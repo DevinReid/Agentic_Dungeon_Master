@@ -1,3 +1,4 @@
 typer[all]
 openai
 python-dotenv
+InquirerPy
