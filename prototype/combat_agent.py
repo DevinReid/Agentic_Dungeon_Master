@@ -1,43 +1,4 @@
-# from openai import OpenAI
-# import json
-
-# client = OpenAI()
-
-# class CombatAgent:
-#     def handle_combat(self, scene_description: str, player_name: str):
-#         response = client.chat.completions.create(
-#             model="gpt-4o",
-#             response_format="json",  # 👈 structured response!
-#             messages=[
-#                 {
-#                     "role": "system",
-#                     "content": (
-#                         "You are a Dungeon Master narrating a combat sequence. "
-#                         "Return only JSON like this: "
-#                         '{"narration": "...", "damage": 8}'
-#                     )
-#                 },
-#                 {
-#                     "role": "user",
-#                     "content": scene_description
-#                 }
-#             ]
-#         )
-
-#         json_string = response.choices[0].message.content
-#         combat_data = json.loads(json_string)
-
-#         narration = combat_data["narration"]
-#         damage = combat_data["damage"]
-
-#         print("\n🎲 Combat Narration:\n", narration)
-#         print("Damage:", damage)
-#         # Your logic to update health would go here
-
-# # Example usage
-# agent = CombatAgent()
-# agent.handle_combat("The goblin swings at the player.", player_name="Devin")
-
+#combat_agent.py
 
 import os
 from openai import OpenAI
@@ -47,24 +8,30 @@ load_dotenv()
 client = OpenAI()
 
 class CombatAgent:
-    def run_combat_encounter(self):
+    def __init__(self):
+        # Keep track of the conversation history
+        self.conversation = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a Dungeon Master narrating a D&D combat encounter. "
+                    "After each player response, continue the story and ask what the player does next. "
+                    "Keep it concise and in the style of classic D&D combat narration."
+                )
+            }
+        ]
+    def run_combat_encounter(self, player_input: str):
+        # Add the player's input to the conversation
+        self.conversation.append({"role": "user", "content": player_input})
+
+        # Send the entire conversation to the LLM
         response = client.chat.completions.create(
             model="gpt-4o",
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a Dungeon Master. Create a very short combat encounter "
-                        "narration that ends after describing the attack."
-                    )
-                },
-                {
-                    "role": "user",
-                    "content": (
-                        "Describe a goblin attacking the player with a short dramatic narration."
-                    )
-                }
-            ]
+            messages=self.conversation
         )
-        narration = response.choices[0].message.content
-        return narration
+
+        dm_reply = response.choices[0].message.content
+        # Add the DM's reply to the conversation
+        self.conversation.append({"role": "assistant", "content": dm_reply})
+
+        return dm_reply
