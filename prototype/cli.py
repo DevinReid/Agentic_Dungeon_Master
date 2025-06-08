@@ -3,7 +3,7 @@ import typer
 from InquirerPy import inquirer
 from combat_agent import CombatAgent
 from story_agent import StoryAgent
-from db import init_db, clear_characters, create_character, get_character_sheet
+from db import init_db, clear_characters, create_character, get_character_sheet, update_character_stats
 
 
 app = typer.Typer()
@@ -62,25 +62,35 @@ def character_select():
 
     name = input("Enter your character's name: ")
 
-    # Clean DB for new game testing
+    # Clear DB for new game testing
     clear_characters()
 
-    # Create character sheet row
-    create_character(name, char_class, hp=30)
+    # Generate initial HP, level, exp
+    level = 1
+    hp = 30  # or let the LLM generate it
 
-    # Generate intro
+    # Create character row with minimal info
+    create_character(name, char_class, hp=hp)
+
+    # 🪄 Get AI-generated stats
+    stats = story.generate_stats(char_class, level)
+
+    # 🛠️ Update the character sheet in the DB
+    update_character_stats(name, stats)
+
+    # 🪄 Generate intro JSON (like before)
     intro = story.generate_intro(char_class, name)
 
-    # Show content
+    # Display content to player
     typer.secho("\n🪄 The Dungeon Master says:", fg=typer.colors.BRIGHT_BLUE)
     typer.echo(intro["content"])
 
-    # Just a note: In this flow, DB already has player_name and class
-    # If you wanted to update based on LLM output, you'd do it here
+    # Feed intro to combat agent
+    combat.conversation.append({"role": "assistant", "content": intro["content"]})
 
     # Start combat
-    combat.conversation.append({"role": "assistant", "content": intro["content"]})
     type_action()
+
 
 ''' PLAYER CHOICES MENU '''
 
@@ -102,11 +112,20 @@ def character_sheet():
     typer.secho("\n📜 Character Sheet:", fg=typer.colors.CYAN)
     character = get_character_sheet()
     if character:
-        name, char_class, hp = character
-        typer.echo(f"Name: {name}\nClass: {char_class}\nHP: {hp}")
+        (
+            name, char_class, hp,
+            strength, dexterity, constitution,
+            intelligence, wisdom, charisma,
+            level, experience
+        ) = character
+
+        typer.echo(f"Name: {name}\nClass: {char_class}\nLevel: {level}\nExperience: {experience}\nHP: {hp}")
+        typer.echo(f"STR: {strength}  DEX: {dexterity}  CON: {constitution}")
+        typer.echo(f"INT: {intelligence}  WIS: {wisdom}  CHA: {charisma}")
     else:
         typer.echo("No character found!")
     typer.echo()
+
 
 
 def inventory():

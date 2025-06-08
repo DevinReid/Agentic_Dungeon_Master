@@ -25,7 +25,29 @@ class StoryAgent:
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": f"The player's class is {character_class}. The player's name is {player_name}."}
             ],
-            response_format="json"  # Direct JSON return
+            response_format={"type": "json_object"}  # Direct JSON return
+        )
+
+        json_string = response.choices[0].message.content
+        return json.loads(json_string)
+
+    def generate_stats(self, character_class: str, level: int) -> dict:
+        system_prompt = (
+            "You are a D&D character creator assistant. "
+            "Given a character's class and level, generate a basic stat block as JSON. "
+            "Return fields: strength, dexterity, constitution, intelligence, wisdom, charisma, level, experience, hp. "
+            "Use typical stat ranges (8-18) and assign experience as 0 for level 1."
+        )
+
+        user_prompt = f"Class: {character_class}\nLevel: {level}"
+
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+             response_format={"type": "json_object"} 
         )
 
         json_string = response.choices[0].message.content
