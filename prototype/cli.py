@@ -3,6 +3,7 @@ import typer
 from InquirerPy import inquirer
 from combat_agent import CombatAgent
 from story_agent import StoryAgent
+from db import init_db, clear_characters, create_character, get_character_sheet
 
 
 app = typer.Typer()
@@ -54,24 +55,31 @@ def main_menu():
 ''' CAMPAIGN SETUP '''
 def character_select():
     typer.secho("\n🧙 Choose your character:", fg=typer.colors.MAGENTA)
-    choice = inquirer.select(
+    char_class = inquirer.select(
         message="Select your class:",
         choices=["Wizard", "Ranger", "Fighter"]
     ).execute()
 
-    typer.secho(f"\nYou have chosen: {choice}!", fg=typer.colors.GREEN)
-    
-    # Use StoryAgent to generate intro
-    intro_narration = story.generate_intro(choice)
-    
+    name = input("Enter your character's name: ")
+
+    # Clean DB for new game testing
+    clear_characters()
+
+    # Create character sheet row
+    create_character(name, char_class, hp=30)
+
+    # Generate intro
+    intro = story.generate_intro(char_class, name)
+
+    # Show content
     typer.secho("\n🪄 The Dungeon Master says:", fg=typer.colors.BRIGHT_BLUE)
-    typer.echo(intro_narration)
-    typer.echo()  # blank line for spacing
+    typer.echo(intro["content"])
 
-    # Feed intro to combat agent
-    combat.conversation.append({"role": "assistant", "content": intro_narration})
+    # Just a note: In this flow, DB already has player_name and class
+    # If you wanted to update based on LLM output, you'd do it here
 
-    # Start combat loop
+    # Start combat
+    combat.conversation.append({"role": "assistant", "content": intro["content"]})
     type_action()
 
 ''' PLAYER CHOICES MENU '''
@@ -92,7 +100,12 @@ def type_action():
 
 def character_sheet():
     typer.secho("\n📜 Character Sheet:", fg=typer.colors.CYAN)
-    typer.echo("Name: Devin the Brave\nHP: 25/30\nStrength: 14")
+    character = get_character_sheet()
+    if character:
+        name, char_class, hp = character
+        typer.echo(f"Name: {name}\nClass: {char_class}\nHP: {hp}")
+    else:
+        typer.echo("No character found!")
     typer.echo()
 
 
