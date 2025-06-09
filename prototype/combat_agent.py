@@ -1,76 +1,78 @@
-#combat_agent.py
-
-# combat_agent.py
+# combat_system.py
 
 import os
+import json
+import random
 from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
 client = OpenAI()
 
+
+# 🟩 Combat State Analyzer
+def analyze_combat_state_ai(narration_text: str) -> bool:
+    system_prompt = (
+        "You are a Dungeon Master assistant. Based on the following narration, "
+        "determine if combat has started or if combat is ongoing. "
+        "Respond with JSON: {\"combat\": true} or {\"combat\": false}."
+    )
+
+    user_prompt = f"Narration text:\n{narration_text}\n\nIs combat happening?"
+
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        response_format={"type": "json_object"}
+    )
+
+    combat_state = json.loads(response.choices[0].message.content)
+    return combat_state["combat"]
+
+
+# 🟩 Combat Manager
+class CombatManager:
+    def __init__(self, player_name: str, npcs: list):
+        self.initiative_order = []
+        self.current_turn_index = 0
+        self.round = 1
+        self.combatants = {"player": {"name": player_name, "hp": 30, "ac": 15}}
+        for npc in npcs:
+            self.combatants[npc["name"]] = npc
+
+    def next_turn(self):
+        self.current_turn_index = (self.current_turn_index + 1) % len(self.initiative_order)
+        if self.current_turn_index == 0:
+            self.round += 1
+
+    def is_combat_over(self):
+        player_hp = self.combatants["player"]["hp"]
+        npcs_alive = [c for n, c in self.combatants.items() if n != "player" and c["hp"] > 0]
+        return player_hp <= 0 or not npcs_alive
+
+
+# 🟩 Combat Agent
 class CombatAgent:
     def __init__(self):
         self.client = client
-        # Conversation history for narration flow
-        self.conversation = [
-            {
-                "role": "system",
-                "content": (
-                    "You are a Dungeon Master for a D&D game. "
-                    "You are neutral and do not favor the player. "
-                    "You must:\n"
-                    "- Narrate the outcome of the player’s actions based on the roll result and DC.\n"
-                    "- If the roll result is equal to or higher than the DC, narrate success.\n"
-                    "- If the roll is lower than the DC, narrate failure. "
-                    "The consequences should be logical and match the severity of the situation.\n"
-                    "- Critical failures (1) should have worse consequences. "
-                    "Critical successes (20) should have better outcomes.\n"
-                    "- Do not allow repeated attempts at the same action unless the player tries a new approach. "
-                    "Narrate that the opportunity has closed after repeated failures.\n\n"
-                    "Always be strict but fair, never forgiving or overly harsh. "
-                    "You are the impartial Dungeon Master."
-                )
-            }
-        ]
 
-    def run_combat_encounter(self, player_input: str) -> str:
+    def narrate_combat_turn(self, turn_info: dict) -> str:
         """
-        This method is used when the player provides an action and there is no dice roll result yet.
-        It narrates the scene and sets up the situation.
-        """
-        self.conversation.append({"role": "user", "content": player_input})
-
-        response = self.client.chat.completions.create(
-            model="gpt-4o",
-            messages=self.conversation
-        )
-
-        dm_reply = response.choices[0].message.content
-        self.conversation.append({"role": "assistant", "content": dm_reply})
-
-        return dm_reply
-
-    def narrate_roll_outcome(self, last_dm_text: str, player_input: str, roll_result: int, dc: int) -> str:
-        """
-        This method narrates the outcome of a dice roll.
-        It should be called after the player has rolled and you have the DC.
+        Narrate the outcome of a single combat turn.
         """
         system_prompt = (
-            "You are a Dungeon Master for a D&D game. "
-            "Based on the DC and the player’s roll result, decide the outcome:\n"
-            "- If roll >= DC, narrate success.\n"
-            "- If roll < DC, narrate failure.\n"
-            "- Critical failures (1) should have worse consequences.\n"
-            "- Critical successes (20) should have exceptional outcomes.\n"
-            "Do not ask for another roll. Only narrate the outcome."
+            "You are a Dungeon Master for a D&D combat encounter. "
+            "You receive the result of the player's or NPC's turn, including whether they hit or missed, "
+            "and you must narrate the outcome of this action in a neutral, immersive way. "
+            "Always keep it short, like 2-3 sentences, and never fudge the outcome."
         )
 
         user_prompt = (
-            f"Last DM text:\n{last_dm_text}\n\n"
-            f"Player input:\n{player_input}\n"
-            f"Roll result: {roll_result}\nDC: {dc}\n\n"
-            "Narrate the outcome of this action."
+            f"Turn Info:\n{turn_info}\n\n"
+            "Narrate the outcome of this combat turn."
         )
 
         response = self.client.chat.completions.create(
@@ -81,7 +83,27 @@ class CombatAgent:
             ]
         )
 
-        narration = response.choices[0].message.content
-        self.conversation.append({"role": "assistant", "content": narration})
-        return narration
+        return response.choices[0].message.content
+
+    def decide_npc_action(self, npc_info: dict) -> str:
+        """
+        Decide the NPC's next combat action.
+        """
+        system_prompt = (
+            "You are the DM. Given this NPC's status and environment, decide their next combat action. "
+            "Reply in a single sentence with the NPC's chosen action, no extra commentary."
+        )
+
+        user_prompt = f"NPC Info:\n{npc_info}\n\nWhat is the NPC's action?"
+
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ]
+        )
+
+        return response.choices[0].message.content.strip()
+
 

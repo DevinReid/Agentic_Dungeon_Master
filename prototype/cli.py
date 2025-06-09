@@ -1,39 +1,23 @@
-#cli.py
+# cli.py
 import typer
 from InquirerPy import inquirer
-from combat_agent import CombatAgent
 from story_agent import StoryAgent
-from db import init_db, clear_characters, create_character, get_character_sheet, update_character_stats
+from db import clear_characters, create_character, get_character_sheet, update_character_stats
+from combat_agent import CombatAgent, CombatManager, analyze_combat_state_ai
 from dice_utility import DiceUtility
 
 dice = DiceUtility()
+story = StoryAgent()
+combat_agent = CombatAgent()
 
 app = typer.Typer()
-combat = CombatAgent()
-story = StoryAgent()
-
-''' START MENU '''
-
-def start_new_campaign():
-    typer.secho("\n🛡️ Starting a New Campaign...", fg=typer.colors.GREEN)
-    typer.echo("New campaign setup logic here.")
-    player_choices()
-
-def load_previous_campaign():
-    typer.secho("\n📜 Load Previous Campaign:", fg=typer.colors.CYAN)
-    typer.echo("Load game logic here.")
-    player_choices()
-
-def options_menu():
-    typer.secho("\n⚙️ Game Options:", fg=typer.colors.YELLOW)
-    typer.echo("No options configured yet!")
 
 def main_menu():
     while True:
         choice = inquirer.select(
             message="Welcome to Agentic Dungeon Master! Choose an option:",
             choices=[
-                "Play",  # 🚀 NEW button at the top
+                "Play",
                 "Start New Campaign",
                 "Load Previous Campaign",
                 "Options",
@@ -41,130 +25,108 @@ def main_menu():
             ]
         ).execute()
 
-        if choice == "Play":
-            typer.secho("\n🎮 Launching into the game!", fg=typer.colors.GREEN)
-            character_select() # Same logic as Start New Campaign
-        elif choice == "Start New Campaign":
+        if choice in ["Play", "Start New Campaign"]:
             start_new_campaign()
         elif choice == "Load Previous Campaign":
-            load_previous_campaign()
+            typer.echo("Load logic placeholder")
         elif choice == "Options":
-            options_menu()
+            typer.echo("Options placeholder")
         elif choice == "Quit":
-            typer.secho("Goodbye!", fg=typer.colors.RED)
+            typer.echo("Goodbye!")
             raise typer.Exit()
-        
-''' CAMPAIGN SETUP '''
-def character_select():
+
+def start_new_campaign():
+    typer.secho("\n🛡️ Starting a New Campaign...", fg=typer.colors.GREEN)
+    setup_character()
+    run_intro_scene()
+
+def setup_character():
     typer.secho("\n🧙 Choose your character:", fg=typer.colors.MAGENTA)
     char_class = inquirer.select(
         message="Select your class:",
         choices=["Wizard", "Ranger", "Fighter"]
     ).execute()
-
     name = input("Enter your character's name: ")
 
-    # Clear DB for new game testing
-    clear_characters()
-
-    # Generate initial HP, level, exp
+    # ⚠️ Replace with LLM-based stat generation later
     level = 1
-    hp = 30  # or let the LLM generate it
-
-    # Create character row with minimal info
+    hp = 30
+    clear_characters()
     create_character(name, char_class, hp=hp)
-
-    # 🪄 Get AI-generated stats
     stats = story.generate_stats(char_class, level)
-
-    # 🛠️ Update the character sheet in the DB
     update_character_stats(name, stats)
 
-    # 🪄 Generate intro JSON (like before)
-    intro = story.generate_intro(char_class, name)
+       # Store for later use
+    global player_name, player_class
+    player_name = name
+    player_class = char_class
 
-    # Display content to player
+def run_intro_scene():
+    intro = story.generate_intro(player_class, player_name)
     typer.secho("\n🪄 The Dungeon Master says:", fg=typer.colors.BRIGHT_BLUE)
     typer.echo(intro["content"])
 
-    # Feed intro to combat agent
-    combat.conversation.append({"role": "assistant", "content": intro["content"]})
+    # Player’s first response
+    action = input("\nType your action (or type 'menu' to open player choices): ")
+    if action.strip().lower() == "menu":
+        player_choices()
+        return
 
-    # Start combat
-    type_action()
-
-
-''' PLAYER CHOICES MENU '''
-
-def type_action():
-    typer.secho("\n🎲 Combat Encounter Begins!", fg=typer.colors.BRIGHT_GREEN)
-    player_input = input("Type your action (or type 'menu' to open player choices): ")
-
-    while True:
-        if player_input.strip().lower() == "menu":
-            typer.secho("\n📜 Returning to Player Choices Menu!", fg=typer.colors.GREEN)
-            player_choices()
-
-        # 1️⃣ DM Narration (initial scene or reaction)
-        narration = combat.run_combat_encounter(player_input)
+    # Check if combat should start
+    if analyze_combat_state_ai(intro["content"] + " " + action):
+        # ⚠️ Later: dynamically create NPC stat blocks instead of hardcoding
+        start_combat_loop(player_name, [{"name": "Goblin", "hp": 10, "ac": 13}])
+    else:
+        narration = story.handle_player_action(intro["content"], action)
         typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
-        typer.echo(narration)
+        typer.echo(narration["content"])
+        player_choices()
 
-        # 2️⃣ Check if DM triggers a dice roll (like a saving throw)
-        roll_check = dice.analyze_for_roll(last_dm_text=narration, player_input="")
-        if roll_check["roll_needed"]:
-            typer.secho(f"\nDice roll needed! Type: {roll_check['dice_type']}", fg=typer.colors.YELLOW)
-            typer.secho(f"Roll type: {roll_check['roll_type']}", fg=typer.colors.YELLOW)
-            typer.secho(f"Reason: {roll_check['roll_reason']}", fg=typer.colors.YELLOW)
-            typer.secho(f"DC: {roll_check['dc']}", fg=typer.colors.YELLOW)
+def start_combat_loop(player_name: str, npcs: list):
+    combat_manager = CombatManager(player_name=player_name, npcs=npcs)
+    combat_manager.initiative_order = ["player"] + [npc["name"] for npc in npcs]
 
-            roll_input = input("Type 'roll' to roll the dice: ")
-            if roll_input.lower() == "roll":
-                roll_result = dice.roll_dice(roll_check["dice_type"])
-                typer.secho(f"You rolled: {roll_result}", fg=typer.colors.BRIGHT_CYAN)
+    while not combat_manager.is_combat_over():
+        current_turn = combat_manager.initiative_order[combat_manager.current_turn_index]
 
-                # 🎯 Narrate outcome based on roll and DC
-                outcome = combat.narrate_roll_outcome(
-                    last_dm_text=narration,
-                    player_input=player_input,
-                    roll_result=roll_result,
-                    dc=roll_check["dc"]
-                )
-                typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
-                typer.echo(outcome)
-
-        # 3️⃣ Otherwise, player's action triggers possible roll
+        if current_turn == "player":
+            action = input("\nYour turn! What do you do? ")
+            roll = dice.roll_dice("d20")
+            success = roll >= 13  # Example AC
+            narration = combat_agent.narrate_combat_turn({
+                "who": "player",
+                "action": action,
+                "roll_result": roll,
+                "dc_or_ac": 13,
+                "success": success,
+                "damage": 8 if success else 0,
+                "hp_remaining": 10
+            })
+            typer.echo(narration)
         else:
-            player_input = input("\nYour next action (or type 'menu' to open player choices): ")
-            if player_input.strip().lower() == "menu":
-                typer.secho("\n📜 Returning to Player Choices Menu!", fg=typer.colors.GREEN)
-                player_choices()
+            npc = combat_manager.combatants[current_turn]
+            npc_action = combat_agent.decide_npc_action({
+                "npc_name": npc["name"],
+                "hp": npc["hp"],
+                "player_ac": 15
+            })
+            roll = dice.roll_dice("d20")
+            success = roll >= 15  # Player AC
+            narration = combat_agent.narrate_combat_turn({
+                "who": npc["name"],
+                "action": npc_action,
+                "roll_result": roll,
+                "dc_or_ac": 15,
+                "success": success,
+                "damage": 5 if success else 0,
+                "hp_remaining": 25
+            })
+            typer.echo(narration)
 
-            roll_check = dice.analyze_for_roll(last_dm_text=narration, player_input=player_input)
-            if roll_check["roll_needed"]:
-                typer.secho(f"\nDice roll needed! Type: {roll_check['dice_type']}", fg=typer.colors.YELLOW)
-                typer.secho(f"Roll type: {roll_check['roll_type']}", fg=typer.colors.YELLOW)
-                typer.secho(f"Reason: {roll_check['roll_reason']}", fg=typer.colors.YELLOW)
-                typer.secho(f"DC: {roll_check['dc']}", fg=typer.colors.YELLOW)
+        combat_manager.next_turn()
 
-                roll_input = input("Type 'roll' to roll the dice: ")
-                if roll_input.lower() == "roll":
-                    roll_result = dice.roll_dice(roll_check["dice_type"])
-                    typer.secho(f"You rolled: {roll_result}", fg=typer.colors.BRIGHT_CYAN)
-
-                    # 🎯 Narrate outcome based on roll and DC
-                    outcome = combat.narrate_roll_outcome(
-                        last_dm_text=narration,
-                        player_input=player_input,
-                        roll_result=roll_result,
-                        dc=roll_check["dc"]
-                    )
-                    typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
-                    typer.echo(outcome)
-            else:
-                # If no roll needed for player, go back to input prompt
-                continue
-
+    typer.secho("\nCombat is over. Back to the story...", fg=typer.colors.BRIGHT_BLUE)
+    player_choices()
 
 def character_sheet():
     typer.secho("\n📜 Character Sheet:", fg=typer.colors.CYAN)
@@ -176,102 +138,52 @@ def character_sheet():
             intelligence, wisdom, charisma,
             level, experience
         ) = character
-
         typer.echo(f"Name: {name}\nClass: {char_class}\nLevel: {level}\nExperience: {experience}\nHP: {hp}")
         typer.echo(f"STR: {strength}  DEX: {dexterity}  CON: {constitution}")
         typer.echo(f"INT: {intelligence}  WIS: {wisdom}  CHA: {charisma}")
     else:
         typer.echo("No character found!")
-    typer.echo()
 
-
-
-def inventory():
-    typer.secho("\n🎒 Inventory:", fg=typer.colors.YELLOW)
-    typer.echo("Backpack: 1x Health Potion, 10x Gold Coins")
-    typer.echo()
-
-
-def journal():
-    typer.secho("\n📖 Journal:", fg=typer.colors.MAGENTA)
-    typer.echo("Journal:\n- Met goblin in dark cave.\n- Found mysterious shard.")
-    typer.echo()
-
-
-def player_choices():
+def player_choices(last_story=""):
     while True:
         choice = inquirer.select(
             message="Choose an option:",
             choices=[
                 "Type an Action",
                 "Character Sheet",
-                "Inventory",
-                "Journal",
-                "In-Game Menu"
-            ]
-        ).execute()
-
-        if choice == "Type an Action":
-            type_action()
-        elif choice == "Character Sheet":
-            character_sheet()
-        elif choice == "Inventory":
-            inventory()
-        elif choice == "Journal":
-            journal()
-        elif choice == "In-Game Menu":
-            game_menu()
-
-''' IN-GAME MENU '''
-
-def game_menu():
-    while True:
-        # Use Typer's secho to print the prompt in pink (magenta)
-        typer.secho("\nIn-Game Menu:", fg=typer.colors.MAGENTA, bold=True)
-
-        choice = inquirer.select(
-            message="",
-            choices=[
-                "Return to Game",
-                "View Artifacts",
-                "Talk to DM",
-                "Options",
-                "Save game",
-                "Load Game",
+                "Inventory (placeholder)",
+                "Journal (placeholder)",
                 "Return to Start Menu",
-                "Return to Campaign Menu",
                 "Quit Application"
             ]
         ).execute()
-
-        if choice == "Return to Game":
-            typer.secho("\n🎮 Returning to the game!", fg=typer.colors.GREEN)
-            break
-        elif choice == "View Artifacts":
-            typer.echo("\n🔮 Viewing your artifacts... (placeholder)")
-        elif choice == "Talk to DM":
-            typer.echo("\n🗣️ Talking to the Dungeon Master... (placeholder)")
-        elif choice == "Options":
-            typer.echo("\n⚙️ Adjusting options... (placeholder)")
-        elif choice == "Save game":
-            typer.echo("\n💾 Saving your game... (placeholder)")
-        elif choice == "Load Game":
-            typer.echo("\n📜 Loading a game... (placeholder)")
+        if choice == "Type an Action":
+            action = input("\nWhat do you do? ")
+            action_handler(last_story,action)
+        elif choice == "Character Sheet":
+            character_sheet()
+        elif choice in ["Inventory (placeholder)", "Journal (placeholder)"]:
+            typer.echo(f"{choice} shown here (placeholder)")
         elif choice == "Return to Start Menu":
-            typer.secho("\n🏠 Returning to Start Menu!", fg=typer.colors.GREEN)
             main_menu()
-            break
-        elif choice == "Return to Campaign Menu":
-            typer.secho("\n🛡️ Returning to Campaign Menu!", fg=typer.colors.BLUE)
-            player_choices()
             break
         elif choice == "Quit Application":
             typer.secho("Goodbye!", fg=typer.colors.RED)
             raise typer.Exit()
 
+def action_handler(last_story,action):
+            combat_triggered = analyze_combat_state_ai(last_story + " " + action)
 
-''' ENTRY POINT '''
+            if combat_triggered:
+                # ⚠️ Needs dynamic enemy generation later
+                start_combat_loop(player_name, [{"name": "Goblin", "hp": 10, "ac": 13}])
+                return  # exit to combat, no further narrative
+            else:
+                # 2️⃣ Continue with StoryAgent
+                response_json = story.handle_player_action(last_story, action)
+                last_story = response_json["content"]  # update for next loop
+                typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
+                typer.echo(response_json["content"])
 
 if __name__ == "__main__":
     typer.run(main_menu)
-
