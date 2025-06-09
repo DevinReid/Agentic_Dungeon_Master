@@ -5,7 +5,7 @@ import json
 import random
 from openai import OpenAI
 from dotenv import load_dotenv
-
+from debug_util import debug_log
 load_dotenv()
 client = OpenAI()
 
@@ -14,6 +14,7 @@ class DiceUtility:
         self.client = client
 
     def analyze_for_roll(self, last_dm_text: str, player_input: str = "") -> dict:
+        debug_log("analyze_for_roll() called.")
         system_prompt = (
               "You are a Dungeon Master rules assistant. "
                 "Given the last DM narration and the player's input, determine:\n"
@@ -45,6 +46,7 @@ class DiceUtility:
         return json.loads(response.choices[0].message.content)
 
     def roll_dice(self, dice_type: str) -> int:
+        debug_log("roll_dice() called.")
         if dice_type == "d20":
             return random.randint(1, 20)
         elif dice_type == "d6":

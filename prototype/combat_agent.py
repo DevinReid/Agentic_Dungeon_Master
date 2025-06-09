@@ -5,6 +5,7 @@ import json
 import random
 from openai import OpenAI
 from dotenv import load_dotenv
+from debug_util import debug_log
 
 load_dotenv()
 client = OpenAI()
@@ -12,6 +13,7 @@ client = OpenAI()
 
 # 🟩 Combat State Analyzer
 def analyze_combat_state_ai(narration_text: str) -> bool:
+    debug_log("analyze_combat_state_ai() called.")
     system_prompt = (
         "You are a Dungeon Master assistant. Based on the following narration, "
         "determine if combat has started or if combat is ongoing. "
@@ -36,6 +38,7 @@ def analyze_combat_state_ai(narration_text: str) -> bool:
 # 🟩 Combat Manager
 class CombatManager:
     def __init__(self, player_name: str, npcs: list):
+        debug_log("CombatManager.__init__() called.")
         self.initiative_order = []
         self.current_turn_index = 0
         self.round = 1
@@ -44,22 +47,27 @@ class CombatManager:
             self.combatants[npc["name"]] = npc
 
     def next_turn(self):
+        debug_log("CombatManager.next_turn() called.")
         self.current_turn_index = (self.current_turn_index + 1) % len(self.initiative_order)
         if self.current_turn_index == 0:
             self.round += 1
 
     def is_combat_over(self):
+        debug_log("CombatManager.is_combat_over() called.")
+        
         player_hp = self.combatants["player"]["hp"]
         npcs_alive = [c for n, c in self.combatants.items() if n != "player" and c["hp"] > 0]
-        return player_hp <= 0 or not npcs_alive
+        return player_hp <= 0 or not npcs_alive 
 
 
 # 🟩 Combat Agent
 class CombatAgent:
     def __init__(self):
+        debug_log("CombatAgent.__init__() called.")
         self.client = client
 
     def narrate_combat_turn(self, turn_info: dict) -> str:
+        debug_log("CombatAgent.narrate_combat_turn() called.")
         """
         Narrate the outcome of a single combat turn.
         """
@@ -86,6 +94,7 @@ class CombatAgent:
         return response.choices[0].message.content
 
     def decide_npc_action(self, npc_info: dict) -> str:
+        debug_log("CombatAgent.decide_npc_next_action() called.")
         """
         Decide the NPC's next combat action.
         """

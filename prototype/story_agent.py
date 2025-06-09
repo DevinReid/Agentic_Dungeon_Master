@@ -2,6 +2,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 import json
+from debug_util import debug_log
 
 load_dotenv()
 client = OpenAI()
@@ -54,6 +55,7 @@ class StoryAgent:
         return json.loads(json_string)
 
     def story_agent(self, last_story: str, player_input: str) -> dict:
+        debug_log("Story_Agent() called.")
         """
         Given the last story narration and the player's response,
         continue narrating the scene (social or exploration, not combat).
