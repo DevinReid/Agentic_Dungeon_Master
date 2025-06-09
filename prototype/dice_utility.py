@@ -14,7 +14,7 @@ class DiceUtility:
         self.client = client
 
     def analyze_for_roll(self, last_dm_text: str, player_input: str = "") -> dict:
-        print(last_dm_text)
+
         debug_log("analyze_for_roll() called.")
         system_prompt = (
               "You are a Dungeon Master rules assistant. "
@@ -46,11 +46,25 @@ class DiceUtility:
         
         return json.loads(response.choices[0].message.content)
 
-    def roll_dice(self, dice_type: str) -> int:
+    def roll_dice(self, dice_type) -> int:
+        
         debug_log("roll_dice() called.")
         if dice_type == "d20":
             return random.randint(1, 20)
         elif dice_type == "d6":
             return random.randint(1, 6)
         # Add other dice as needed
-        return 1  # Default
+        return 
+          # Default
+
+
+    def determine_success(self, roll_info, dice_result):
+        dc = roll_info['dc']
+        if dice_result == 1:
+            return "Critical Failure!"
+        elif dice_result == 20:
+            return "Critical Success!"
+        elif dice_result < dc:
+            return "Failure"
+        else:
+            return "Success"
