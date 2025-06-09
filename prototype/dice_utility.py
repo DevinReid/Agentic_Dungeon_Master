@@ -14,6 +14,7 @@ class DiceUtility:
         self.client = client
 
     def analyze_for_roll(self, last_dm_text: str, player_input: str = "") -> dict:
+        print(last_dm_text)
         debug_log("analyze_for_roll() called.")
         system_prompt = (
               "You are a Dungeon Master rules assistant. "
@@ -23,7 +24,7 @@ class DiceUtility:
                 "- roll_type: the type of roll needed, e.g., 'Persuasion', 'Attack', 'Stealth', 'Perception', etc.\n"
                 "- roll_reason: a short explanation\n"
                 "- dc: a numeric Difficulty Class (DC) based on the situation\n\n"
-                "If the player is repeating the same action that already failed and no new approach is offered, set roll_needed to false.\n"
+                
                 "Respond in JSON only."
             )
                 
@@ -42,7 +43,7 @@ class DiceUtility:
             ],
             response_format={"type": "json_object"}
         )
-
+        
         return json.loads(response.choices[0].message.content)
 
     def roll_dice(self, dice_type: str) -> int:

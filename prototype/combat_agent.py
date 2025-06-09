@@ -12,7 +12,7 @@ client = OpenAI()
 
 
 # 🟩 Combat State Analyzer
-def analyze_combat_state_ai(narration_text: str) -> bool:
+def analyze_combat_state_ai(last_dm_text: str, player_response) -> bool:
     debug_log("analyze_combat_state_ai() called.")
     system_prompt = (
         "You are a Dungeon Master assistant. Based on the following narration, "
@@ -20,7 +20,9 @@ def analyze_combat_state_ai(narration_text: str) -> bool:
         "Respond with JSON: {\"combat\": true} or {\"combat\": false}."
     )
 
-    user_prompt = f"Narration text:\n{narration_text}\n\nIs combat happening?"
+    user_prompt = (f"Dungeon Master's Narration text:\n {last_dm_text}\n\n"
+                   f"Player's Response : \n {player_response}"
+                   "\n\nIs combat happening?")
 
     response = client.chat.completions.create(
         model="gpt-4o",

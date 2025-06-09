@@ -13,6 +13,10 @@ combat_agent = CombatAgent()
 
 app = typer.Typer()
 
+session_context = ""  # Start with empty session context
+last_dm_text = ""     # Start with empty last DM text
+##move this to a new script of some kind
+
 def main_menu():
     while True:
         choice = inquirer.select(
@@ -70,21 +74,22 @@ def run_intro_scene():
     typer.secho("\n🪄 The Dungeon Master says:", fg=typer.colors.BRIGHT_BLUE)
     typer.echo(intro["content"])
 
+
     # Player’s first response
-    action = input("\nType your action (or type 'menu' to open player choices): ")
-    if action.strip().lower() == "menu":
-        player_choices()
-        return
+    player_choices(intro["content"])
+    # if action.strip().lower() == "menu":
+    #     player_choices()
+    #     return <><<<<This needs to be its own script that handles all of the differeent word shortcuts
 
     # Check if combat should start
-    if analyze_combat_state_ai(intro["content"] + " " + action):
-        # ⚠️ Later: dynamically create NPC stat blocks instead of hardcoding
-        start_combat_loop(player_name, [{"name": "Goblin", "hp": 10, "ac": 13}])
-    else:
-        narration = story.story_agent(intro["content"], action)
-        typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
-        typer.echo(narration["content"])
-        player_choices()
+    # if analyze_combat_state_ai(intro["content"] + " " + action):
+    #     # ⚠️ Later: dynamically create NPC stat blocks instead of hardcoding
+    #     start_combat_loop(player_name, [{"name": "Goblin", "hp": 10, "ac": 13}])
+    # else:
+    #     narration = story.story_agent(intro["content"], action)
+    #     typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
+    #     typer.echo(narration["content"])
+    #     player_choices()
 
 def start_combat_loop(player_name: str, npcs: list):
     debug_log("start_combat_loop() called.")
@@ -151,8 +156,9 @@ def character_sheet():
     else:
         typer.echo("No character found!")
 
-def player_choices(last_story=""):
+def player_choices(session_context, last_dm_text):
     while True:
+        typer.echo("")
         choice = inquirer.select(
             message="Choose an option:",
             choices=[
@@ -166,7 +172,11 @@ def player_choices(last_story=""):
         ).execute()
         if choice == "Type an Action":
             action = input("\nWhat do you do? ")
-            action_handler(last_story,action)
+            if action.strip().lower() == "menu": ## make a script that handles all of this 
+                player_choices()
+                return 
+            
+            action_handler(session_context,last_dm_text,action)
         elif choice == "Character Sheet":
             character_sheet()
         elif choice in ["Inventory (placeholder)", "Journal (placeholder)"]:
@@ -178,19 +188,75 @@ def player_choices(last_story=""):
             typer.secho("Goodbye!", fg=typer.colors.RED)
             raise typer.Exit()
 
-def action_handler(last_story,action):
-            combat_triggered = analyze_combat_state_ai(last_story + " " + action)
+def action_handler(session_context, last_dm_text, action):
+    combat_triggered = analyze_combat_state_ai(last_dm_text, action) #put this formatting in the api call
+    if combat_triggered:
+        start_combat_loop(player_name, [{"name": "Goblin", "hp": 10, "ac": 13}])
+        return
 
-            if combat_triggered:
-                # ⚠️ Needs dynamic enemy generation later
-                start_combat_loop(player_name, [{"name": "Goblin", "hp": 10, "ac": 13}])
-                return  # exit to combat, no further narrative
-            else:
-                # 2️⃣ Continue with StoryAgent
-                response_json = story.story_agent(last_story, action)
-                last_story = response_json["content"]  # update for next loop
-                typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
-                typer.echo(response_json["content"])
+    # 2️⃣ Check if dice roll needed
+    roll_info = dice.analyze_for_roll(last_dm_text, action)
+    print(roll_info)
+
+    if roll_info.get('roll_needed'):
+        result= handle_dice_roll(roll_info)
+        success = determine_success(roll_info, result)
+        typer.secho(success, fg= typer.colors.BRIGHT_YELLOW)
+    else:
+        success = "No result required"
+
+    # 3️⃣ Update story with roll info
+    response_json = story.story_agent(
+        session_context, action,
+        roll_info.get('roll_needed'),
+        roll_info.get('roll_type'),
+        roll_info.get('dc'),
+        success
+    )
+    new_dm_text = response_json["content"]
+
+    # 4️⃣ Append to last_story to preserve context
+    session_context += f"\nPlayer: {action}\n\nDM: {new_dm_text}"
+
+    last_dm_text= new_dm_text
+
+    typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
+    typer.echo(new_dm_text)
+    typer.echo("")
+    return session_context, last_dm_text
+
+def handle_dice_roll(roll_info):
+    typer.secho(f"\n  🎲 {roll_info['roll_type']} is required. DC {roll_info['dc']}", fg=typer.colors.YELLOW)
+    
+    choice = inquirer.select(
+        message="Choose an option:",
+        choices=["Roll!"]
+    ).execute()
+
+    if choice == "Roll!":
+        dice_result = dice.roll_dice(roll_info['dice_type'])
+        # TODO: add logic for modifiers
+        typer.secho(f"You rolled a {dice_result} on a {roll_info['dice_type']}", fg=typer.colors.BRIGHT_YELLOW)
+        typer.echo("")
+        return dice_result
+    else:
+        typer.echo("No roll made.")
+        return None
+
+
+def determine_success(roll_info, dice_result):
+    if dice_result is None:
+        return "No result required"
+    dc = roll_info['dc']
+    if dice_result == 1:
+        return "Critical Failure!"
+    elif dice_result == 20:
+        return "Critical Success!"
+    elif dice_result < dc:
+        return "Failure"
+    else:
+        return "Success"
+
 
 if __name__ == "__main__":
     typer.run(main_menu)

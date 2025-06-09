@@ -54,7 +54,7 @@ class StoryAgent:
         json_string = response.choices[0].message.content
         return json.loads(json_string)
 
-    def story_agent(self, last_story: str, player_input: str) -> dict:
+    def story_agent(self, last_story: str, player_input: str, roll_needed: bool, roll_type: str, dc: int, success: str) -> dict:
         debug_log("Story_Agent() called.")
         """
         Given the last story narration and the player's response,
@@ -78,6 +78,10 @@ class StoryAgent:
         user_prompt = (
             f"Last narration:\n{last_story}\n\n"
             f"Player input:\n{player_input}\n\n"
+            f"Did the character need to roll? \n{roll_needed}\n\n"
+            f"If the character needed to roll, what kind of roll was required? \n {roll_type}\n\n"
+            f"What was the Difficulty Class(DC) of the attempt the character is trying to beat? \n {dc}"
+            f"What was the outcome of the roll? \n {success}\n\n"
             "Continue the scene and return JSON: {\"content\": \"...\"}"
         )
 
