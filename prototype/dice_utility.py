@@ -1,0 +1,53 @@
+#dice_utility.py
+
+import os
+import json
+import random
+from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+client = OpenAI()
+
+class DiceUtility:
+    def __init__(self):
+        self.client = client
+
+    def analyze_for_roll(self, last_dm_text: str, player_input: str = "") -> dict:
+        system_prompt = (
+              "You are a Dungeon Master rules assistant. "
+                "Given the last DM narration and the player's input, determine:\n"
+                "- roll_needed: true or false\n"
+                "- dice_type: e.g., d20, d6\n"
+                "- roll_type: the type of roll needed, e.g., 'Persuasion', 'Attack', 'Stealth', 'Perception', etc.\n"
+                "- roll_reason: a short explanation\n"
+                "- dc: a numeric Difficulty Class (DC) based on the situation\n\n"
+                "If the player is repeating the same action that already failed and no new approach is offered, set roll_needed to false.\n"
+                "Respond in JSON only."
+            )
+                
+
+        user_prompt = (
+            f"Last DM text:\n{last_dm_text}\n\n"
+            f"Player input:\n{player_input}\n\n"
+            "Decide if a dice roll is needed and explain the type and reason."
+        )
+
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            response_format={"type": "json_object"}
+        )
+
+        return json.loads(response.choices[0].message.content)
+
+    def roll_dice(self, dice_type: str) -> int:
+        if dice_type == "d20":
+            return random.randint(1, 20)
+        elif dice_type == "d6":
+            return random.randint(1, 6)
+        # Add other dice as needed
+        return 1  # Default

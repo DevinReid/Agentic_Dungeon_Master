@@ -4,7 +4,9 @@ from InquirerPy import inquirer
 from combat_agent import CombatAgent
 from story_agent import StoryAgent
 from db import init_db, clear_characters, create_character, get_character_sheet, update_character_stats
+from dice_utility import DiceUtility
 
+dice = DiceUtility()
 
 app = typer.Typer()
 combat = CombatAgent()
@@ -103,10 +105,66 @@ def type_action():
             typer.secho("\n📜 Returning to Player Choices Menu!", fg=typer.colors.GREEN)
             player_choices()
 
+        # 1️⃣ DM Narration (initial scene or reaction)
         narration = combat.run_combat_encounter(player_input)
         typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
         typer.echo(narration)
-        player_input = input("\nType your next action (or type 'menu' to open player choices): ")
+
+        # 2️⃣ Check if DM triggers a dice roll (like a saving throw)
+        roll_check = dice.analyze_for_roll(last_dm_text=narration, player_input="")
+        if roll_check["roll_needed"]:
+            typer.secho(f"\nDice roll needed! Type: {roll_check['dice_type']}", fg=typer.colors.YELLOW)
+            typer.secho(f"Roll type: {roll_check['roll_type']}", fg=typer.colors.YELLOW)
+            typer.secho(f"Reason: {roll_check['roll_reason']}", fg=typer.colors.YELLOW)
+            typer.secho(f"DC: {roll_check['dc']}", fg=typer.colors.YELLOW)
+
+            roll_input = input("Type 'roll' to roll the dice: ")
+            if roll_input.lower() == "roll":
+                roll_result = dice.roll_dice(roll_check["dice_type"])
+                typer.secho(f"You rolled: {roll_result}", fg=typer.colors.BRIGHT_CYAN)
+
+                # 🎯 Narrate outcome based on roll and DC
+                outcome = combat.narrate_roll_outcome(
+                    last_dm_text=narration,
+                    player_input=player_input,
+                    roll_result=roll_result,
+                    dc=roll_check["dc"]
+                )
+                typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
+                typer.echo(outcome)
+
+        # 3️⃣ Otherwise, player's action triggers possible roll
+        else:
+            player_input = input("\nYour next action (or type 'menu' to open player choices): ")
+            if player_input.strip().lower() == "menu":
+                typer.secho("\n📜 Returning to Player Choices Menu!", fg=typer.colors.GREEN)
+                player_choices()
+
+            roll_check = dice.analyze_for_roll(last_dm_text=narration, player_input=player_input)
+            if roll_check["roll_needed"]:
+                typer.secho(f"\nDice roll needed! Type: {roll_check['dice_type']}", fg=typer.colors.YELLOW)
+                typer.secho(f"Roll type: {roll_check['roll_type']}", fg=typer.colors.YELLOW)
+                typer.secho(f"Reason: {roll_check['roll_reason']}", fg=typer.colors.YELLOW)
+                typer.secho(f"DC: {roll_check['dc']}", fg=typer.colors.YELLOW)
+
+                roll_input = input("Type 'roll' to roll the dice: ")
+                if roll_input.lower() == "roll":
+                    roll_result = dice.roll_dice(roll_check["dice_type"])
+                    typer.secho(f"You rolled: {roll_result}", fg=typer.colors.BRIGHT_CYAN)
+
+                    # 🎯 Narrate outcome based on roll and DC
+                    outcome = combat.narrate_roll_outcome(
+                        last_dm_text=narration,
+                        player_input=player_input,
+                        roll_result=roll_result,
+                        dc=roll_check["dc"]
+                    )
+                    typer.secho("\n🪄 DM Narration:", fg=typer.colors.BRIGHT_BLUE)
+                    typer.echo(outcome)
+            else:
+                # If no roll needed for player, go back to input prompt
+                continue
+
 
 def character_sheet():
     typer.secho("\n📜 Character Sheet:", fg=typer.colors.CYAN)
