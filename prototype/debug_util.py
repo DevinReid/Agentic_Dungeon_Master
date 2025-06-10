@@ -1,5 +1,5 @@
 # debug_util.py
-DEBUG_MODE = True  # Toggle this globally!
+DEBUG_MODE = False  # Toggle this globally!
 
 def debug_log(message: str):
     if DEBUG_MODE:

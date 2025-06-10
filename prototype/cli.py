@@ -98,3 +98,12 @@ def ui_handle_dice_roll(roll_info, dice_result):
 
 def ui_declare_dice_result(success):
     typer.secho(f"\n {success}", fg=typer.colors.BRIGHT_YELLOW)
+
+def ui_show_roll(name, roll):
+    print(f"{name} rolled a {roll}!")
+
+def ui_show_damage(name, damage, success):
+    if success:
+        print(f"{name} hits for {damage} damage!")
+    else:
+        print(f"{name} misses their attack!")

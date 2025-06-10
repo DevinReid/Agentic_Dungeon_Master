@@ -2,7 +2,8 @@
 import cli
 from story_agent import StoryAgent
 from db import clear_characters, create_character, update_character_stats
-from combat_agent import CombatAgent, CombatManager, analyze_combat_state_ai
+from combat_agent import CombatAgent
+from combat_system import CombatManager, analyze_combat_state_ai
 from dice_utility import DiceUtility
 from debug_util import debug_log
 
@@ -15,6 +16,7 @@ class GameSession:
         self.last_dm_text = ""
         self.player_name = ""
         self.player_class = ""
+        self.in_combat = False
 
     def setup_character(self, name, char_class):
         debug_log("setup_character() called.")
@@ -61,35 +63,15 @@ class GameSession:
         return new_dm_text
 
 
-    def start_combat_loop(self):
-        combat_manager = CombatManager(player_name=self.player_name, npcs=[{"name": "Goblin", "hp": 10, "ac": 13}])
-        combat_manager.initiative_order = ["player"] + [npc["name"] for npc in combat_manager.npcs]
+    def start_combat(self, npc_names):
+        npcs = [{"name": name, "hp": 10, "ac": 13} for name in npc_names]
+        self.combat_manager = CombatManager(player_name=self.player_name, npcs=npcs)
+        self.combat_manager.initialize_initiative()
+        self.combat_manager.current_turn_index = 0
+        self.combat_manager.round = 1
+        self.combat_manager.run_combat()
+        ## If Combat has already started we want to avoid rerolling initiative
 
-        while not combat_manager.is_combat_over():
-            current_turn = combat_manager.initiative_order[combat_manager.current_turn_index]
+        
 
-            if current_turn == "player":
-                # Leave CLI to handle user input for player action
-                pass
-            else:
-                npc = combat_manager.combatants[current_turn]
-                npc_action = self.combat_agent.decide_npc_action({
-                    "npc_name": npc["name"],
-                    "hp": npc["hp"],
-                    "player_ac": 15
-                })
-                roll = self.dice.roll_dice("d20")
-                success = roll >= 15
-                narration = self.combat_agent.narrate_combat_turn({
-                    "who": npc["name"],
-                    "action": npc_action,
-                    "roll_result": roll,
-                    "dc_or_ac": 15,
-                    "success": success,
-                    "damage": 5 if success else 0,
-                    "hp_remaining": 25
-                })
-                print(narration)
-            combat_manager.next_turn()
 
-        return "Combat ended"
