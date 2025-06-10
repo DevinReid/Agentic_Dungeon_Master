@@ -52,9 +52,10 @@ def ui_character_sheet():
             name, char_class, hp,
             strength, dexterity, constitution,
             intelligence, wisdom, charisma,
-            level, experience
+            level, experience, ac
         ) = character
         typer.echo(f"Name: {name}\nClass: {char_class}\nLevel: {level}\nExperience: {experience}\nHP: {hp}")
+        typer.echo(f"AC: {ac}")
         typer.echo(f"STR: {strength}  DEX: {dexterity}  CON: {constitution}")
         typer.echo(f"INT: {intelligence}  WIS: {wisdom}  CHA: {charisma}")
     else:

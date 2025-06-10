@@ -6,11 +6,11 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from combat_agent import CombatAgent
 from dice_utility import DiceUtility
-import game_session 
+
 
 load_dotenv()
 client = OpenAI()
-session = game_session.GameSession()
+
 dice = DiceUtility()
 combat_agent = CombatAgent()
 
@@ -39,9 +39,9 @@ def analyze_combat_state_ai(last_dm_text: str, player_response) -> bool:
     return combat_state["combat"]
 
 class CombatManager:
-    def __init__(self, player_name: str, npcs: list):
+    def __init__(self, player_name: str, npcs: list, player_hp: int, player_ac: int):
         debug_log("CombatManager.__init__() called.")
-        self.combatants = {"player": {"name": player_name, "hp": session.character.hp, "ac": 15}}
+        self.combatants = {"player": {"name": player_name, "hp": player_hp, "ac": player_ac}}
         for npc in npcs:
             self.combatants[npc["name"]] = npc
 
@@ -91,7 +91,8 @@ class CombatManager:
             print(f"\n-- {who.capitalize()}'s Turn --")
 
             if who == "player":
-                handle_player_turn(self)
+                result = handle_player_turn(self)
+
             else:
                 handle_npc_turn(self, who)
 
@@ -101,31 +102,50 @@ class CombatManager:
         session.in_combat=False
 
 def handle_player_turn(combat_manager):
-    action = input("\nYour turn! What do you do? (e.g., Attack) ")
-    target = next((c for n, c in combat_manager.combatants.items() if n != "player" and c["hp"] > 0), None)
-    if not target:
-        return  # No NPCs left
+    while True:  # 🔁 Keep asking for action until a valid one is given
+        action = cli.ui_get_action()
+        if action.strip().lower() == "menu":
+            while True:
+                choice = cli.ui_player_choice()
+                if choice == "Character Sheet":
+                    cli.ui_character_sheet()
+                elif choice in ["Inventory (placeholder)", "Journal (placeholder)"]:
+                    cli.typer.echo(f"{choice} shown here (placeholder)")
+                elif choice == "Return to Start Menu":
+                    cli.ui_main_menu()  # Or whatever you want here
+                elif choice == "Quit Application":
+                    cli.ui_quit()
+                elif choice == "Type an Action":
+                    # 🚀 Go back to get an action!
+                    break
+            continue  # 🔁 After viewing menu, re-prompt for action
 
-    roll = dice.roll_dice("d20")
-    success = roll >= target["ac"]
-    damage = random.randint(1, 8) if success else 0
-    target["hp"] -= damage
+        # Only get here if action is NOT "menu"
+        target = next((c for n, c in combat_manager.combatants.items() if n != "player" and c["hp"] > 0), None)
+        if not target:
+            return  # No NPCs left
 
-    
-    cli.ui_show_roll("player", roll)
-    cli.ui_show_damage("player", damage, success)
+        roll = dice.roll_dice("d20")
+        success = roll >= target["ac"]
+        damage = random.randint(1, 8) if success else 0
+        target["hp"] -= damage
 
-    turn_info = {
-        "who": "player",
-        "action": action,
-        "roll_result": roll,
-        "dc_or_ac": target["ac"],
-        "success": success,
-        "damage": damage,
-        "hp_remaining": target["hp"]
-    }
-    narration = combat_agent.narrate_combat_turn(turn_info)
-    print(narration)
+        cli.ui_show_roll("player", roll)
+        cli.ui_show_damage("player", damage, success)
+
+        turn_info = {
+            "who": "player",
+            "action": action,
+            "roll_result": roll,
+            "dc_or_ac": target["ac"],
+            "success": success,
+            "damage": damage,
+            "hp_remaining": target["hp"]
+        }
+        narration = combat_agent.narrate_combat_turn(turn_info)
+        cli.ui_display_dm_narration(narration)
+        break  # 🔥 End turn once valid action is taken
+
 
 def handle_npc_turn(combat_manager, npc_name):
     npc = combat_manager.combatants[npc_name]

@@ -19,6 +19,7 @@ class GameSession:
         self.in_combat = False
         self.character={}
 
+        
         self.load_character_stats()
 
     def setup_character(self, name, char_class):
@@ -68,7 +69,7 @@ class GameSession:
 
     def start_combat(self, npc_names):
         npcs = [{"name": name, "hp": 10, "ac": 13} for name in npc_names]
-        self.combat_manager = CombatManager(player_name=self.player_name, npcs=npcs)
+        self.combat_manager = CombatManager(player_name=self.player_name, npcs=npcs, player_hp = self.character["hp"], player_ac= self.character["ac"])
         self.combat_manager.initialize_initiative()
         self.combat_manager.current_turn_index = 0
         self.combat_manager.round = 1
@@ -83,7 +84,7 @@ class GameSession:
                 name, char_class, hp,
                 strength, dexterity, constitution,
                 intelligence, wisdom, charisma,
-                level, experience
+                level, experience, ac
             ) = character
 
             self.character = {
@@ -97,7 +98,8 @@ class GameSession:
                 "wisdom": wisdom,
                 "charisma": charisma,
                 "level": level,
-                "experience": experience
+                "experience": experience,
+                "ac": ac
             }
 
 
