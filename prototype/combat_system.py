@@ -6,11 +6,11 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from combat_agent import CombatAgent
 from dice_utility import DiceUtility
-import game_session
+import game_session 
 
 load_dotenv()
 client = OpenAI()
-session = game_session
+session = game_session.GameSession()
 dice = DiceUtility()
 combat_agent = CombatAgent()
 
@@ -41,7 +41,7 @@ def analyze_combat_state_ai(last_dm_text: str, player_response) -> bool:
 class CombatManager:
     def __init__(self, player_name: str, npcs: list):
         debug_log("CombatManager.__init__() called.")
-        self.combatants = {"player": {"name": player_name, "hp": 10, "ac": 15}}
+        self.combatants = {"player": {"name": player_name, "hp": session.character.hp, "ac": 15}}
         for npc in npcs:
             self.combatants[npc["name"]] = npc
 

@@ -36,7 +36,7 @@ class StoryAgent:
         system_prompt = (
             "You are a D&D character creator assistant. "
             "Given a character's class and level, generate a basic stat block as JSON. "
-            "Return fields: strength, dexterity, constitution, intelligence, wisdom, charisma, level, experience, hp. "
+            "Return fields: strength, dexterity, constitution, intelligence, wisdom, charisma, level, experience, hp, ac. "
             "Use typical stat ranges (8-18) and assign experience as 0 for level 1."
         )
 

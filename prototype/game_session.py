@@ -1,7 +1,7 @@
 # game_session.py
 import cli
 from story_agent import StoryAgent
-from db import clear_characters, create_character, update_character_stats
+from db import clear_characters, create_character, update_character_stats, get_character_sheet
 from combat_agent import CombatAgent
 from combat_system import CombatManager, analyze_combat_state_ai
 from dice_utility import DiceUtility
@@ -17,6 +17,9 @@ class GameSession:
         self.player_name = ""
         self.player_class = ""
         self.in_combat = False
+        self.character={}
+
+        self.load_character_stats()
 
     def setup_character(self, name, char_class):
         debug_log("setup_character() called.")
@@ -72,6 +75,30 @@ class GameSession:
         self.combat_manager.run_combat()
         ## If Combat has already started we want to avoid rerolling initiative
 
-        
+
+    def load_character_stats(self):
+        character = get_character_sheet()
+        if character:
+            (
+                name, char_class, hp,
+                strength, dexterity, constitution,
+                intelligence, wisdom, charisma,
+                level, experience
+            ) = character
+
+            self.character = {
+                "name": name,
+                "class": char_class,
+                "hp": hp,
+                "strength": strength,
+                "dexterity": dexterity,
+                "constitution": constitution,
+                "intelligence": intelligence,
+                "wisdom": wisdom,
+                "charisma": charisma,
+                "level": level,
+                "experience": experience
+            }
+
 
 
