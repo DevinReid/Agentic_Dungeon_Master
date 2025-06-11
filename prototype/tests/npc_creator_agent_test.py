@@ -30,7 +30,7 @@ warrior_named_char_context = """
 
     As you tighten your grip on your weapon, you catch the faint sound of squabbling just beyond the treeline.
     Then—snap! A branch breaks under a careless foot.
-    Two goblins, Peaches and Parrot, emerge from the brush, crude blades in hand, their yellow eyes gleaming with mischief and malice.
+    Two goblins, Peach and Parrot, emerge from the brush, crude blades in hand, their yellow eyes gleaming with mischief and malice.
     One bares jagged teeth in a grin, while the other circles around, looking for an opening.
 """
 
@@ -51,4 +51,4 @@ def test_warrior_length():
 def test_warrior_name():
     list_of_characters = npc_creator.generate_character_sheet(description=warrior_named_char_context, player_character_names=known_characters)
     first_character_json = list_of_characters[0]
-    assert first_character_json["name"] == "Peaches" or first_character_json["name"] == "Parrot"
+    assert first_character_json["name"] == "Peach" or first_character_json["name"] == "Parrot"

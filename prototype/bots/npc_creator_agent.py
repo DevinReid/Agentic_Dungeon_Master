@@ -7,22 +7,6 @@ import json
 load_dotenv()
 client = OpenAI()
 
-fields = [
-    "id",
-    "name",
-    "class",
-    "hp",
-    "strength",
-    "dexterity",
-    "constitution",
-    "intelligence",
-    "wisdom",
-    "charisma",
-    "level",
-    "experience",
-    "ac"
-]
-
 class NpcCreatorAgent:
     def __init__(self):
         self.client = client
