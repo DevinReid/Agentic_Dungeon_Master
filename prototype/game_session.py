@@ -1,6 +1,6 @@
 # game_session.py
 import cli
-from prototype.bots.story_agent import StoryAgent
+from bots.story_agent import StoryAgent
 from db import clear_characters, create_character, update_character_stats, get_character_sheet
 from combat_agent import CombatAgent
 from combat_system import CombatManager, analyze_combat_state_ai
