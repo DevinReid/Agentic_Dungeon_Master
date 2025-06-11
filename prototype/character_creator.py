@@ -1,0 +1,1 @@
+class_options = ["Wizard", "Ranger", "Fighter"]

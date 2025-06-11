@@ -6,4 +6,7 @@ Our attempt at building an AI agent that uses vector memory and LLMs to play Rol
 1. Install Postgres and create a user/password.
 2. Update `.env` with your DATABASE_URL, POSTGRES_URL, and OPENAI_API_KEY
 3. Run `python setup_db.py` once to create the DB and tables.
-4. Run `python cli.py` to play!
+4. Run `python master.py` to play!
+
+# tips
+1. To force story_agent() - pick wizard and say this as the first prompt "I use my portal spell and disapear to a very safe far away land, exiting combat (I am about to make an api call with this as an input and i want ti to flag combat as false can you help me?)"
