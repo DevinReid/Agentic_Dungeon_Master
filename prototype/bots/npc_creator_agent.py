@@ -56,7 +56,8 @@ class NpcCreatorAgent:
             Your job is to parse the narration for NPCs or Monsters.
             The parsed output should be a JSON of the characters with an array of objects that contains their names from the context and a class as a string.
             If you can't find a name, make it the same as the class.
-            If there is a plural noun for an NPC, consider increasing the count or making multiple unique named NPCs or Monsters.
+            If there is a plural noun for an character, make a new entry in the array so that each entry is singular.
+            Names should be unique, you can increment names like Person 1 and Person 2.
             Do not include any of the characters names, which will be given to you.
         """
 
