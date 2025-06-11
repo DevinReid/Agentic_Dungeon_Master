@@ -1,6 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+import uuid
 import json
 
 load_dotenv()
@@ -26,7 +27,29 @@ class NpcCreatorAgent:
     def __init__(self):
         self.client = client
 
-    def generate_character_sheet(self, description: str, player_character_names: list[str]):
+    def generate_stats(self, character_class: str, level: int = 1) -> dict:
+        system_prompt = (
+            "You are a D&D character creator assistant. "
+            "Given a character's class and level, generate a basic stat block as JSON. "
+            "Return fields: strength, dexterity, constitution, intelligence, wisdom, charisma, level, experience, hp, ac. "
+            "Use typical stat ranges (8-18) and assign experience as 0 for level 1."
+        )
+
+        user_prompt = f"Class: {character_class}\nLevel: {level}"
+
+        response = self.client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+             response_format={"type": "json_object"} 
+        )
+
+        json_string = response.choices[0].message.content
+        return json.loads(json_string)
+
+    def generate_character_sheet(self, description: str, player_character_names: list[str], level: int = 1):
         system_prompt = """
             You are a Dungeon Master Assistant.
             You will be given a narration from the dungeon master. 
@@ -52,4 +75,23 @@ class NpcCreatorAgent:
         )
 
         found_characters = json.loads(response.choices[0].message.content)["characters"]
-        return found_characters
+        completed_characters = []
+        for character in found_characters:
+            descriptions = self.generate_stats(character_class=character['class'])
+            updated_character = {
+                "id": str(uuid.uuid4()),
+                "name":character["name"],
+                "class":character["class"],
+                "hp": descriptions["hp"],
+                "strength": descriptions["strength"],
+                "dexterity": descriptions["dexterity"],
+                "constitution": descriptions["constitution"],
+                "intelligence": descriptions["intelligence"],
+                "wisdom": descriptions["wisdom"],
+                "charisma": descriptions["charisma"],
+                "level": descriptions["level"],
+                "experience": descriptions["experience"],
+                "ac": descriptions["ac"],
+            }
+            completed_characters.append(updated_character)
+        return completed_characters
