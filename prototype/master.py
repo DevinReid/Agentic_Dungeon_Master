@@ -2,6 +2,9 @@
 import cli
 from game_session import GameSession
 
+# for debugging
+npc_names = ["Gorgy The Goblin", "Oopsie the Orc"]
+
 def start_game():
     while True:
         choice = cli.ui_main_menu()
@@ -33,7 +36,8 @@ def player_choices(session):
                 return
             result = session.action_handler(action)
             if result == "combat":
-                start_combat(session)
+                session.start_combat(npc_names)
+                session.in_combat = True
             else:
                 cli.ui_display_dm_narration(result)
         elif choice == "Character Sheet":

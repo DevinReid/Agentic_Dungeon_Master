@@ -32,7 +32,8 @@ def init_db():
             wisdom INTEGER,
             charisma INTEGER,
             level INTEGER,
-            experience INTEGER
+            experience INTEGER,
+            ac INTEGER
         );
     """)
 
@@ -65,7 +66,7 @@ def get_character_sheet():
     cur = conn.cursor()
     cur.execute("""
         SELECT name, class, hp, strength, dexterity, constitution,
-               intelligence, wisdom, charisma, level, experience
+               intelligence, wisdom, charisma, level, experience, ac
         FROM characters LIMIT 1;
     """)
     result = cur.fetchone()
@@ -81,12 +82,12 @@ def update_character_stats(name: str, stats: dict):
         UPDATE characters
         SET strength=%s, dexterity=%s, constitution=%s,
             intelligence=%s, wisdom=%s, charisma=%s,
-            level=%s, experience=%s, hp=%s
+            level=%s, experience=%s, hp=%s, ac=%s
         WHERE name=%s;
     """, (
         stats["strength"], stats["dexterity"], stats["constitution"],
         stats["intelligence"], stats["wisdom"], stats["charisma"],
-        stats["level"], stats["experience"], stats["hp"], name
+        stats["level"], stats["experience"], stats["hp"], stats["ac"], name
     ))
     conn.commit()
     cur.close()

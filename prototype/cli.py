@@ -52,9 +52,10 @@ def ui_character_sheet():
             name, char_class, hp,
             strength, dexterity, constitution,
             intelligence, wisdom, charisma,
-            level, experience
+            level, experience, ac
         ) = character
         typer.echo(f"Name: {name}\nClass: {char_class}\nLevel: {level}\nExperience: {experience}\nHP: {hp}")
+        typer.echo(f"AC: {ac}")
         typer.echo(f"STR: {strength}  DEX: {dexterity}  CON: {constitution}")
         typer.echo(f"INT: {intelligence}  WIS: {wisdom}  CHA: {charisma}")
     else:
@@ -98,3 +99,12 @@ def ui_handle_dice_roll(roll_info, dice_result):
 
 def ui_declare_dice_result(success):
     typer.secho(f"\n {success}", fg=typer.colors.BRIGHT_YELLOW)
+
+def ui_show_roll(name, roll):
+    print(f"{name} rolled a {roll}!")
+
+def ui_show_damage(name, damage, success):
+    if success:
+        print(f"{name} hits for {damage} damage!")
+    else:
+        print(f"{name} misses their attack!")
