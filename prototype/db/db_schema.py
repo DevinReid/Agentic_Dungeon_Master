@@ -6,6 +6,11 @@ This creates all tables in ONE database with proper campaign_id isolation.
 Ready for thousands of users and campaigns.
 """
 
+import os
+import psycopg2
+from dotenv import load_dotenv
+
+
 # SQL Schema for dev_tools/setup_db.py to import
 SCHEMA_SQL = """
 -- Drop existing tables in dependency order
@@ -159,9 +164,7 @@ CREATE INDEX idx_npcs_status ON npcs(status);
 CREATE INDEX idx_campaigns_active ON campaigns(is_active);
 """
 
-import os
-import psycopg2
-from dotenv import load_dotenv
+
 
 load_dotenv()
 

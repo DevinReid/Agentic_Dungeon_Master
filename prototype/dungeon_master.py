@@ -2,8 +2,7 @@
 import cli
 from services.game_session import GameSession
 from services.campaign_manager import CampaignManager
-from db.db import get_or_create_user
-import uuid
+
 
 def create_new_character(campaign_id, username):
     """Create a new character for a campaign"""
@@ -25,56 +24,59 @@ def load_existing_character(campaign_id, username):
     game_session = GameSession(campaign_id, username)
     
     if not game_session.character:
-        print("❌ No character found in this campaign!")
+        print("No character found in this campaign!")
         return None
         
-    print(f"✅ Loaded character: {game_session.player_name} ({game_session.player_class})")
+    print(f"Loaded character: {game_session.player_name} ({game_session.player_class})")
     return game_session
 
 def campaign_menu():
-    """Handle campaign selection/creation"""
-    print("\n" + "="*50)
-    print("🎮 D&D CAMPAIGN MANAGER")
-    print("="*50)
+    """Handle campaign selection/creation using scrollable CLI menu"""
     
     # For simplicity, use a default username (could ask user in future)
     username = "Player1"  # Could be extended to multi-user
     
-    campaign_manager = CampaignManager()
-    
     while True:
-        print(f"\n👤 Playing as: {username}")
-        print("\n📁 CAMPAIGN OPTIONS:")
-        print("1. 🆕 Create New Campaign")
-        print("2. 📋 Select Existing Campaign") 
-        print("3. 🔄 Continue Most Recent Campaign")
-        print("4. ❌ Quit")
+        choice = cli.ui_main_menu()
         
-        choice = input("\nEnter choice (1-4): ").strip()
+        campaign_manager = CampaignManager()
         
-        if choice == "1":
+        if choice == "Play":
+            # Continue most recent campaign
+            recent_campaign = campaign_manager.get_most_recent_campaign_for_user(username)
+            
+            if not recent_campaign:
+                print("No recent campaigns found! Create a new one first.")
+                continue
+            
+            campaign_id, name, description, created_at, last_played, creator, role = recent_campaign
+            print(f"Continuing: {name}")
+            
+            return run_campaign(campaign_id, username, is_new=False)
+            
+        elif choice == "Start New Campaign":
             # Create new campaign
-            campaign_name = input("\n📝 Enter campaign name: ").strip()
+            campaign_name = input("\nEnter campaign name: ").strip()
             if not campaign_name:
-                print("❌ Campaign name cannot be empty!")
+                print("Campaign name cannot be empty!")
                 continue
                 
-            description = input("📝 Enter campaign description (optional): ").strip()
+            description = input("Enter campaign description (optional): ").strip()
             
             campaign_id = campaign_manager.create_new_campaign(campaign_name, username, description)
-            print(f"✅ Created campaign: {campaign_name}")
+            print(f"Created campaign: {campaign_name}")
             
             return run_campaign(campaign_id, username, is_new=True)
-            
-        elif choice == "2":
+                
+        elif choice == "Load Previous Campaign":
             # Select existing campaign
             campaigns = campaign_manager.list_user_campaigns(username)
             
             if not campaigns:
-                print("❌ No campaigns found! Create a new one first.")
+                print("No campaigns found! Create a new one first.")
                 continue
                 
-            print("\n📋 YOUR CAMPAIGNS:")
+            print("\nYOUR CAMPAIGNS:")
             for i, campaign in enumerate(campaigns, 1):
                 campaign_id, name, description, created_at, last_played, creator, role = campaign
                 last_played_str = last_played.strftime("%Y-%m-%d %H:%M") if last_played else "Never"
@@ -89,28 +91,18 @@ def campaign_menu():
                     campaign_id = selected_campaign[0]
                     return run_campaign(campaign_id, username, is_new=False)
                 else:
-                    print("❌ Invalid selection!")
+                    print("Invalid selection!")
             except ValueError:
-                print("❌ Please enter a valid number!")
+                print("Please enter a valid number!")
                 
-        elif choice == "3":
-            # Continue most recent campaign
-            recent_campaign = campaign_manager.get_most_recent_campaign_for_user(username)
+        elif choice == "Options":
+            # Placeholder for options menu
+            print("Options menu - coming soon!")
+            continue
             
-            if not recent_campaign:
-                print("❌ No recent campaigns found! Create a new one first.")
-                continue
-                
-            campaign_id, name, description, created_at, last_played, creator, role = recent_campaign
-            print(f"🔄 Continuing: {name}")
-            
-            return run_campaign(campaign_id, username, is_new=False)
-            
-        elif choice == "4":
-            print("👋 Goodbye!")
+        elif choice == "Quit":
+            print("Goodbye!")
             return
-        else:
-            print("❌ Invalid choice! Please enter 1-4.")
 
 def run_campaign(campaign_id, username, is_new=False):
     """Run a campaign session"""
@@ -118,47 +110,48 @@ def run_campaign(campaign_id, username, is_new=False):
     campaign_manager = CampaignManager()
     
     while True:
-        print("\n" + "="*50)
-        print(f"🎮 CAMPAIGN SESSION")
-        print(f"📁 Campaign ID: {str(campaign_id)[:8]}...")
-        print(f"👤 User: {username}")
-        print("="*50)
+        # Show campaign info
+        print(f"\nCampaign ID: {str(campaign_id)[:8]}... | User: {username}")
         
-        print("\n🎯 GAME OPTIONS:")
+        # Use appropriate scrollable menu based on campaign type
         if is_new:
-            print("1. 🆕 Create New Character")
-            print("2. 🔙 Back to Campaign Menu")
-            is_new = False  # Reset flag after first iteration
+            choice = cli.ui_character_menu_new_campaign()
         else:
-            print("1. 🆕 Create New Character")
-            print("2. 📖 Load Existing Character") 
-            print("3. 🔙 Back to Campaign Menu")
+            choice = cli.ui_character_menu_existing_campaign()
         
-        choice = input("\nEnter choice: ").strip()
+        is_new = False  # Reset flag after first iteration
         
-        if choice == "1":
+        if choice == "🔴 Create New Character":
+            # Create new character
             game_session = create_new_character(campaign_id, username)
             if game_session:
                 # Update campaign last played time
                 campaign_manager.update_last_played(campaign_id)
                 run_game_session(game_session)
                 
-        elif choice == "2" and not is_new:
+        elif choice == "🔴 Load Existing Character":
+            # Load existing character (only available for existing campaigns)
             game_session = load_existing_character(campaign_id, username)
             if game_session:
                 # Update campaign last played time
                 campaign_manager.update_last_played(campaign_id)
                 run_game_session(game_session)
                 
-        elif choice == "3" or (choice == "2" and is_new):
-            return campaign_menu()  # Back to campaign selection
-        else:
-            print("❌ Invalid choice!")
+        elif choice == "Create New Character":
+            # Create new character for existing campaign
+            game_session = create_new_character(campaign_id, username)
+            if game_session:
+                # Update campaign last played time
+                campaign_manager.update_last_played(campaign_id)
+                run_game_session(game_session)
+                
+        elif choice == "Back to Main Menu":
+            return campaign_menu()  # Back to main menu
 
 def run_game_session(game_session):
     """Run the actual game session"""
     
-    print(f"\n🎮 Starting session for {game_session.player_name} ({game_session.player_class})")
+    print(f"\nStarting session for {game_session.player_name} ({game_session.player_class})")
     
     cli.ui_intro_text()
     cli.ui_player_character_sheet(game_session.character)
@@ -171,17 +164,19 @@ def run_game_session(game_session):
     while True:
         action = cli.ui_get_action()
         
-        # Handle special commands
-        if action.lower() == "menu":
-            return  # Exit to campaign menu
-        
-        # Process the action
+        # Process the action (command handler will handle menu/other commands)
         result = game_session.action_handler(action)
         
-        if result == "combat":
+        if result == "exit_to_menu":
+            return  # Exit to campaign menu
+        elif result == "command_handled":
+            continue  # Command was handled, ask for next action
+        elif result == "combat":
             # Start combat
             combat_result = game_session.start_combat()
-            if combat_result == "game_over":
+            if combat_result == "exit_to_menu":
+                return  # Player chose to exit to menu from combat
+            elif combat_result == "game_over":
                 return  # Character died, exit to menu
             else:
                 # Combat ended, continue story
@@ -194,15 +189,15 @@ def run_game_session(game_session):
 
 def main():
     """Main entry point"""
-    print("🏰 Welcome to the Agentic D&D Dungeon Master!")
-    print("🧠 Featuring AI Memory - NPCs remember your actions!")
+    print("Welcome to the Agentic D&D Dungeon Master!")
+
     
     try:
         campaign_menu()
     except KeyboardInterrupt:
-        print("\n\n👋 Game interrupted. Goodbye!")
+        print("\n\nGame interrupted. Goodbye!")
     except Exception as e:
-        print(f"\n❌ An error occurred: {e}")
+        print(f"\nAn error occurred: {e}")
         print("Please check your database connection and try again.")
 
 if __name__ == "__main__":

@@ -92,6 +92,8 @@ class CombatManager:
 
             if who == "player":
                 result = handle_player_turn(self)
+                if result == "exit_to_menu":
+                    return "exit_to_menu"  # Propagate exit signal
 
             else:
                 npc = self.combatants[who]
@@ -119,7 +121,10 @@ def handle_player_turn(combat_manager):
         action = cli.ui_get_action()
         
         # Check if it's a command first
-        if cmd_handler.handle_command(action, context="combat"):
+        command_result = cmd_handler.handle_command(action, context="combat")
+        if command_result == "exit_to_menu":
+            return "exit_to_menu"  # Signal to exit combat and game session
+        elif command_result is True:
             continue  # Command handled, ask for action again
         
         # Normal combat action - existing code

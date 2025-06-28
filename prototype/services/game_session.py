@@ -117,6 +117,16 @@ class GameSession:
         return intro["content"]
 
     def action_handler(self, action):
+        # Check for commands first
+        from utils.command_handler import CommandHandler
+        cmd_handler = CommandHandler(game_session=self)
+        command_result = cmd_handler.handle_command(action, context="story")
+        
+        if command_result == "exit_to_menu":
+            return "exit_to_menu"  # Signal to exit to campaign menu
+        elif command_result is True:
+            return "command_handled"  # Command was handled, continue game
+        
         # 🧠 AI MEMORY: Get recent events for context
         recent_events = get_recent_events(self.campaign_id, limit=5)
         relationships = []
@@ -269,7 +279,9 @@ class GameSession:
         self.combat_manager.round = 1
 
         result = self.combat_manager.run_combat()
-        if result == "player_died":
+        if result == "exit_to_menu":
+            return "exit_to_menu"  # Propagate exit signal
+        elif result == "player_died":
             return self.handle_player_death()
         elif result == "player_won":
             return self.handle_victory()

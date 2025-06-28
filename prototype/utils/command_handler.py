@@ -45,23 +45,20 @@ class CommandHandler:
         return False  # Not a command, treat as normal action
     
     def handle_menu(self, context):
-        """Handle menu command - different behavior for story vs combat"""
-        if context == "combat":
-            while True:
-                choice = cli.ui_player_choice()
-                if choice == "Character Sheet":
-                    cli.ui_character_sheet()
-                elif choice in ["Inventory (placeholder)", "Journal (placeholder)"]:
-                    cli.typer.echo(f"{choice} shown here (placeholder)")
-                elif choice == "Return to Start Menu":
-                    cli.ui_main_menu()
-                elif choice == "Quit Application":
-                    cli.ui_quit()
-                elif choice == "Type an Action":
-                    break
-            return True
-        else:
-            return "exit_to_menu"
+        """Handle menu command - always shows player choice menu"""
+        while True:
+            choice = cli.ui_player_choice()
+            if choice == "Character Sheet":
+                cli.ui_character_sheet()
+            elif choice in ["Inventory (placeholder)", "Journal (placeholder)"]:
+                cli.typer.echo(f"{choice} shown here (placeholder)")
+            elif choice == "Return to Start Menu":
+                return "exit_to_menu"  # Signal to exit game session
+            elif choice == "Quit Application":
+                cli.ui_quit()
+            elif choice == "Type an Action":
+                break
+        return True
     
     def handle_win(self):
         """Debug command: Kill all enemies instantly"""

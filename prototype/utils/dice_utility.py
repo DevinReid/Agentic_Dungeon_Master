@@ -1,6 +1,6 @@
 #dice_utility.py
 
-import os
+
 import json
 import random
 from openai import OpenAI

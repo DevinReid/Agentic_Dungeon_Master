@@ -1,6 +1,6 @@
 import os
 import psycopg2
-import uuid
+
 from dotenv import load_dotenv
 
 load_dotenv()
