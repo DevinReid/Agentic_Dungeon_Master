@@ -2,7 +2,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 import json
-from debug_util import debug_log
+from utils.debug_util import debug_log
 
 load_dotenv()
 client = OpenAI()

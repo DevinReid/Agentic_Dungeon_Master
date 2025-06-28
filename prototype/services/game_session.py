@@ -1,14 +1,14 @@
 # game_session.py
 import cli
 from bots.story_agent import StoryAgent
-from db import (create_character, get_character_in_campaign, update_character_stats,
-                save_npc, get_npcs_at_location, save_event, get_recent_events, 
-                update_npc_relationship, get_npc_relationships, get_or_create_user,
-                clear_characters_in_campaign)
-from combat_agent import CombatAgent
-from combat_system import CombatManager, analyze_combat_state_ai
-from dice_utility import DiceUtility
-from debug_util import debug_log
+from db.db import (create_character, get_character_in_campaign, update_character_stats,
+                   save_npc, get_npcs_at_location, save_event, get_recent_events, 
+                   update_npc_relationship, get_npc_relationships, get_or_create_user,
+                   clear_characters_in_campaign)
+from bots.combat_agent import CombatAgent
+from services.combat_system import CombatManager, analyze_combat_state_ai
+from utils.dice_utility import DiceUtility
+from utils.debug_util import debug_log
 from bots.npc_creator_agent import NpcCreatorAgent
 import json
 

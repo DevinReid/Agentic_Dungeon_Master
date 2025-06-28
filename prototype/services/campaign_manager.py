@@ -1,6 +1,6 @@
 import os
-from db import (create_campaign, list_campaigns, get_most_recent_campaign, 
-                update_campaign_last_played, get_or_create_user)
+from db.db import (create_campaign, list_campaigns, get_most_recent_campaign, 
+                   update_campaign_last_played, get_or_create_user)
 
 class CampaignManager:
     def __init__(self):

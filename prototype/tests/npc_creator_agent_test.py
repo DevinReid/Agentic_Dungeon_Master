@@ -1,4 +1,4 @@
-from prototype.bots.npc_creator_agent import NpcCreatorAgent
+from bots.npc_creator_agent import NpcCreatorAgent
 import pytest
 import json
 

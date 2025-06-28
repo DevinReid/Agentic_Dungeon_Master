@@ -73,7 +73,7 @@ def create_campaign(name, description, created_by_user_id):
     """Create a new campaign"""
     conn = get_db_connection()
     cur = conn.cursor()
-    
+
     cur.execute("""
         INSERT INTO campaigns (name, description, created_by)
         VALUES (%s, %s, %s)
@@ -87,11 +87,11 @@ def create_campaign(name, description, created_by_user_id):
         INSERT INTO campaign_members (campaign_id, user_id, role)
         VALUES (%s, %s, 'dm');
     """, (campaign_id, created_by_user_id))
-    
+
     conn.commit()
     cur.close()
     conn.close()
-    
+
     return campaign_id
 
 def list_campaigns(user_id=None):
@@ -166,7 +166,7 @@ def create_character(campaign_id, user_id, name, char_class, hp=30):
     conn.commit()
     cur.close()
     conn.close()
-    
+
     return character_id
 
 def get_character_in_campaign(campaign_id, user_id):

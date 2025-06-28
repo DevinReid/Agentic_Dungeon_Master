@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-from prototype.combat_system import CombatManager
+from services.combat_system import CombatManager
 import pytest
 import random
 

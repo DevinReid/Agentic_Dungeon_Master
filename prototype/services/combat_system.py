@@ -1,11 +1,11 @@
 import json
 import random
 import cli
-from debug_util import debug_log
+from utils.debug_util import debug_log
 from openai import OpenAI
 from dotenv import load_dotenv
-from combat_agent import CombatAgent
-from dice_utility import DiceUtility
+from bots.combat_agent import CombatAgent
+from utils.dice_utility import DiceUtility
 from utils import CommandHandler
 
 load_dotenv()

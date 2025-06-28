@@ -6,7 +6,7 @@ This creates all tables in ONE database with proper campaign_id isolation.
 Ready for thousands of users and campaigns.
 """
 
-# SQL Schema for setup_db.py to import
+# SQL Schema for dev_tools/setup_db.py to import
 SCHEMA_SQL = """
 -- Drop existing tables in dependency order
 DROP TABLE IF EXISTS relationships CASCADE;

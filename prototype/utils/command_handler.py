@@ -1,6 +1,6 @@
 # utils/command_handler.py
 import cli
-from db import get_recent_events, get_npc_relationships, get_npcs_at_location
+from db.db import get_recent_events, get_npc_relationships, get_npcs_at_location
 
 class CommandHandler:
     def __init__(self, game_session=None, combat_manager=None):

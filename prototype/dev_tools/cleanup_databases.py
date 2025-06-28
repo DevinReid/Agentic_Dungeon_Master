@@ -76,7 +76,7 @@ def cleanup_campaign_databases():
     
     print("\n✅ Cleanup complete!")
     print("\n🎯 NEXT STEPS:")
-    print("1. Run: python db_schema.py  (to create proper schema)")
+    print("1. Run: python db/db_schema.py  (to create proper schema)")
     print("2. All data will live in one database with campaign_id columns")
     print("3. Much cleaner and more scalable!")
     

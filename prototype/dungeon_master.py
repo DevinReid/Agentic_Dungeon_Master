@@ -1,8 +1,8 @@
-# master.py
+# dungeon_master.py
 import cli
-from game_session import GameSession
-from campaign_manager import CampaignManager
-from db import get_or_create_user
+from services.game_session import GameSession
+from services.campaign_manager import CampaignManager
+from db.db import get_or_create_user
 import uuid
 
 def create_new_character(campaign_id, username):

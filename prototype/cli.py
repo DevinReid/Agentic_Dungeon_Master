@@ -1,9 +1,9 @@
 # cli.py
 import typer
 from InquirerPy import inquirer
-from debug_util import debug_log
-import character_creator
-from dice_utility import DiceUtility
+from utils.debug_util import debug_log
+from services import character_creator
+from utils.dice_utility import DiceUtility
 
 dice = DiceUtility()
 app = typer.Typer()
