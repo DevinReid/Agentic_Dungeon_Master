@@ -15,8 +15,20 @@ class NpcCreatorAgent:
         system_prompt = (
             "You are a D&D character creator assistant. "
             "Given a character's class and level, generate a basic stat block as JSON. "
-            "Return fields: strength, dexterity, constitution, intelligence, wisdom, charisma, level, experience, hp, ac. "
-            "Use typical stat ranges (8-18) and assign experience as 0 for level 1."
+            "Return exactly this JSON structure:\n"
+            "{\n"
+            "  \"strength\": [number 8-18],\n"
+            "  \"dexterity\": [number 8-18],\n"
+            "  \"constitution\": [number 8-18],\n"
+            "  \"intelligence\": [number 8-18],\n"
+            "  \"wisdom\": [number 8-18],\n"
+            "  \"charisma\": [number 8-18],\n"
+            "  \"level\": [number],\n"
+            "  \"experience\": [number, 0 for level 1],\n"
+            "  \"hp\": [number],\n"
+            "  \"ac\": [number]\n"
+            "}\n"
+            "Use typical D&D stat ranges and appropriate HP/AC for the class."
         )
 
         user_prompt = f"Class: {character_class}\nLevel: {level}"

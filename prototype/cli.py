@@ -1,7 +1,6 @@
 # cli.py
 import typer
 from InquirerPy import inquirer
-from db import get_character_sheet
 from debug_util import debug_log
 import character_creator
 from dice_utility import DiceUtility
@@ -30,36 +29,48 @@ def ui_start_new_campaign():
     debug_log("ui_start_new_campaign() called.")
     typer.secho("\n🛡️ Starting a New Campaign...", fg=typer.colors.GREEN)
 
-def ui_setup_character():
-    debug_log("ui_setup_character() called.")
-    typer.secho("\n🧙 Choose your character:", fg=typer.colors.MAGENTA)
-    char_class = inquirer.select(
+def ui_get_char_name():
+    return input("Enter your character's name: ")
+
+def ui_get_char_class():
+    return inquirer.select(
         message="Select your class:",
         choices=character_creator.class_options
     ).execute()
-    name = input("Enter your character's name: ")
+
+def ui_setup_character():
+    debug_log("ui_setup_character() called.")
+    typer.secho("\n🧙 Choose your character:", fg=typer.colors.MAGENTA)
+    char_class = ui_get_char_class()
+    name = ui_get_char_name()
     return name, char_class
 
+def ui_intro_text():
+    typer.secho("\n🎮 Welcome to your adventure!", fg=typer.colors.GREEN)
 
 def ui_combat_over():
     typer.secho("\nCombat is over. Back to the story...", fg=typer.colors.BRIGHT_BLUE)
 
 def ui_character_sheet():
+    """Legacy function - now displays message about using in-game commands"""
     typer.secho("\n📜 Character Sheet:", fg=typer.colors.CYAN)
-    character = get_character_sheet()
-    if character:
-        (
-            name, char_class, hp,
-            strength, dexterity, constitution,
-            intelligence, wisdom, charisma,
-            level, experience, ac
-        ) = character
-        typer.echo(f"Name: {name}\nClass: {char_class}\nLevel: {level}\nExperience: {experience}\nHP: {hp}")
-        typer.echo(f"AC: {ac}")
-        typer.echo(f"STR: {strength}  DEX: {dexterity}  CON: {constitution}")
-        typer.echo(f"INT: {intelligence}  WIS: {wisdom}  CHA: {charisma}")
-    else:
-        typer.echo("No character found!")
+    typer.echo("Use the 'debug' command during gameplay to see character stats!")
+
+def ui_player_character_sheet(character):
+    """Display character sheet from game session data"""
+    if not character:
+        typer.echo("No character data available!")
+        return
+        
+    typer.secho("\n📜 Character Sheet:", fg=typer.colors.CYAN)
+    typer.echo(f"Name: {character.get('name', 'Unknown')}")
+    typer.echo(f"Class: {character.get('class', 'Unknown')}")
+    typer.echo(f"Level: {character.get('level', 1)}")
+    typer.echo(f"Experience: {character.get('experience', 0)}")
+    typer.echo(f"HP: {character.get('hp', 0)}/{character.get('max_hp', 0)}")
+    typer.echo(f"AC: {character.get('ac', 10)}")
+    typer.echo(f"STR: {character.get('strength', 10)}  DEX: {character.get('dexterity', 10)}  CON: {character.get('constitution', 10)}")
+    typer.echo(f"INT: {character.get('intelligence', 10)}  WIS: {character.get('wisdom', 10)}  CHA: {character.get('charisma', 10)}")
 
 def ui_player_choice():
     choice = inquirer.select(

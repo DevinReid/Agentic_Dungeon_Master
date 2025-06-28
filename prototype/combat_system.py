@@ -6,7 +6,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from combat_agent import CombatAgent
 from dice_utility import DiceUtility
-
+from utils import CommandHandler
 
 load_dotenv()
 client = OpenAI()
@@ -94,38 +94,40 @@ class CombatManager:
                 result = handle_player_turn(self)
 
             else:
-                handle_npc_turn(self, who)
+                npc = self.combatants[who]
+                if npc["hp"] > 0:
+                    handle_npc_turn(self, who)
+                else:
+                    print(f"{who} is dead. Removing from combat.")
 
             self.print_combatants_status()
             self.next_turn()
         print("\nCombat has ended.")
-        session.in_combat=False
+        player_hp = self.combatants["player"]["hp"]
+        if player_hp <= 0:
+            print("You have been defeated. Game over.")
+            return "player_died"
+        else:
+            print("You have emerged victorious!")
+            return "player_won"
 
 def handle_player_turn(combat_manager):
-    while True:  # 🔁 Keep asking for action until a valid one is given
+    # Create command handler with access to combat manager
+    cmd_handler = CommandHandler(combat_manager=combat_manager)
+    
+    while True:
         action = cli.ui_get_action()
-        if action.strip().lower() == "menu":
-            while True:
-                choice = cli.ui_player_choice()
-                if choice == "Character Sheet":
-                    cli.ui_character_sheet()
-                elif choice in ["Inventory (placeholder)", "Journal (placeholder)"]:
-                    cli.typer.echo(f"{choice} shown here (placeholder)")
-                elif choice == "Return to Start Menu":
-                    cli.ui_main_menu()  # Or whatever you want here
-                elif choice == "Quit Application":
-                    cli.ui_quit()
-                elif choice == "Type an Action":
-                    # 🚀 Go back to get an action!
-                    break
-            continue  # 🔁 After viewing menu, re-prompt for action
-
-        # Only get here if action is NOT "menu"
+        
+        # Check if it's a command first
+        if cmd_handler.handle_command(action, context="combat"):
+            continue  # Command handled, ask for action again
+        
+        # Normal combat action - existing code
         target = next((c for n, c in combat_manager.combatants.items() if n != "player" and c["hp"] > 0), None)
         if not target:
             return  # No NPCs left
 
-        roll = dice.roll_dice("d20")
+        roll = dice.roll_dice("d20") + 5
         success = roll >= target["ac"]
         damage = random.randint(1, 8) if success else 0
         target["hp"] -= damage
@@ -144,8 +146,7 @@ def handle_player_turn(combat_manager):
         }
         narration = combat_agent.narrate_combat_turn(turn_info)
         cli.ui_display_dm_narration(narration)
-        break  # 🔥 End turn once valid action is taken
-
+        break
 
 def handle_npc_turn(combat_manager, npc_name):
     npc = combat_manager.combatants[npc_name]

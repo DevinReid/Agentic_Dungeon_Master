@@ -1,34 +1,49 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
-from db import init_db
+from db_schema import SCHEMA_SQL
 
 load_dotenv()
 
-# Connection to the default 'postgres' DB to create new DB
-POSTGRES_URL = os.getenv("POSTGRES_URL")  # e.g. postgresql://postgres:password@localhost:5432/postgres
-GAME_DB_NAME = os.getenv("GAME_DB_NAME", "agentic_dnd")
+DB_URL = os.getenv("DATABASE_URL")
 
-def create_game_database():
-    conn = psycopg2.connect(POSTGRES_URL)
-    conn.autocommit = True  # To run CREATE DATABASE command
-    cur = conn.cursor()
-
-    # Check if DB already exists
-    cur.execute("SELECT 1 FROM pg_database WHERE datname = %s;", (GAME_DB_NAME,))
-    exists = cur.fetchone()
-
-    if not exists:
-        cur.execute(f"CREATE DATABASE {GAME_DB_NAME};")
-        print(f"Database '{GAME_DB_NAME}' created successfully.")
-    else:
-        print(f"Database '{GAME_DB_NAME}' already exists.")
-
-    cur.close()
-    conn.close()
+def setup_database():
+    """Initialize database with all tables for persistent world data"""
+    print("🚀 Setting up database with scalable schema...")
+    print("   - Users table (for future multiplayer)")
+    print("   - Campaigns table (campaign management)")
+    print("   - Campaign_members table (access control)")
+    print("   - Characters table (player data)")
+    print("   - NPCs table (persistent characters)")  
+    print("   - Locations table (world building)")
+    print("   - Events table (story memory)")
+    print("   - Relationships table (NPC allegiances)")
+    
+    try:
+        conn = psycopg2.connect(DB_URL)
+        cur = conn.cursor()
+        
+        # Execute the schema directly from import
+        cur.execute(SCHEMA_SQL)
+        conn.commit()
+        
+        cur.close()
+        conn.close()
+        
+        print("✅ Database setup complete!")
+        print("\n🧠 AI Memory System Ready:")
+        print("   → NPCs will remember past interactions")
+        print("   → Story events will be stored for context")
+        print("   → Relationships will persist between sessions")
+        print("   → Campaign isolation ensures clean multiplayer")
+        print("   → Scalable architecture ready for thousands of users")
+        
+    except Exception as e:
+        print(f"❌ Database setup failed: {e}")
+        print("Make sure PostgreSQL is running and DATABASE_URL is correct")
+        return False
+    
+    return True
 
 if __name__ == "__main__":
-    create_game_database()
-    # Now that the DB exists, initialize the schema
-    init_db()
-    print("Database and tables are set up and ready to go!")
+    setup_database()
