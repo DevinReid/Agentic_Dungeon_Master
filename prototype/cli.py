@@ -1,7 +1,7 @@
 # cli.py
 import typer
 from InquirerPy import inquirer
-from utils.debug_util import debug_log
+from prototype.debug.debug_util import debug_log
 from services import character_creator
 from utils.dice_utility import DiceUtility
 
