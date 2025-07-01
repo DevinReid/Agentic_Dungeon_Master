@@ -507,3 +507,296 @@ def get_npc_relationships(campaign_id, character_id):
         "last_interaction": row[5], "updated_at": row[6]
     } for row in results]
 
+
+# =============================================================================
+# WORLD BUILDING MANAGEMENT
+# =============================================================================
+
+def save_world(campaign_id, world_data):
+    """Save world metadata and structured content to database
+    
+    Args:
+        campaign_id: UUID of the campaign
+        world_data: Dictionary containing UniverseBuilder JSON output
+        
+    Returns:
+        world_id: UUID of the created world
+    """
+    import psycopg2.extras
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    # Extract basic world info
+    world_info = world_data.get('world_info', {})
+    magic_system = world_data.get('magic_system', {})
+    size_info = world_data.get('size', {})
+    
+    world_name = world_info.get('world_name', 'Unnamed World')
+    scope = size_info.get('scope', 'regional')
+    theme_list = world_info.get('theme_list', '')
+    region_count = size_info.get('region_count', 1)
+    major_city_count = size_info.get('major_city_count', 1)
+    settlement_count = size_info.get('settlement_count', 3)
+    magic_level = magic_system.get('magic_level', 'medium')
+    
+    # Create the world record
+    cur.execute("""
+        INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
+                           region_count, major_city_count, settlement_count, magic_level)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        RETURNING world_id;
+    """, (campaign_id, world_name, scope, theme_list, 
+          region_count, major_city_count, settlement_count, magic_level))
+    
+    world_id = cur.fetchone()[0]
+    
+    # Commit the world record first so it's available for foreign key references
+    conn.commit()
+    cur.close()
+    conn.close()
+    
+    # Save structured content for each major section
+    content_sections = [
+        ('world_info', world_info.get('world_description', ''), world_data.get('world_info')),
+        ('magic_system', magic_system.get('mechanics', ''), world_data.get('magic_system')),
+        ('pantheon', world_data.get('pantheon', {}).get('structure', ''), world_data.get('pantheon')),
+    ]
+    
+    # Save global threats as separate content entries
+    for threat in world_data.get('global_threats', []):
+        threat_title = threat.get('primary_threat', 'Unknown Threat')
+        threat_content = threat.get('threat_details', '')
+        content_sections.append(('global_threat', threat_content, threat))
+    
+    # Insert all content sections (each creates its own transaction)
+    for content_type, content_text, metadata in content_sections:
+        if content_text:  # Only save if there's actual content
+            save_world_content(world_id, campaign_id, content_type, content_text, metadata)
+    
+    return world_id
+
+def save_world_content(world_id, campaign_id, content_type, content_text, metadata=None, title=None, create_embedding=True):
+    """Save a piece of world content to the database and optionally create embeddings
+    
+    Args:
+        world_id: UUID of the world
+        campaign_id: UUID of the campaign
+        content_type: Type of content ('world_info', 'magic_system', 'pantheon', 'global_threat', etc.)
+        content_text: The narrative text content
+        metadata: Optional structured data (JSON object)
+        title: Optional title (will generate from content_type if not provided)
+        create_embedding: Whether to create vector embeddings (default True)
+        
+    Returns:
+        content_id: UUID of the created content
+    """
+    import psycopg2.extras
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    if not title:
+        title = content_type.replace('_', ' ').title()
+    
+    cur.execute("""
+        INSERT INTO world_content (world_id, campaign_id, content_type, source_type, 
+                                 title, content, metadata)
+        VALUES (%s, %s, %s, 'universe_builder', %s, %s, %s)
+        RETURNING content_id;
+    """, (world_id, campaign_id, content_type, title, content_text, 
+          psycopg2.extras.Json(metadata) if metadata else None))
+    
+    content_id = cur.fetchone()[0]
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+    
+    # Create vector embedding if requested and content is substantial
+    if create_embedding and content_text and len(content_text.strip()) > 50:
+        try:
+            from services.vector_service import VectorService
+            vector_service = VectorService()
+            vector_service.store_world_content_embedding(
+                content_id=str(content_id),
+                campaign_id=str(campaign_id),
+                world_id=str(world_id),
+                content_type=content_type,
+                title=title,
+                text=content_text
+            )
+        except Exception as e:
+            print(f"⚠️ Warning: Content saved to database but vector embedding failed: {e}")
+            print("💾 Content is still searchable via regular database queries")
+    
+    return content_id
+
+def get_world_by_campaign(campaign_id):
+    """Get world data for a campaign
+    
+    Args:
+        campaign_id: UUID of the campaign
+        
+    Returns:
+        Dictionary with world metadata and content, or None if no world exists
+    """
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    # Get basic world info
+    cur.execute("""
+        SELECT world_id, world_name, scope, theme_list, region_count, 
+               major_city_count, settlement_count, magic_level, created_at
+        FROM worlds 
+        WHERE campaign_id = %s;
+    """, (campaign_id,))
+    
+    world_row = cur.fetchone()
+    if not world_row:
+        cur.close()
+        conn.close()
+        return None
+    
+    world_data = {
+        "world_id": world_row[0],
+        "world_name": world_row[1],
+        "scope": world_row[2],
+        "theme_list": world_row[3],
+        "region_count": world_row[4],
+        "major_city_count": world_row[5],
+        "settlement_count": world_row[6],
+        "magic_level": world_row[7],
+        "created_at": world_row[8],
+        "content": {}
+    }
+    
+    # Get all content for this world
+    cur.execute("""
+        SELECT content_id, content_type, title, content, metadata, created_at
+        FROM world_content 
+        WHERE world_id = %s
+        ORDER BY created_at;
+    """, (world_row[0],))
+    
+    content_rows = cur.fetchall()
+    for row in content_rows:
+        content_id, content_type, title, content, metadata, created_at = row
+        world_data["content"][content_type] = {
+            "content_id": content_id,
+            "title": title,
+            "content": content,
+            "metadata": metadata,
+            "created_at": created_at
+        }
+    
+    cur.close()
+    conn.close()
+    
+    return world_data
+
+def search_world_content(campaign_id, query, content_types=None, limit=5):
+    """Search world content using semantic search via Pinecone
+    
+    Args:
+        campaign_id: UUID of the campaign
+        query: The search query text
+        content_types: Optional list of content types to filter by
+        limit: Maximum number of results to return
+        
+    Returns:
+        List of matching content with full details from database
+    """
+    try:
+        from services.vector_service import VectorService
+        
+        vector_service = VectorService()
+        
+        # Perform semantic search in Pinecone
+        vector_results = vector_service.semantic_search(
+            query=query,
+            campaign_id=str(campaign_id),
+            content_types=content_types,
+            top_k=limit
+        )
+        
+        if not vector_results:
+            print(f"🔍 No semantic matches found for: '{query}'")
+            return []
+        
+        # Get full content details from database
+        conn = get_db_connection()
+        cur = conn.cursor()
+        
+        enriched_results = []
+        for result in vector_results:
+            cur.execute("""
+                SELECT content_id, title, content, content_type, metadata, created_at
+                FROM world_content 
+                WHERE content_id = %s;
+            """, (result["content_id"],))
+            
+            db_row = cur.fetchone()
+            if db_row:
+                enriched_results.append({
+                    "content_id": db_row[0],
+                    "title": db_row[1],
+                    "content": db_row[2],
+                    "content_type": db_row[3],
+                    "metadata": db_row[4],
+                    "created_at": db_row[5],
+                    "similarity_score": result["score"],
+                    "text_snippet": result["text_snippet"]
+                })
+        
+        cur.close()
+        conn.close()
+        
+        print(f"🎯 Found {len(enriched_results)} semantic matches for: '{query}'")
+        return enriched_results
+        
+    except Exception as e:
+        print(f"⚠️ Semantic search failed, falling back to database text search: {e}")
+        
+        # Fallback to simple database text search
+        conn = get_db_connection()
+        cur = conn.cursor()
+        
+        content_type_filter = ""
+        params = [str(campaign_id), f"%{query}%"]
+        
+        if content_types:
+            placeholders = ",".join(["%s"] * len(content_types))
+            content_type_filter = f"AND content_type IN ({placeholders})"
+            params.extend(content_types)
+        
+        cur.execute(f"""
+            SELECT content_id, title, content, content_type, metadata, created_at
+            FROM world_content 
+            WHERE campaign_id = %s 
+            AND (title ILIKE %s OR content ILIKE %s)
+            {content_type_filter}
+            ORDER BY created_at DESC
+            LIMIT %s;
+        """, params + [f"%{query}%", limit])
+        
+        results = cur.fetchall()
+        cur.close()
+        conn.close()
+        
+        fallback_results = []
+        for row in results:
+            fallback_results.append({
+                "content_id": row[0],
+                "title": row[1],
+                "content": row[2],
+                "content_type": row[3],
+                "metadata": row[4],
+                "created_at": row[5],
+                "similarity_score": 0.5,  # Default score for text search
+                "text_snippet": row[2][:500] + "..." if len(row[2]) > 500 else row[2]
+            })
+        
+        print(f"🔍 Fallback search found {len(fallback_results)} text matches")
+        return fallback_results
+

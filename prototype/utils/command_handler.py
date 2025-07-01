@@ -1,6 +1,7 @@
 # utils/command_handler.py
 import cli
 from db.db import get_recent_events, get_npc_relationships, get_npcs_at_location
+from debug.debug_menu import DebugMenu
 
 class CommandHandler:
     def __init__(self, game_session=None, combat_manager=None):
@@ -52,6 +53,10 @@ class CommandHandler:
                 cli.ui_character_sheet()
             elif choice in ["Inventory (placeholder)", "Journal (placeholder)"]:
                 cli.typer.echo(f"{choice} shown here (placeholder)")
+            elif choice == "Debug Menu":  # ← Add this
+                debug_menu = DebugMenu(self.game_session, self.combat_manager)
+                debug_menu.show_main_debug_menu()
+                
             elif choice == "Return to Start Menu":
                 return "exit_to_menu"  # Signal to exit game session
             elif choice == "Quit Application":

@@ -8,7 +8,7 @@ from db.db import (create_character, get_character_in_campaign, update_character
 from bots.combat_agent import CombatAgent
 from services.combat_system import CombatManager, analyze_combat_state_ai
 from utils.dice_utility import DiceUtility
-from utils.debug_util import debug_log
+from debug.debug_util import debug_log
 from bots.npc_creator_agent import NpcCreatorAgent
 import json
 

@@ -1,7 +1,7 @@
 import json
 import random
 import cli
-from utils.debug_util import debug_log
+from debug.debug_util import debug_log
 from openai import OpenAI
 from dotenv import load_dotenv
 from bots.combat_agent import CombatAgent

@@ -1,6 +1,7 @@
 typer[all]
-openai
+openai>=1.0.0
 python-dotenv
 InquirerPy
 pytest
 psycopg2-binary
+pinecone-client
