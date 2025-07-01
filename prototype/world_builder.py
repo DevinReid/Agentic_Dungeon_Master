@@ -1,23 +1,32 @@
-# world_builder.py
+#!/usr/bin/env python3
 """
 World Builder Orchestrator
-Main script for coordinating world generation across multiple AI bots
+
+Simple phase coordinator for world generation.
+Calls different AI bots in sequence and handles results.
+Does NOT assign values itself - lets the AI determine structure.
 """
 
 from dataclasses import dataclass
 from typing import List, Dict, Any, Optional
 import json
+
+# Import the actual builders
 from bots.world_builder.universe_builder import UniverseBuilder
-from bots.world_builder.regional_builder import RegionalBuilder  
-from bots.world_builder.settlement_builder import SettlementBuilder
-from bots.world_builder.npc_network_builder import NPCNetworkBuilder
-from bots.world_builder.conflict_builder import ConflictBuilder
-from bots.world_builder.quest_network_builder import QuestNetworkBuilder
+
+# These builders don't exist yet but will in the future
+# from bots.world_builder.regional_builder import RegionalBuilder  
+# from bots.world_builder.settlement_builder import SettlementBuilder
+# from bots.world_builder.npc_network_builder import NPCNetworkBuilder
+# from bots.world_builder.conflict_builder import ConflictBuilder
+# from bots.world_builder.quest_network_builder import QuestNetworkBuilder
 
 @dataclass
 class WorldGenerationResult:
+    """Result container for world generation operations"""
     success: bool
     world_name: str = ""
+    world_data: Dict = None
     regions: List[Dict] = None
     settlements: List[Dict] = None 
     npcs: List[Dict] = None
@@ -26,74 +35,62 @@ class WorldGenerationResult:
     error: str = ""
 
 class WorldGenerationOrchestrator:
-    """Main orchestrator for world generation process"""
+    """Phase coordinator for world generation - calls different bots in sequence"""
     
     def __init__(self):
+        
         self.universe_builder = UniverseBuilder()
-        self.regional_builder = RegionalBuilder()
-        self.settlement_builder = SettlementBuilder()
-        self.npc_builder = NPCNetworkBuilder()
-        self.conflict_builder = ConflictBuilder()
-        self.quest_builder = QuestNetworkBuilder()
+        
+        # TODO: Initialize these when they're implemented
+        # self.regional_builder = RegionalBuilder()
+        # self.settlement_builder = SettlementBuilder()
+        # self.npc_builder = NPCNetworkBuilder()
+        # self.conflict_builder = ConflictBuilder()
+        # self.quest_builder = QuestNetworkBuilder()
 
     def generate_complete_world(self, campaign_id: str, parameters: Dict[str, Any]) -> WorldGenerationResult:
-        """Generate a complete world with all layers"""
+        """Generate a complete world through sequential bot phases"""
         try:
-            print("🌍 Starting complete world generation...")
+            print("🌍 Starting world generation phases...")
             
-            # Layer 1: Cosmic/Universe Level
-            print("🌌 Generating universe foundation...")
-            universe = self.universe_builder.generate_campaign_universe(campaign_id, parameters.get('theme', 'fantasy'))
+            # Phase 1: Universe Foundation (IMPLEMENTED)
+            print("🌌 Phase 1: Generating universe foundation...")
+            universe_data = self.universe_builder.generate_universe_context(parameters)
+            world_name = universe_data.get('world_info', {}).get('world_name', 'Generated World')
             
-            # Layer 2: Regional Level  
-            print("🗺️ Generating regions...")
-            regions = []
-            region_count = self._get_region_count(parameters.get('size', 'Medium'))
-            for i in range(region_count):
-                region = self.regional_builder.generate_region(universe, f"region_{i}")
-                regions.append(region)
+            # Phase 2: Regional Development (PLACEHOLDER)
+            print("🗺️ Phase 2: Regional development... (coming soon)")
+            regions = []  # TODO: Call regional_builder when implemented
             
-            # Layer 3: Settlement Level
-            print("🏘️ Generating settlements...")
-            settlements = []
-            for region in regions:
-                settlement_count = self._get_settlement_count_per_region(parameters.get('size', 'Medium'))
-                for j in range(settlement_count):
-                    settlement = self.settlement_builder.generate_settlement(region, f"settlement_{j}")
-                    settlements.append(settlement)
+            # Phase 3: Settlement Networks (PLACEHOLDER)
+            print("🏘️ Phase 3: Settlement networks... (coming soon)")
+            settlements = []  # TODO: Call settlement_builder when implemented
             
-            # Layer 4: NPC Network
-            print("👥 Generating NPC networks...")
-            all_npcs = []
-            for settlement in settlements:
-                npcs = self.npc_builder.generate_settlement_npcs(settlement)
-                all_npcs.extend(npcs)
+            # Phase 4: NPC Networks (PLACEHOLDER)
+            print("👥 Phase 4: NPC networks... (coming soon)")
+            npcs = []  # TODO: Call npc_builder when implemented
             
-            # Layer 5: Conflict Web
-            print("⚔️ Generating conflicts...")
-            conflicts = self.conflict_builder.generate_conflict_layers({
-                'universe': universe,
-                'regions': regions, 
-                'settlements': settlements,
-                'npcs': all_npcs
-            })
+            # Phase 5: Conflict Webs (PLACEHOLDER)
+            print("⚔️ Phase 5: Conflict webs... (coming soon)")
+            conflicts = []  # TODO: Call conflict_builder when implemented
             
-            # Layer 6: Quest Network
-            print("📜 Generating quest networks...")
-            quests = self.quest_builder.generate_interconnected_quests(conflicts, all_npcs, settlements)
+            # Phase 6: Quest Networks (PLACEHOLDER)
+            print("📜 Phase 6: Quest networks... (coming soon)")
+            quests = []  # TODO: Call quest_builder when implemented
             
-            # Save to database
-            print("💾 Saving to database...")
-            self._save_world_to_database(campaign_id, universe, regions, settlements, all_npcs, conflicts, quests)
+            # Phase 7: Database Storage (PLACEHOLDER)
+            print("💾 Phase 7: Saving to database... (coming soon)")
+            # TODO: Implement database storage
             
-            print("✅ World generation complete!")
+            print("✅ Universe foundation complete! (Further phases in development)")
             
             return WorldGenerationResult(
                 success=True,
-                world_name=universe.get('world_info', {}).get('world_name', 'Generated World'),
+                world_name=world_name,
+                world_data=universe_data,
                 regions=regions,
                 settlements=settlements,
-                npcs=all_npcs,
+                npcs=npcs,
                 conflicts=conflicts,
                 quests=quests
             )
@@ -102,89 +99,50 @@ class WorldGenerationOrchestrator:
             print(f"❌ World generation failed: {str(e)}")
             return WorldGenerationResult(success=False, error=str(e))
 
-    def generate_test_settlement(self, campaign_id: str, settlement_name: str = "Oakwood Village") -> WorldGenerationResult:
-        """Generate a single test settlement for development/testing"""
-        try:
-            print(f"🏰 Generating test settlement: {settlement_name}")
+    # def generate_test_settlement(self, campaign_id: str, settlement_name: str = "Oakwood Village") -> WorldGenerationResult:
+    #     """Generate a single test settlement for development/testing"""
+    #     try:
+    #         print(f"🏰 Generating test settlement: {settlement_name}")
+    #         print("🚧 Test settlement generation - coming soon!")
             
-            # Create minimal context for test
-            test_universe = {"cosmic_setting": {"world_name": "Test World", "theme": "fantasy"}}
-            test_region = {"region_name": "Test Region", "geography": {"terrain": "forested hills"}}
+    #         # For now, just return a placeholder
+    #         return WorldGenerationResult(
+    #             success=True,
+    #             world_name="Test World",
+    #             settlements=[{"name": settlement_name, "status": "placeholder"}],
+    #             npcs=[],
+    #             conflicts=[]
+    #         )
             
-            # Generate settlement
-            settlement = self.settlement_builder.generate_settlement(test_region, settlement_name)
-            
-            # Generate NPCs for settlement
-            npcs = self.npc_builder.generate_settlement_npcs(settlement)
-            
-            # Generate simple local conflicts
-            conflicts = self.conflict_builder.generate_local_conflicts(settlement, npcs)
-            
-            # Save test data
-            self._save_test_settlement(campaign_id, settlement, npcs, conflicts)
-            
-            print("✅ Test settlement generated!")
-            
-            return WorldGenerationResult(
-                success=True,
-                world_name="Test World",
-                settlements=[settlement],
-                npcs=npcs,
-                conflicts=conflicts
-            )
-            
-        except Exception as e:
-            print(f"❌ Test settlement generation failed: {str(e)}")
-            return WorldGenerationResult(success=False, error=str(e))
-
-    def _get_region_count(self, size: str) -> int:
-        """Get number of regions based on size parameter"""
-        size_map = {
-            "Small": 1,
-            "Medium": 3, 
-            "Large": 5
-        }
-        return size_map.get(size.split()[0], 3)
-
-    def _get_settlement_count_per_region(self, size: str) -> int:
-        """Get number of settlements per region"""
-        size_map = {
-            "Small": 3,
-            "Medium": 3,
-            "Large": 4
-        }
-        return size_map.get(size.split()[0], 3)
-
-    def _save_world_to_database(self, campaign_id, universe, regions, settlements, npcs, conflicts, quests):
-        """Save complete world data to database"""
-        # TODO: Implement database storage
-        print("🚧 Database storage not yet implemented")
-        pass
-
-    def _save_test_settlement(self, campaign_id, settlement, npcs, conflicts):
-        """Save test settlement data"""
-        # TODO: Implement test data storage
-        print("🚧 Test data storage not yet implemented")
-        pass
+    #     except Exception as e:
+    #         print(f"❌ Test settlement generation failed: {str(e)}")
+    #         return WorldGenerationResult(success=False, error=str(e))
 
 def main():
     """Main function for standalone world builder execution"""
-    print("🌍 Agentic World Builder")
-    print("========================")
+    print("🌍 Agentic World Builder - Phase Coordinator")
+    print("=" * 50)
     
     orchestrator = WorldGenerationOrchestrator()
     
     # Example usage
     test_params = {
         "theme": "High Fantasy",
-        "size": "Small (1 region, 3 settlements)",
-        "magic_level": "High"
+        "size": "Regional",
+        "magic_commonality": "Common"
     }
     
-    result = orchestrator.generate_test_settlement("test_campaign", "Oakwood Village")
+    print("🧪 Running test generation...")
+    result = orchestrator.generate_complete_world("test_campaign", test_params)
     
     if result.success:
         print(f"✅ Success! Generated world: {result.world_name}")
+        if result.world_data:
+            size_info = result.world_data.get('size', {})
+            print(f"📊 World scope: {size_info.get('scope', 'Unknown')}")
+            print(f"🗺️ Regions: {size_info.get('region_count', 0)}")
+            print(f"🏙️ Major cities: {size_info.get('major_city_count', 0)}")
+            print(f"🏘️ Settlements: {size_info.get('settlement_count', 0)}")
     else:
         print(f"❌ Failed: {result.error}")
 
