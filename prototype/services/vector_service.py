@@ -11,17 +11,20 @@ This service handles:
 
 import os
 import hashlib
+import json
 from typing import List, Dict, Any, Optional
 from pinecone import Pinecone
 from openai import OpenAI
 from dotenv import load_dotenv
+import numpy as np
 
 load_dotenv()
 
 class VectorService:
     """Service for managing embeddings and vector operations"""
     
-    def __init__(self):
+    def __init__(self, debug=False):
+        self.debug = debug
         self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         
         # Initialize Pinecone
@@ -37,6 +40,16 @@ class VectorService:
         
         # Connect to index (will be created if it doesn't exist)
         self.index = self._get_or_create_index()
+        
+        if self.debug:
+            print("✅ VectorService initialized")
+        
+        try:
+            stats = self.index.describe_index_stats()
+            total_vectors = stats['total_vector_count']
+            print(f"✅ Connected to Pinecone index '{self.index_name}' with {total_vectors} vectors")
+        except Exception as e:
+            print(f"⚠️ Could not get Pinecone stats: {e}")
     
     def _get_or_create_index(self):
         """Get existing index or create a new one"""
@@ -239,4 +252,55 @@ class VectorService:
             }
         except Exception as e:
             print(f"❌ Failed to get index stats: {e}")
-            return {} 
+            return {}
+    
+    def store_content_chunk_embedding(self, 
+                                     content_id: str,
+                                     campaign_id: str, 
+                                     world_id: str,
+                                     chunk_data: Dict[str, Any]) -> str:
+        """Store content chunk embedding in Pinecone
+        
+        Args:
+            content_id: UUID from world_content table
+            campaign_id: Campaign UUID
+            world_id: World UUID  
+            chunk_data: Chunk data from ContentChunker with metadata
+            
+        Returns:
+            vector_id: The Pinecone vector ID
+        """
+        try:
+            # Generate embedding from chunk text
+            embedding = self.generate_embedding(chunk_data['text'])
+            
+            # Create unique vector ID for this chunk
+            vector_id = f"{content_id}_chunk_{chunk_data['index']}"
+            
+            # Metadata for linking back to PostgreSQL and filtering
+            metadata = {
+                "content_id": content_id,
+                "campaign_id": campaign_id,
+                "world_id": world_id,
+                "content_type": chunk_data['content_type'],
+                "chunk_topic": chunk_data['topic'],
+                "chunk_type": chunk_data['chunk_type'],
+                "tags": chunk_data['tags'][:10],  # Limit tags for metadata size
+                "entity_names": [e['name'] for e in chunk_data['entities_mentioned']],
+                "text_snippet": chunk_data['text'][:500] + "..." if len(chunk_data['text']) > 500 else chunk_data['text'],
+                "word_count": chunk_data['word_count'],
+                "is_expansion": chunk_data['embedding_metadata'].get('is_expansion', False)
+            }
+            
+            # Store in Pinecone
+            self.index.upsert(vectors=[(vector_id, embedding, metadata)])
+            
+            if self.debug:
+                print(f"✅ Stored chunk embedding: {chunk_data['topic']} ({chunk_data['word_count']} words)")
+            
+            return vector_id
+            
+        except Exception as e:
+            if self.debug:
+                print(f"❌ Failed to store chunk embedding: {e}")
+            raise 

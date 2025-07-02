@@ -13,9 +13,9 @@ import json
 
 # Import the actual builders
 from bots.world_builder.universe_builder import UniverseBuilder
+from bots.world_builder.regional_builder import RegionalBuilder  
 
 # These builders don't exist yet but will in the future
-# from bots.world_builder.regional_builder import RegionalBuilder  
 # from bots.world_builder.settlement_builder import SettlementBuilder
 # from bots.world_builder.npc_network_builder import NPCNetworkBuilder
 # from bots.world_builder.conflict_builder import ConflictBuilder
@@ -40,9 +40,9 @@ class WorldGenerationOrchestrator:
     def __init__(self):
         
         self.universe_builder = UniverseBuilder()
+        self.regional_builder = RegionalBuilder()
         
         # TODO: Initialize these when they're implemented
-        # self.regional_builder = RegionalBuilder()
         # self.settlement_builder = SettlementBuilder()
         # self.npc_builder = NPCNetworkBuilder()
         # self.conflict_builder = ConflictBuilder()
@@ -58,9 +58,9 @@ class WorldGenerationOrchestrator:
             universe_data = self.universe_builder.generate_universe_context(parameters)
             world_name = universe_data.get('world_info', {}).get('world_name', 'Generated World')
             
-            # Phase 2: Regional Development (PLACEHOLDER)
-            print("🗺️ Phase 2: Regional development... (coming soon)")
-            regions = []  # TODO: Call regional_builder when implemented
+            # Phase 2: Regional Development (IMPLEMENTED)
+            print("🗺️ Phase 2: Regional development...")
+            regions = self.regional_builder.generate_regions_for_world(universe_data)
             
             # Phase 3: Settlement Networks (PLACEHOLDER)
             print("🏘️ Phase 3: Settlement networks... (coming soon)")
@@ -99,24 +99,28 @@ class WorldGenerationOrchestrator:
             print(f"❌ World generation failed: {str(e)}")
             return WorldGenerationResult(success=False, error=str(e))
 
-    # def generate_test_settlement(self, campaign_id: str, settlement_name: str = "Oakwood Village") -> WorldGenerationResult:
-    #     """Generate a single test settlement for development/testing"""
-    #     try:
-    #         print(f"🏰 Generating test settlement: {settlement_name}")
-    #         print("🚧 Test settlement generation - coming soon!")
+    def generate_test_settlement(self, campaign_id: str, settlement_name: str = "Oakwood Village") -> WorldGenerationResult:
+        """Generate a single test settlement for development/testing"""
+        try:
+            print(f"🏰 Generating test settlement: {settlement_name}")
+            print("🚧 Test settlement generation - coming soon!")
             
-    #         # For now, just return a placeholder
-    #         return WorldGenerationResult(
-    #             success=True,
-    #             world_name="Test World",
-    #             settlements=[{"name": settlement_name, "status": "placeholder"}],
-    #             npcs=[],
-    #             conflicts=[]
-    #         )
+            # For now, just return a placeholder
+            return WorldGenerationResult(
+                success=True,
+                world_name="Test World",
+                settlements=[{"name": settlement_name, "status": "placeholder"}],
+                npcs=[],
+                conflicts=[]
+            )
             
-    #     except Exception as e:
-    #         print(f"❌ Test settlement generation failed: {str(e)}")
-    #         return WorldGenerationResult(success=False, error=str(e))
+        except Exception as e:
+            print(f"❌ Test settlement generation failed: {str(e)}")
+            return WorldGenerationResult(success=False, error=str(e))
+
+    def handle_region_planning_for_campaign(self, campaign_id: str, campaign_name: str, world_id: str, universe_data: Dict[str, Any]) -> bool:
+        """Delegate region planning to the regional builder"""
+        return self.regional_builder.handle_region_planning_for_campaign(campaign_id, campaign_name, world_id, universe_data)
 
 def main():
     """Main function for standalone world builder execution"""

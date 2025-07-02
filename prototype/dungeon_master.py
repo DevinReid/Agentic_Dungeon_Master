@@ -6,58 +6,11 @@ from db import db
 
 
 def handle_region_building_for_campaign(campaign_id, campaign_name, world_id, universe_data):
-    """Handle region building as a separate step after world creation"""
-    from InquirerPy import inquirer
-    import typer
+    """Delegate region building to the world builder orchestrator"""
+    from world_builder import WorldGenerationOrchestrator
     
-    print(f"\n🗺️ REGION PLANNING FOR: {campaign_name}")
-    print("="*60)
-    print("Now that your world foundation is created and saved, let's plan its regions!")
-    
-    # Extract world size to determine region count
-    size_info = universe_data.get('size', {})
-    world_size = size_info.get('scope', 'Regional')
-    
-    # Determine region count based on world size
-    if "Intimate" in world_size:
-        region_count = 1
-    elif "Regional" in world_size:
-        region_count = 3
-    elif "Continental" in world_size:
-        region_count = 5
-    elif "Wilderness" in world_size:
-        region_count = 3
-    else:
-        region_count = 3  # Default
-    
-    print(f"Based on your world size ({world_size}), we'll work with {region_count} regions.")
-    print()
-    
-    # Ask how to handle regions (this was moved from universe builder)
-    typer.secho("🗺️ Would you like to design your regions in detail?", fg=typer.colors.BRIGHT_BLUE)
-    
-    design_regions = inquirer.select(
-        message="How should we handle regions?",
-        choices=[
-            "🚀 Auto-generate everything - surprise me!",
-            "🖌️ I want to design regions step-by-step",
-            "📝 Skip for now - I'll add regions later"
-        ]
-    ).execute()
-    
-    if "📝 Skip for now" in design_regions:
-        print("✅ Regions skipped for now. You can add them later from the World Builder!")
-        return True
-    elif "🚀 Auto-generate" in design_regions:
-        print("🎲 Auto-generating regions... (This would create regions automatically)")
-        print("🚧 Auto-generation coming soon! For now, skipping to character creation.")
-        return True
-    elif "🖌️ I want to design" in design_regions:
-        print("🖌️ Step-by-step region design... (This would use the detailed region builder)")
-        print("🚧 Detailed region design coming soon! For now, skipping to character creation.")
-        return True
-    
-    return True
+    orchestrator = WorldGenerationOrchestrator()
+    return orchestrator.handle_region_planning_for_campaign(campaign_id, campaign_name, world_id, universe_data)
 
 
 def create_new_character(campaign_id, username):
@@ -117,165 +70,220 @@ def handle_world_creation_for_campaign(campaign_id, campaign_name):
     return True
 
 def create_new_world_for_campaign(campaign_id, campaign_name):
-    """Create a new world for the campaign using UniverseBuilder"""
+    """Delegate world creation to the world builder orchestrator"""
     print(f"\n🏗️ CREATING WORLD FOR: {campaign_name}")
     print("="*60)
     
-    # Import world builder CLI functionality
-    from cli import WorldBuilderCLI
-    
     try:
-        # Create world builder instance and get parameters
-        world_builder = WorldBuilderCLI()
+        # Delegate to CLI for world parameters and creation
+        from cli import WorldBuilderCLI
+        world_builder_cli = WorldBuilderCLI()
+        
+        # This will handle the entire world creation flow
         print("Let's build your world! This will be the foundation for your adventures.")
+        world_params = world_builder_cli.get_world_parameters()
         
-        world_params = world_builder.get_world_parameters()
-        
-        # Generate universe using UniverseBuilder
-        from bots.world_builder.universe_builder import UniverseBuilder
+        # Delegate to world builder orchestrator
+        from world_builder import WorldGenerationOrchestrator
+        orchestrator = WorldGenerationOrchestrator()
         
         print("\n🔄 Generating your world... (this may take a moment)")
+        result = orchestrator.generate_complete_world(campaign_id, world_params)
         
-        builder = UniverseBuilder()
-        universe_data = builder.generate_universe_context(world_params)
-        
-        world_name = universe_data.get('world_info', {}).get('world_name', 'Generated World')
-        
-        print(f"\n✅ World '{world_name}' created successfully!")
-        print(f"📁 Linked to campaign: {campaign_name}")
-        
-        # Save universe_data to database
-        try:
-            print("💾 Saving world to database...")
-            world_id = db.save_world(campaign_id, universe_data)
-            print(f"✅ World saved successfully! (ID: {str(world_id)[:8]}...)")
-        except Exception as save_error:
-            print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
-            print("💾 Your world is still usable for this session!")
-        
-        # Display basic summary
-        world_info = universe_data.get('world_info', {})
-        size_info = universe_data.get('size', {})
-        magic_info = universe_data.get('magic_system', {})
-        
-        print(f"\n📊 World Summary:")
-        print(f"   🌍 World: {world_name}")
-        print(f"   📏 Scope: {size_info.get('scope', 'Unknown')}")
-        print(f"   🗺️ Regions: {size_info.get('region_count', 0)}")
-        print(f"   ✨ Magic Level: {magic_info.get('magic_level', 'Unknown')}")
-        
-        threats = universe_data.get('global_threats', [])
-        if threats:
-            print(f"   ⚔️ Global Threats: {len(threats)}")
-            for threat in threats[:2]:  # Show first 2
-                print(f"      • {threat.get('primary_threat', 'Unknown Threat')}")
-        
-        input("\n📖 Press Enter to continue to region planning...")
-        
-        # Now handle region building as a separate step
-        region_success = handle_region_building_for_campaign(campaign_id, campaign_name, world_id, universe_data)
-        if not region_success:
+        if result.success:
+            print(f"\n✅ World '{result.world_name}' created successfully!")
+            print(f"📁 Linked to campaign: {campaign_name}")
+            
+            # PHASE 1: Save base content using new ContentProcessor pipeline
+            try:
+                print("🏗️ Processing and saving world content...")
+                world_id = save_world_with_content_processing(campaign_id, result.world_data)
+                print("✅ World saved successfully!")
+                
+                # PHASE 2: Optional expansion
+                if offer_content_expansion():
+                    print("🔄 Expanding world content... (this may take a few minutes)")
+                    expand_world_content(campaign_id, world_id)
+                else:
+                    print("⏩ Skipping expansion - world ready to play!")
+                
+                # Handle region planning
+                input("\n📖 Press Enter to continue to region planning...")
+                region_success = handle_region_building_for_campaign(campaign_id, campaign_name, world_id, result.world_data)
+                if not region_success:
+                    return False
+                    
+            except Exception as save_error:
+                print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
+                print("💾 Your world is still usable for this session!")
+            
+            input("\n📖 Press Enter to continue to character creation...")
+            return True
+        else:
+            print(f"\n❌ World creation failed: {result.error}")
             return False
             
-        input("\n📖 Press Enter to continue to character creation...")
-        return True
-        
     except Exception as e:
         print(f"\n❌ World creation failed: {str(e)}")
-        
-        from InquirerPy import inquirer
-        retry_choice = inquirer.select(
-            message="What would you like to do?",
-            choices=[
-                "🔄 Try again",
-                "🔙 Skip world creation for now",
-                "❌ Cancel campaign creation"
-            ]
-        ).execute()
-        
-        if "🔄 Try again" in retry_choice:
-            return create_new_world_for_campaign(campaign_id, campaign_name)
-        elif "❌ Cancel" in retry_choice:
-            return False
-        else:
-            print("📝 You can add a world to this campaign later from the World Builder menu.")
-            return True
+        print("📝 You can add a world to this campaign later from the World Builder menu.")
+        return True
 
 def create_auto_world_for_campaign(campaign_id, campaign_name):
-    """Create an auto-generated world for the campaign with sensible defaults"""
+    """Create an auto-generated world using predefined parameters"""
     print(f"\n🎲 AUTO-CRAFTING WORLD FOR: {campaign_name}")
     print("="*60)
     print("We'll create a classic fantasy world perfect for adventures!")
     
-    # Auto-generate world parameters with sensible defaults
-    auto_world_params = {
-        'theme': 'High Fantasy - Magic is everywhere, heroes are legendary',
-        'magic_commonality': 'Common - Most towns have a wizard or healer',
-        'deity_structure': 'Pantheon - Multiple gods with distinct domains',
-        'major_threat': 'Ancient Evil - Something terrible stirs from long slumber',
-        'size': 'Regional - Small continent (3 kingdoms, 3-5 major cities, 15-20 settlements)',
-        'custom_details': f'Classic fantasy adventure setting for the {campaign_name} campaign'
-    }
-    
     try:
-        # Generate universe using UniverseBuilder
-        from bots.world_builder.universe_builder import UniverseBuilder
+        # Use predefined parameters for auto-generation
+        auto_world_params = {
+            'theme': 'High Fantasy - Magic is everywhere, heroes are legendary',
+            'magic_commonality': 'Common - Most towns have a wizard or healer',
+            'deity_structure': 'Pantheon - Multiple gods with distinct domains',
+            'major_threat': 'Ancient Evil - Something terrible stirs from long slumber',
+            'size': 'Regional - Small continent (3 kingdoms, 3-5 major cities, 15-20 settlements)',
+            'custom_details': f'Classic fantasy adventure setting for the {campaign_name} campaign'
+        }
+        
+        # Delegate to world builder orchestrator
+        from world_builder import WorldGenerationOrchestrator
+        orchestrator = WorldGenerationOrchestrator()
         
         print("🔄 Generating your world... (this may take a moment)")
+        result = orchestrator.generate_complete_world(campaign_id, auto_world_params)
         
-        builder = UniverseBuilder()
-        universe_data = builder.generate_universe_context(auto_world_params)
-        
-        world_name = universe_data.get('world_info', {}).get('world_name', 'Generated World')
-        
-        print(f"\n✅ World '{world_name}' auto-crafted successfully!")
-        print(f"📁 Linked to campaign: {campaign_name}")
-        
-        # Save universe_data to database
-        try:
-            print("💾 Saving world to database...")
-            world_id = db.save_world(campaign_id, universe_data)
-            print(f"✅ World saved successfully! (ID: {str(world_id)[:8]}...)")
-        except Exception as save_error:
-            print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
-            print("💾 Your world is still usable for this session!")
-        
-        # Display basic summary
-        world_info = universe_data.get('world_info', {})
-        size_info = universe_data.get('size', {})
-        magic_info = universe_data.get('magic_system', {})
-        
-        print(f"\n📊 Your Auto-Generated World:")
-        print(f"   🌍 World: {world_name}")
-        print(f"   📏 Scope: {size_info.get('scope', 'Unknown')}")
-        print(f"   🗺️ Regions: {size_info.get('region_count', 0)}")
-        print(f"   ✨ Magic Level: {magic_info.get('magic_level', 'Unknown')}")
-        
-        pantheon_info = universe_data.get('pantheon', {})
-        deities = pantheon_info.get('major_deities', [])
-        if deities:
-            print(f"   ⚡ Major Deities: {', '.join(deities[:3])}")
-        
-        threats = universe_data.get('global_threats', [])
-        if threats:
-            print(f"   ⚔️ Primary Threat: {threats[0].get('primary_threat', 'Unknown Threat')}")
-        
-        print("\n🎯 Perfect for classic D&D adventures!")
-        input("\n📖 Press Enter to continue to region planning...")
-        
-        # Now handle region building as a separate step
-        region_success = handle_region_building_for_campaign(campaign_id, campaign_name, world_id, universe_data)
-        if not region_success:
-            return False
+        if result.success:
+            print(f"\n✅ World '{result.world_name}' auto-crafted successfully!")
+            print(f"📁 Linked to campaign: {campaign_name}")
+            print("🎯 Perfect for classic D&D adventures!")
             
-        input("\n📖 Press Enter to continue to character creation...")
-        return True
-        
+            # PHASE 1: Save base content using new ContentProcessor pipeline
+            try:
+                print("🏗️ Processing and saving world content...")
+                world_id = save_world_with_content_processing(campaign_id, result.world_data)
+                print("✅ World saved successfully!")
+                
+                # PHASE 2: Auto-expand for enhanced experience
+                print("🔄 Auto-expanding content for richer experience...")
+                expand_world_content(campaign_id, world_id, auto_expand=True)
+                
+                # Handle region planning
+                input("\n📖 Press Enter to continue to region planning...")
+                region_success = handle_region_building_for_campaign(campaign_id, campaign_name, world_id, result.world_data)
+                if not region_success:
+                    return False
+                    
+            except Exception as save_error:
+                print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
+                print("💾 Your world is still usable for this session!")
+            
+            input("\n📖 Press Enter to continue to character creation...")
+            return True
+        else:
+            print(f"\n❌ Auto-world creation failed: {result.error}")
+            print("Don't worry, you can still play without a generated world!")
+            input("📖 Press Enter to continue...")
+            return True  # Continue anyway
+            
     except Exception as e:
         print(f"\n❌ Auto-world creation failed: {str(e)}")
         print("Don't worry, you can still play without a generated world!")
         input("📖 Press Enter to continue...")
         return True  # Continue anyway
+
+def save_world_with_content_processing(campaign_id: str, universe_data: dict) -> str:
+    """
+    Save world using new ContentProcessor pipeline
+    
+    Args:
+        campaign_id: Campaign UUID
+        universe_data: Raw UniverseBuilder output
+        
+    Returns:
+        world_id: UUID of created world
+    """
+    from bots.content_processor_agent import ContentProcessorAgent
+    
+    # Process universe data through ContentProcessor
+    processor = ContentProcessorAgent(debug=True)
+    processed_sections = processor.process_universe_content(campaign_id, universe_data)
+    
+    # Save processed content to database with full enrichment
+    world_name = universe_data.get('world_info', {}).get('world_name')
+    world_id = db.save_processed_world(campaign_id, processed_sections, world_name)
+    
+    return world_id
+
+def offer_content_expansion() -> bool:
+    """Ask user if they want to expand content"""
+    from InquirerPy import inquirer
+    
+    print("\n🔄 CONTENT EXPANSION")
+    print("="*50)
+    print("Your world is ready to play! Would you like to expand any sections?")
+    print("Expansion adds detailed lore, NPCs, and connections.")
+    
+    choice = inquirer.select(
+        message="Expand world content?",
+        choices=[
+            "🚀 Yes - Expand all sections (2-3 minutes)",
+            "🎯 Selective - Choose which sections to expand",
+            "⏩ No - Use base content (ready to play now)"
+        ]
+    ).execute()
+    
+    if "🚀 Yes" in choice:
+        return True
+    elif "🎯 Selective" in choice:
+        return offer_selective_expansion()
+    else:
+        return False
+
+def offer_selective_expansion() -> bool:
+    """Let user choose which sections to expand"""
+    from InquirerPy import inquirer
+    
+    expansion_choices = inquirer.checkbox(
+        message="Which sections would you like to expand?",
+        choices=[
+            {"name": "🏛️ Pantheon - Detailed religions, temples, clergy", "value": "pantheon"},
+            {"name": "✨ Magic System - Schools, spells, limitations", "value": "magic_system"}, 
+            {"name": "👹 Global Threats - Detailed villains, minions", "value": "global_threats"},
+            {"name": "🌍 World Overview - History, cultures, politics", "value": "world_overview"}
+        ]
+    ).execute()
+    
+    # Store selected expansions for later use
+    global selected_expansions
+    selected_expansions = expansion_choices
+    
+    return len(expansion_choices) > 0
+
+def expand_world_content(campaign_id: str, world_id: str, auto_expand: bool = False):
+    """
+    Expand world content using expansion bots
+    
+    Args:
+        campaign_id: Campaign UUID
+        world_id: World UUID  
+        auto_expand: If True, expand all sections automatically
+    """
+    # TODO: Implement expansion bots
+    print("🚧 Content expansion bots coming soon!")
+    
+    if auto_expand:
+        print("   🏛️ Expanding pantheon...")
+        print("   ✨ Expanding magic system...")
+        print("   👹 Expanding global threats...")
+        print("   ✅ Auto-expansion complete!")
+    else:
+        global selected_expansions
+        for section in selected_expansions:
+            print(f"   🔄 Expanding {section}...")
+        print("   ✅ Selected expansions complete!")
+
+# Global variable to store user expansion choices
+selected_expansions = []
 
 def handle_campaign_deletion(username):
     """Handle campaign deletion with double confirmation"""
@@ -343,7 +351,7 @@ def handle_campaign_deletion(username):
         return
     
     # Second confirmation (double-check)
-    print(f"\n🚨 FINAL WARNING 🚨")
+    print("\n🚨 FINAL WARNING 🚨")
     print(f"Campaign: '{name}'")
     print("This will DELETE:")
     print("  • The campaign itself")

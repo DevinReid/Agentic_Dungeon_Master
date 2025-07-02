@@ -82,6 +82,7 @@ CREATE TABLE locations (
     description TEXT,
     connections JSONB,  -- Array of connected location IDs
     notable_features TEXT,
+    tags TEXT[] DEFAULT '{}',      -- AI-generated tags ['temple', 'solara', 'holy_ground', 'mountain_peak']
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -105,6 +106,7 @@ CREATE TABLE npcs (
     status TEXT DEFAULT 'alive',  -- alive, dead, fled
     disposition TEXT DEFAULT 'neutral',  -- friendly, hostile, neutral
     backstory TEXT,
+    tags TEXT[] DEFAULT '{}',      -- AI-generated tags ['solara', 'priest', 'spell_teacher', 'friendly']
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -163,14 +165,15 @@ CREATE TABLE worlds (
 -- 10. WORLD_CONTENT - Rich narrative content + structured JSON metadata
 CREATE TABLE world_content (
     content_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    parent_content_id UUID REFERENCES world_content(content_id), -- For hierarchical content (expansions)
     world_id UUID REFERENCES worlds(world_id) ON DELETE CASCADE,
     campaign_id UUID REFERENCES campaigns(campaign_id) ON DELETE CASCADE,
-    content_type TEXT NOT NULL,    -- 'world_info', 'magic_system', 'pantheon', 'global_threat', 'region', 'settlement'
-    source_type TEXT NOT NULL,     -- 'universe_builder', 'regional_builder', 'manual'
+    source_type TEXT NOT NULL,     -- 'universe_builder', 'expansion_bot', 'regional_builder', 'manual'
+    content_type TEXT NOT NULL,    -- 'world_overview', 'magic_system', 'pantheon', 'global_threats', 'political_structure', 'regional_overview'
     title TEXT NOT NULL,
     content TEXT NOT NULL,         -- The full paragraph/essay content
     metadata JSONB,                -- Structured data (UniverseBuilder JSON objects)
-    parent_content_id UUID REFERENCES world_content(content_id), -- For hierarchical content
+    tags TEXT[] DEFAULT '{}',      -- AI-generated tags for cross-referencing ['pantheon', 'solara', 'divine_magic']
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -185,6 +188,7 @@ CREATE TABLE extracted_entities (
     entity_name TEXT NOT NULL,
     description TEXT,
     status TEXT DEFAULT 'extracted', -- 'extracted', 'generated', 'detailed'
+    tags TEXT[] DEFAULT '{}',      -- AI-generated tags ['solara', 'priest', 'spell_teacher', 'temple_of_solara']
     game_object_id UUID,           -- Links to actual NPC/location table when created
     extraction_context TEXT,       -- The sentence it was extracted from
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -214,9 +218,31 @@ CREATE INDEX idx_world_content_type ON world_content(content_type);
 CREATE INDEX idx_extracted_entities_world ON extracted_entities(world_id);
 CREATE INDEX idx_extracted_entities_campaign ON extracted_entities(campaign_id);
 CREATE INDEX idx_extracted_entities_type ON extracted_entities(entity_type);
+
+-- GIN INDEXES FOR TAG ARRAY SEARCHING (Fast "tag IN array" queries)
+CREATE INDEX idx_world_content_tags ON world_content USING GIN (tags);
+CREATE INDEX idx_extracted_entities_tags ON extracted_entities USING GIN (tags);
+CREATE INDEX idx_npcs_tags ON npcs USING GIN (tags);
+CREATE INDEX idx_locations_tags ON locations USING GIN (tags);
 -- TODO: Uncomment when pgvector extension is installed
 -- CREATE INDEX idx_content_embeddings_world ON content_embeddings(world_id);
 -- CREATE INDEX idx_content_embeddings_campaign ON content_embeddings(campaign_id);
+
+-- 13. TAG_VOCABULARY - Track tag usage patterns for AI consistency
+CREATE TABLE tag_vocabulary (
+    tag_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    campaign_id UUID REFERENCES campaigns(campaign_id) ON DELETE CASCADE,
+    tag_name TEXT NOT NULL,
+    tag_category TEXT,             -- 'entity', 'theme', 'category', 'location', 'relationship'
+    usage_count INTEGER DEFAULT 1,
+    first_used TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_used TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(campaign_id, tag_name)  -- One tag per campaign (but different campaigns can have same tag)
+);
+
+CREATE INDEX idx_tag_vocabulary_campaign ON tag_vocabulary(campaign_id);
+CREATE INDEX idx_tag_vocabulary_category ON tag_vocabulary(tag_category);
+CREATE INDEX idx_tag_vocabulary_usage ON tag_vocabulary(usage_count DESC);
 
 -- ========================================
 -- USER FLOW NOTES FOR CAMPAIGN + WORLD
