@@ -252,7 +252,7 @@ class VectorService:
             }
         except Exception as e:
             print(f"❌ Failed to get index stats: {e}")
-            return {}
+            return {} 
     
     def store_content_chunk_embedding(self, 
                                      content_id: str,

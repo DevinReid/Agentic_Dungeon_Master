@@ -15,8 +15,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class EntityExtractorAgent:
-    """AI bot that extracts game entities from narrative content"""
     
+
     def __init__(self, debug=False):
         self.debug = debug
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -25,54 +25,64 @@ class EntityExtractorAgent:
             print("🔍 EntityExtractorAgent initialized")
     
     def extract_entities(self, content: str, content_type: str, existing_tags: List[str], 
-                        campaign_id: str) -> List[Dict[str, Any]]:
-        """
-        Extract entities from narrative content with consistent tagging
+                        campaign_id: str) -> Dict[str, List[Dict[str, Any]]]:
+       
+        # *Extract and process entities into complete database-ready records
         
-        Args:
-            content: The narrative text content
-            content_type: Type of content ('pantheon', 'magic_system', etc.)
-            existing_tags: Tags already generated for this content
-            campaign_id: Campaign UUID for consistency
+        # * Args:
+        # *    content: The narrative text content
+        # *    content_type: Type of content being processed  
+        # *    existing_tags: Tags from content for consistency
+        # *    campaign_id: Campaign UUID for context
             
-        Returns:
-            List of extracted entities with metadata and tags
-        """
+        # * Returns:
+        # *    Dict with processed entities grouped by type, ready for database insertion
+        
         if self.debug:
-            print(f"🔍 Extracting entities from {content_type}")
+            print(f"🔍 Extracting and processing entities from {content_type}")
         
         try:
-            # Get existing entities for consistency
+            # Pass 1: Extract raw entities using existing method
             existing_entities = self._get_existing_entities(campaign_id)
+            raw_entities = self._ai_extract_entities(content, content_type, existing_tags, existing_entities)
             
-            # Extract entities using AI
-            entities = self._ai_extract_entities(content, content_type, existing_tags, existing_entities)
+            if not raw_entities:
+                if self.debug:
+                    print("⚠️ No entities extracted")
+                return {'npcs': [], 'locations': [], 'organizations': [], 'artifacts': [], 'deities': [], 'threats': [], 'events': [], 'items': []}
             
-            # Validate and enrich entities
-            enriched_entities = self._enrich_entities(entities, content_type, existing_tags)
+            # Pass 2: Batch process into complete database records
+            from .entity_processor_agent import EntityProcessorAgent
+            processor = EntityProcessorAgent(debug=self.debug)
+            processed_entities = processor.process_entities(raw_entities, campaign_id, content, content_type)
             
             if self.debug:
-                print(f"✅ Extracted {len(enriched_entities)} entities")
-                for entity in enriched_entities[:3]:
-                    print(f"   - {entity['entity_name']} ({entity['entity_type']})")
+                total_entities = sum(len(entities) for entities in processed_entities.values())
+                print(f"✅ Generated {total_entities} complete entity records")
+                for entity_type, entities in processed_entities.items():
+                    if entities:
+                        print(f"   - {len(entities)} {entity_type}")
             
-            return enriched_entities
+            return processed_entities
             
         except Exception as e:
-            print(f"❌ Entity extraction failed: {e}")
-            return []
+            print(f"❌ Entity extraction and processing failed: {e}")
+            return {'npcs': [], 'locations': [], 'organizations': [], 'artifacts': [], 'deities': [], 'threats': [], 'events': [], 'items': []}
     
     def _ai_extract_entities(self, content: str, content_type: str, existing_tags: List[str], 
                             existing_entities: Dict[str, List[str]]) -> List[Dict[str, Any]]:
-        """Use AI to extract entities from content"""
+        # Use AI to extract entities from content
         
         # Format existing entities for context
         entity_context = self._format_entity_context(existing_entities)
         
+        # Simple quote escaping to avoid JSON parsing issues
+        escaped_content = content.replace('"', "'").replace('\n', ' ').replace('\r', '')
+        
         prompt = f"""You are an expert at extracting game entities from D&D world building content.
 
 CONTENT TYPE: {content_type}
-CONTENT TO ANALYZE: {content}
+CONTENT TO ANALYZE: {escaped_content}
 
 EXISTING CONTENT TAGS: {', '.join(existing_tags)}
 
@@ -91,8 +101,10 @@ ENTITY TYPES TO EXTRACT:
 - location: Specific places (Temple of Solara, Crystal Peak, Malakar's Lair)
 - organization: Groups/factions (Church of Solara, Order of the Dawn)
 - artifact: Magical items/relics (Crown of Malakar, Sunblade of Dawn)
+- item: normal items a player might find in the world (potion of healing, scroll of magic missile, iron sword, silver plate, etc.)
 - deity: Gods/divine beings (Solara, Lunaris, Malakar)
 - threat: Specific dangers (The Dread Titan, Shadow Plague)
+- event: Specific events (The Battle of the Crystal Peak, The Great Council of the Gods)
 
 For each entity, provide:
 - entity_name: Proper name
@@ -116,10 +128,11 @@ Return ONLY a JSON object:
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-4",
+                model="gpt-4o",  # Use gpt-4o which supports structured output
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.2,  # Lower temperature for consistent extraction
-                max_tokens=1000
+                temperature=0.2,
+                max_tokens=4000,  # High limit to ensure complete JSON. If we hit this, implement content chunking.
+                response_format={"type": "json_object"}
             )
             
             result = json.loads(response.choices[0].message.content.strip())
@@ -229,33 +242,6 @@ Return ONLY a JSON object:
         
         return enriched
     
-    def extract_entities_from_expansion(self, expanded_content: str, content_type: str, 
-                                      parent_tags: List[str], campaign_id: str) -> List[Dict[str, Any]]:
-        """
-        Extract entities from expanded content, connecting to parent content
-        
-        Args:
-            expanded_content: The expanded narrative content
-            content_type: Type of content being expanded
-            parent_tags: Tags from the original content
-            campaign_id: Campaign UUID
-            
-        Returns:
-            List of extracted entities with parent relationships
-        """
-        if self.debug:
-            print(f"🔄 Extracting entities from expanded {content_type}")
-        
-        # Extract entities normally
-        entities = self.extract_entities(expanded_content, content_type, parent_tags, campaign_id)
-        
-        # Mark as expansion entities
-        for entity in entities:
-            entity['status'] = 'expansion_extracted'
-            entity['tags'].append('detailed')
-            entity['tags'].append('expanded')
-        
-        return entities
     
     def validate_entity_consistency(self, new_entities: List[Dict[str, Any]], 
                                   campaign_id: str) -> List[Dict[str, Any]]:
@@ -267,38 +253,93 @@ Return ONLY a JSON object:
             campaign_id: Campaign UUID
             
         Returns:
-            List of validated entities (may have name adjustments)
+            List of validated entities (duplicates filtered out)
         """
         if self.debug:
             print(f"🔍 Validating {len(new_entities)} entities for consistency")
         
         try:
-            existing_entities = self._get_existing_entities(campaign_id)
-            existing_names = []
-            
-            for entity_list in existing_entities.values():
-                for entity_desc in entity_list:
-                    name = entity_desc.split(':')[0].strip()
-                    existing_names.append(name.lower())
+            # Get existing entity names from database
+            existing_names = self._get_existing_entity_names(campaign_id)
             
             validated = []
+            duplicates_found = 0
             
             for entity in new_entities:
-                entity_name = entity['entity_name'].lower()
+                entity_name = entity['entity_name'].lower().strip()
                 
                 # Check for exact duplicates
                 if entity_name in existing_names:
                     if self.debug:
-                        print(f"⚠️ Found duplicate entity: {entity['entity_name']}")
-                    # Keep the entity but mark it as duplicate
-                    entity['status'] = 'duplicate_detected'
-                    entity['tags'].append('needs_review')
+                        print(f"⚠️ Skipping duplicate entity: {entity['entity_name']}")
+                    duplicates_found += 1
+                    continue  # Skip duplicates entirely
                 
-                validated.append(entity)
+                # Check for similar names (basic fuzzy matching)
+                similar_found = False
+                for existing_name in existing_names:
+                    if self._names_are_similar(entity_name, existing_name):
+                        if self.debug:
+                            print(f"⚠️ Skipping similar entity: {entity['entity_name']} (similar to {existing_name})")
+                        similar_found = True
+                        duplicates_found += 1
+                        break
+                
+                if not similar_found:
+                    validated.append(entity)
+            
+            if self.debug and duplicates_found > 0:
+                print(f"🔍 Filtered out {duplicates_found} duplicate/similar entities")
             
             return validated
             
         except Exception as e:
             if self.debug:
                 print(f"❌ Entity validation failed: {e}")
-            return new_entities  # Return unvalidated if validation fails 
+            return new_entities  # Return unvalidated if validation fails
+    
+    def _get_existing_entity_names(self, campaign_id: str) -> List[str]:
+        """Get just the names of existing entities for duplicate checking"""
+        try:
+            from db.db import get_db_connection
+            
+            conn = get_db_connection()
+            cur = conn.cursor()
+            
+            cur.execute("""
+                SELECT DISTINCT LOWER(entity_name) as name
+                FROM extracted_entities 
+                WHERE campaign_id = %s
+            """, (campaign_id,))
+            
+            names = [row[0] for row in cur.fetchall()]
+            cur.close()
+            conn.close()
+            
+            return names
+            
+        except Exception as e:
+            if self.debug:
+                print(f"⚠️ Could not get existing entity names: {e}")
+            return []
+    
+    def _names_are_similar(self, name1: str, name2: str) -> bool:
+        """Basic similarity check for entity names"""
+        # Simple similarity: check if one name contains the other
+        # or if they share significant common words
+        
+        name1_words = set(name1.split())
+        name2_words = set(name2.split())
+        
+        # If one name contains the other
+        if name1 in name2 or name2 in name1:
+            return True
+        
+        # If they share more than 50% of words and at least 2 words
+        if len(name1_words) >= 2 and len(name2_words) >= 2:
+            overlap = len(name1_words.intersection(name2_words))
+            total = min(len(name1_words), len(name2_words))
+            if overlap / total > 0.5:
+                return True
+        
+        return False 

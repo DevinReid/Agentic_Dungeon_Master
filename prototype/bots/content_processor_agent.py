@@ -15,8 +15,7 @@ from dotenv import load_dotenv
 # Import the processing bots
 from .tag_generator_agent import TagGeneratorAgent
 from .entity_extractor_agent import EntityExtractorAgent
-# TODO: Insert chunker functionality here - build ContentChunkerAgent together
-# from .content_chunker_agent import ContentChunkerAgent
+from .content_chunker_agent import ContentChunkerAgent
 
 load_dotenv()
 
@@ -30,8 +29,7 @@ class ContentProcessorAgent:
         # Initialize processing bots
         self.tag_generator = TagGeneratorAgent(debug=debug)
         self.entity_extractor = EntityExtractorAgent(debug=debug)
-        # TODO: Insert chunker initialization here - build ContentChunkerAgent together
-        # self.content_chunker = ContentChunkerAgent(debug=debug)
+        self.content_chunker = ContentChunkerAgent(debug=debug)
         
         if self.debug:
             print("🤖 ContentProcessorAgent initialized with processing bots")
@@ -88,23 +86,23 @@ class ContentProcessorAgent:
                 )
                 
                 # Step 2: Extract entities (uses tags for consistency)
-                entities = self.entity_extractor.extract_entities(
+                entities_grouped = self.entity_extractor.extract_entities(
                     content=narrative_content,
                     content_type=content_type,
                     existing_tags=tags,
                     campaign_id=campaign_id
                 )
                 
+                # Flatten entities for content chunker (expects flat list)
+                entities_flat = self._flatten_entities(entities_grouped)
+                
                 # Step 3: Create chunks for vector embedding
-                # TODO: Insert chunker functionality here - build ContentChunkerAgent.create_chunks() together
-                # chunks = self.content_chunker.create_chunks(
-                #     content=narrative_content,
-                #     content_type=content_type,
-                #     tags=tags,
-                #     entities=entities
-                # )
-                # Temporary placeholder chunks until we build the chunker
-                chunks = self._create_placeholder_chunks(narrative_content, content_type, tags, entities)
+                chunks = self.content_chunker.create_chunks(
+                    content=narrative_content,
+                    content_type=content_type,
+                    tags=tags,
+                    entities=entities_flat
+                )
                 
                 processed_section = {
                     'section_key': section_key,
@@ -114,14 +112,16 @@ class ContentProcessorAgent:
                     'narrative_content': narrative_content,
                     'original_metadata': section_data,
                     'tags': tags,
-                    'entities': entities,
+                    'entities': entities_grouped,  # Keep grouped format for database saving
+                    'entities_flat': entities_flat,  # Flat format for compatibility
                     'chunks': chunks
                 }
                 
                 processed_sections.append(processed_section)
                 
                 if self.debug:
-                    print(f"✅ Processed {section_key}: {len(tags)} tags, {len(entities)} entities, {len(chunks)} chunks")
+                    total_entities = sum(len(entities) for entities in entities_grouped.values())
+                    print(f"✅ Processed {section_key}: {len(tags)} tags, {total_entities} entities, {len(chunks)} chunks")
                     
             except Exception as e:
                 print(f"❌ Error processing {section_key}: {e}")
@@ -234,22 +234,22 @@ class ContentProcessorAgent:
                 is_expansion=True
             )
             
-            entities = self.entity_extractor.extract_entities(
+            entities_grouped = self.entity_extractor.extract_entities(
                 content=expanded_content,
                 content_type=content_type,
                 existing_tags=tags,
                 campaign_id=campaign_id
             )
             
-            # TODO: Insert chunker functionality here - build ContentChunkerAgent.create_chunks() together
-            # chunks = self.content_chunker.create_chunks(
-            #     content=expanded_content,
-            #     content_type=content_type,
-            #     tags=tags,
-            #     entities=entities
-            # )
-            # Temporary placeholder chunks until we build the chunker
-            chunks = self._create_placeholder_chunks(expanded_content, content_type, tags, entities)
+            # Flatten entities for content chunker
+            entities_flat = self._flatten_entities(entities_grouped)
+            
+            chunks = self.content_chunker.create_chunks(
+                content=expanded_content,
+                content_type=content_type,
+                tags=tags,
+                entities=entities_flat
+            )
             
             return {
                 'content_type': content_type,
@@ -257,7 +257,8 @@ class ContentProcessorAgent:
                 'title': f"Expanded {content_type.replace('_', ' ').title()}",
                 'narrative_content': expanded_content,
                 'tags': tags,
-                'entities': entities,
+                'entities': entities_grouped,  # Keep grouped format for database saving
+                'entities_flat': entities_flat,  # Flat format for compatibility
                 'chunks': chunks,
                 'parent_content_id': parent_content_id
             }
@@ -266,33 +267,11 @@ class ContentProcessorAgent:
             print(f"❌ Error processing expansion content: {e}")
             raise
     
-    def _create_placeholder_chunks(self, content: str, content_type: str, 
-                                 tags: List[str], entities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """
-        Temporary placeholder method until we build the ContentChunkerAgent together
-        Creates simple chunks for now so the system doesn't crash
-        """
-        # Simple placeholder: create one chunk with all the content
-        word_count = len(content.split())
-        
-        # Extract entity names for metadata
-        entity_names = [entity.get('entity_name', '') for entity in entities]
-        
-        placeholder_chunk = {
-            'index': 0,
-            'text': content,
-            'topic': f"{content_type.replace('_', ' ').title()} Overview",
-            'word_count': word_count,
-            'chunk_type': 'placeholder',
-            'content_type': content_type,
-            'tags': tags,
-            'entities_mentioned': [{'name': name, 'type': 'unknown', 'tags': []} for name in entity_names],
-            'embedding_metadata': {
-                'content_type': content_type,
-                'chunk_topic': f"{content_type} overview",
-                'chunk_index': 0,
-                'entity_names': entity_names
-            }
-        }
-        
-        return [placeholder_chunk] 
+    def _flatten_entities(self, entities_grouped: dict) -> list:
+        """Flatten grouped entities into a flat list"""
+        entities_flat = []
+        for group, entities in entities_grouped.items():
+            entities_flat.extend(entities)
+        return entities_flat
+    
+ 

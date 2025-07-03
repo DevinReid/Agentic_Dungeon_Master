@@ -76,7 +76,7 @@ def create_new_world_for_campaign(campaign_id, campaign_name):
     
     try:
         # Delegate to CLI for world parameters and creation
-        from cli import WorldBuilderCLI
+    from cli import WorldBuilderCLI
         world_builder_cli = WorldBuilderCLI()
         
         # This will handle the entire world creation flow
@@ -92,10 +92,10 @@ def create_new_world_for_campaign(campaign_id, campaign_name):
         
         if result.success:
             print(f"\n✅ World '{result.world_name}' created successfully!")
-            print(f"📁 Linked to campaign: {campaign_name}")
-            
+        print(f"📁 Linked to campaign: {campaign_name}")
+        
             # PHASE 1: Save base content using new ContentProcessor pipeline
-            try:
+        try:
                 print("🏗️ Processing and saving world content...")
                 world_id = save_world_with_content_processing(campaign_id, result.world_data)
                 print("✅ World saved successfully!")
@@ -113,20 +113,20 @@ def create_new_world_for_campaign(campaign_id, campaign_name):
                 if not region_success:
                     return False
                     
-            except Exception as save_error:
-                print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
-                print("💾 Your world is still usable for this session!")
-            
+        except Exception as save_error:
+            print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
+            print("💾 Your world is still usable for this session!")
+        
             input("\n📖 Press Enter to continue to character creation...")
             return True
         else:
             print(f"\n❌ World creation failed: {result.error}")
             return False
-            
+        
     except Exception as e:
         print(f"\n❌ World creation failed: {str(e)}")
-        print("📝 You can add a world to this campaign later from the World Builder menu.")
-        return True
+            print("📝 You can add a world to this campaign later from the World Builder menu.")
+            return True
 
 def create_auto_world_for_campaign(campaign_id, campaign_name):
     """Create an auto-generated world using predefined parameters"""
@@ -136,15 +136,15 @@ def create_auto_world_for_campaign(campaign_id, campaign_name):
     
     try:
         # Use predefined parameters for auto-generation
-        auto_world_params = {
-            'theme': 'High Fantasy - Magic is everywhere, heroes are legendary',
-            'magic_commonality': 'Common - Most towns have a wizard or healer',
-            'deity_structure': 'Pantheon - Multiple gods with distinct domains',
-            'major_threat': 'Ancient Evil - Something terrible stirs from long slumber',
-            'size': 'Regional - Small continent (3 kingdoms, 3-5 major cities, 15-20 settlements)',
-            'custom_details': f'Classic fantasy adventure setting for the {campaign_name} campaign'
-        }
-        
+    auto_world_params = {
+        'theme': 'High Fantasy - Magic is everywhere, heroes are legendary',
+        'magic_commonality': 'Common - Most towns have a wizard or healer',
+        'deity_structure': 'Pantheon - Multiple gods with distinct domains',
+        'major_threat': 'Ancient Evil - Something terrible stirs from long slumber',
+        'size': 'Regional - Small continent (3 kingdoms, 3-5 major cities, 15-20 settlements)',
+        'custom_details': f'Classic fantasy adventure setting for the {campaign_name} campaign'
+    }
+    
         # Delegate to world builder orchestrator
         from world_builder import WorldGenerationOrchestrator
         orchestrator = WorldGenerationOrchestrator()
@@ -154,11 +154,11 @@ def create_auto_world_for_campaign(campaign_id, campaign_name):
         
         if result.success:
             print(f"\n✅ World '{result.world_name}' auto-crafted successfully!")
-            print(f"📁 Linked to campaign: {campaign_name}")
+        print(f"📁 Linked to campaign: {campaign_name}")
             print("🎯 Perfect for classic D&D adventures!")
             
             # PHASE 1: Save base content using new ContentProcessor pipeline
-            try:
+        try:
                 print("🏗️ Processing and saving world content...")
                 world_id = save_world_with_content_processing(campaign_id, result.world_data)
                 print("✅ World saved successfully!")
@@ -173,18 +173,18 @@ def create_auto_world_for_campaign(campaign_id, campaign_name):
                 if not region_success:
                     return False
                     
-            except Exception as save_error:
-                print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
-                print("💾 Your world is still usable for this session!")
+        except Exception as save_error:
+            print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
+            print("💾 Your world is still usable for this session!")
             
-            input("\n📖 Press Enter to continue to character creation...")
-            return True
+        input("\n📖 Press Enter to continue to character creation...")
+        return True
         else:
             print(f"\n❌ Auto-world creation failed: {result.error}")
             print("Don't worry, you can still play without a generated world!")
             input("📖 Press Enter to continue...")
             return True  # Continue anyway
-            
+        
     except Exception as e:
         print(f"\n❌ Auto-world creation failed: {str(e)}")
         print("Don't worry, you can still play without a generated world!")
