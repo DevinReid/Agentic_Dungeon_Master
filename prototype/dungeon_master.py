@@ -3,6 +3,7 @@ import cli
 from services.game_session import GameSession
 from services.campaign_manager import CampaignManager
 from db import db
+import psycopg2.extras
 
 
 def handle_region_building_for_campaign(campaign_id, campaign_name, world_id, universe_data):
@@ -76,7 +77,7 @@ def create_new_world_for_campaign(campaign_id, campaign_name):
     
     try:
         # Delegate to CLI for world parameters and creation
-    from cli import WorldBuilderCLI
+        from cli import WorldBuilderCLI
         world_builder_cli = WorldBuilderCLI()
         
         # This will handle the entire world creation flow
@@ -94,29 +95,28 @@ def create_new_world_for_campaign(campaign_id, campaign_name):
             print(f"\n✅ World '{result.world_name}' created successfully!")
         print(f"📁 Linked to campaign: {campaign_name}")
         
-            # PHASE 1: Save base content using new ContentProcessor pipeline
+        # PHASE 1: Save base content using new ContentProcessor pipeline
         try:
-                print("🏗️ Processing and saving world content...")
-                world_id = save_world_with_content_processing(campaign_id, result.world_data)
-                print("✅ World saved successfully!")
+            print("🏗️ Processing and saving world content with distributed architecture...")
+            world_id = save_world_with_distributed_processing(campaign_id, result.world_data)
+            print("✅ World saved successfully!")
+            
+            # PHASE 2: Optional expansion
+            if offer_content_expansion():
+                print("🔄 Expanding world content... (this may take a few minutes)")
+                expand_world_content(campaign_id, world_id)
+            else:
+                print("⏩ Skipping expansion - world ready to play!")
+            
+            # Handle region planning
+            input("\n📖 Press Enter to continue to region planning...")
+            region_success = handle_region_building_for_campaign(campaign_id, campaign_name, world_id, result.world_data)
+            if not region_success:
+                return False
                 
-                # PHASE 2: Optional expansion
-                if offer_content_expansion():
-                    print("🔄 Expanding world content... (this may take a few minutes)")
-                    expand_world_content(campaign_id, world_id)
-                else:
-                    print("⏩ Skipping expansion - world ready to play!")
-                
-                # Handle region planning
-                input("\n📖 Press Enter to continue to region planning...")
-                region_success = handle_region_building_for_campaign(campaign_id, campaign_name, world_id, result.world_data)
-                if not region_success:
-                    return False
-                    
         except Exception as save_error:
             print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
             print("💾 Your world is still usable for this session!")
-        
             input("\n📖 Press Enter to continue to character creation...")
             return True
         else:
@@ -125,8 +125,8 @@ def create_new_world_for_campaign(campaign_id, campaign_name):
         
     except Exception as e:
         print(f"\n❌ World creation failed: {str(e)}")
-            print("📝 You can add a world to this campaign later from the World Builder menu.")
-            return True
+        print("📝 You can add a world to this campaign later from the World Builder menu.")
+        return True
 
 def create_auto_world_for_campaign(campaign_id, campaign_name):
     """Create an auto-generated world using predefined parameters"""
@@ -136,7 +136,7 @@ def create_auto_world_for_campaign(campaign_id, campaign_name):
     
     try:
         # Use predefined parameters for auto-generation
-    auto_world_params = {
+        auto_world_params = {
         'theme': 'High Fantasy - Magic is everywhere, heroes are legendary',
         'magic_commonality': 'Common - Most towns have a wizard or healer',
         'deity_structure': 'Pantheon - Multiple gods with distinct domains',
@@ -154,13 +154,13 @@ def create_auto_world_for_campaign(campaign_id, campaign_name):
         
         if result.success:
             print(f"\n✅ World '{result.world_name}' auto-crafted successfully!")
-        print(f"📁 Linked to campaign: {campaign_name}")
+            print(f"📁 Linked to campaign: {campaign_name}")
             print("🎯 Perfect for classic D&D adventures!")
             
             # PHASE 1: Save base content using new ContentProcessor pipeline
-        try:
-                print("🏗️ Processing and saving world content...")
-                world_id = save_world_with_content_processing(campaign_id, result.world_data)
+            try:
+                print("🏗️ Processing and saving world content with distributed architecture...")
+                world_id = save_world_with_distributed_processing(campaign_id, result.world_data)
                 print("✅ World saved successfully!")
                 
                 # PHASE 2: Auto-expand for enhanced experience
@@ -172,19 +172,16 @@ def create_auto_world_for_campaign(campaign_id, campaign_name):
                 region_success = handle_region_building_for_campaign(campaign_id, campaign_name, world_id, result.world_data)
                 if not region_success:
                     return False
-                    
-        except Exception as save_error:
-            print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
-            print("💾 Your world is still usable for this session!")
-            
-        input("\n📖 Press Enter to continue to character creation...")
-        return True
+            except Exception as save_error:
+                print(f"⚠️ Warning: World created but database save failed: {str(save_error)}")
+                print("💾 Your world is still usable for this session!")
+                input("\n📖 Press Enter to continue to character creation...")
+                return True
         else:
             print(f"\n❌ Auto-world creation failed: {result.error}")
             print("Don't worry, you can still play without a generated world!")
             input("📖 Press Enter to continue...")
             return True  # Continue anyway
-        
     except Exception as e:
         print(f"\n❌ Auto-world creation failed: {str(e)}")
         print("Don't worry, you can still play without a generated world!")
@@ -213,6 +210,96 @@ def save_world_with_content_processing(campaign_id: str, universe_data: dict) ->
     world_id = db.save_processed_world(campaign_id, processed_sections, world_name)
     
     return world_id
+
+def save_world_with_distributed_processing(campaign_id: str, universe_data: dict) -> str:
+    """
+    Save world using distributed ContentProcessor pipeline that matches user's exact flow:
+    - Content feeds directly into all agents
+    - TagGenerator feeds into EntityExtractor, ContentProcessor, ContentChunker  
+    - EntityProcessor saves directly to PostgreSQL and vectorizer (bypassing ContentProcessor)
+    - ContentChunker results sent directly to vectorizer (bypassing ContentProcessor)
+    - Only lightweight data (tags, narrative) goes through ContentProcessor for final save
+    
+    Args:
+        campaign_id: Campaign UUID
+        universe_data: Raw UniverseBuilder output
+        
+    Returns:
+        world_id: UUID of created world
+    """
+    from bots.content_processor_agent import ContentProcessorAgent
+    import db
+    from db.db import _update_tag_vocabulary_batch
+    
+    print("🏗️ Using optimized batch processing architecture...")
+    print("📊 Flow Summary:")
+    print("   • Content → TagGenerator, EntityExtractor, ContentChunker")
+    print("   • TagGenerator → EntityExtractor, ContentProcessor, ContentChunker")
+    print("   • EntityExtractor → EntityProcessor → Direct PostgreSQL + Vectorizer")
+    print("   • ContentChunker → Direct Vectorizer")
+    print("   • ContentProcessor → PostgreSQL (full data)")
+    
+    # Extract world metadata for initial world creation
+    world_name = universe_data.get('world_info', {}).get('world_name', 'Generated World')
+    world_metadata = universe_data.get('world_info', {})
+    
+    # Create the world record FIRST so we have a real world_id for entity saves
+    print("💾 Creating world record first for entity direct saves...")
+    conn = db.get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        scope = world_metadata.get('scope', 'regional')
+        theme_list = world_metadata.get('theme_list', '')
+        magic_level = world_metadata.get('magic_level', 'medium')
+        
+        cur.execute("""
+            INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
+                               region_count, major_city_count, settlement_count, magic_level)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING world_id;
+        """, (campaign_id, world_name, scope, theme_list, 
+              world_metadata.get('region_count', 1),
+              world_metadata.get('major_city_count', 1), 
+              world_metadata.get('settlement_count', 3),
+              magic_level))
+        
+        world_id = cur.fetchone()[0]
+        conn.commit()
+        print(f"✅ World record created with ID: {world_id}")
+        
+    except Exception as e:
+        conn.rollback()
+        print(f"❌ Failed to create world record: {e}")
+        raise
+    finally:
+        cur.close()
+        conn.close()
+    
+    # Process universe data through distributed ContentProcessor with REAL world_id
+    processor = ContentProcessorAgent(debug=True)
+    
+    # Use batch processing with the real world_id for entity direct saves
+    processed_sections = processor.process_universe_content_batch(
+        campaign_id=campaign_id, 
+        universe_data=universe_data,
+        world_id=str(world_id)  # Use the real world_id for direct saves
+    )
+    
+    # Batch processing already handles all saving (content, entities, chunks, tags)
+    # No additional lightweight saving needed
+    print(f"✅ World '{world_name}' content saved with ID: {world_id}")
+    
+    print("✅ Batch processing complete!")
+    print("📊 Architecture Summary:")
+    print("   • Content: Combined all sections into single batch")
+    print("   • Tags: Generated for entire world content (1 AI call)")
+    print("   • Entities: Extracted and saved directly to PostgreSQL by EntityProcessor")
+    print("   • Entity vectors: Created directly by EntityProcessor") 
+    print("   • Content chunks: Vectorized directly by ContentChunker")
+    print("   • All data: Saved by batch processor (no lightweight saves)")
+    
+    return str(world_id)
 
 def offer_content_expansion() -> bool:
     """Ask user if they want to expand content"""

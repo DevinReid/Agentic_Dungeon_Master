@@ -4,6 +4,7 @@ Entity Processor Agent
 
 Transforms raw extracted entities into complete, database-ready records using batch processing.
 Handles duplicate resolution, entity individualization, and full stat/lore generation in one AI call.
+Saves directly to PostgreSQL and vectorizer, bypassing ContentProcessor.
 """
 
 import json
@@ -12,6 +13,7 @@ from typing import List, Dict, Any, Optional
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import psycopg2.extras
 
 load_dotenv()
 
@@ -28,7 +30,8 @@ class EntityProcessorAgent:
             print("🔄 EntityProcessorAgent initialized")
     
     def process_entities(self, raw_entities: List[Dict[str, Any]], campaign_id: str, 
-                        content: str, content_type: str) -> Dict[str, List[Dict[str, Any]]]:
+                        content: str, content_type: str, world_id: str = None, 
+                        save_direct: bool = True, source_content_id: str = None) -> Dict[str, List[Dict[str, Any]]]:
         """
         Main processing method that transforms raw entities into database-ready records
         
@@ -37,14 +40,14 @@ class EntityProcessorAgent:
             campaign_id: Campaign UUID for context
             content: Original content for context
             content_type: Type of content being processed
+            world_id: World UUID for direct saves (optional)
+            save_direct: If True, save directly to PostgreSQL and vectorizer
+            source_content_id: ID of source content for entity linking (optional)
             
         Returns:
             Dict with keys: 'npcs', 'locations', 'organizations', 'artifacts', 'deities', 'threats'
             Each containing lists of complete database records
         """
-        if self.debug:
-            print(f"🔄 Processing {len(raw_entities)} raw entities with batching")
-        
         if not raw_entities:
             return {'npcs': [], 'locations': [], 'organizations': [], 'artifacts': [], 'deities': [], 'threats': [], 'events': [], 'items': []}
         
@@ -56,16 +59,10 @@ class EntityProcessorAgent:
             batch_size = 8  # Process 8 entities at a time to stay well under token limits
             batches = [raw_entities[i:i + batch_size] for i in range(0, len(raw_entities), batch_size)]
             
-            if self.debug:
-                print(f"🔄 Split into {len(batches)} batches of up to {batch_size} entities each")
-            
             # Process each batch and combine results
             combined_results = {'npcs': [], 'locations': [], 'organizations': [], 'artifacts': [], 'deities': [], 'threats': [], 'events': [], 'items': []}
             
             for i, batch in enumerate(batches):
-                if self.debug:
-                    print(f"🔄 Processing batch {i+1}/{len(batches)} ({len(batch)} entities)")
-                
                 batch_results = self._batch_process_entities(
                     batch, campaign_id, content, content_type, existing_context
                 )
@@ -74,9 +71,10 @@ class EntityProcessorAgent:
                 for entity_type, entities in batch_results.items():
                     combined_results[entity_type].extend(entities)
             
-            if self.debug:
-                total_entities = sum(len(entities) for entities in combined_results.values())
-                print(f"✅ Generated {total_entities} complete entity records across {len(batches)} batches")
+            # DIRECT SAVE TO DATABASE AND VECTORIZER
+            if save_direct and world_id:
+                self._save_entities_direct(combined_results, campaign_id, world_id, content_type, source_content_id)
+                self._vectorize_entities_direct(combined_results, campaign_id, world_id, content_type)
             
             return combined_results
             
@@ -85,13 +83,244 @@ class EntityProcessorAgent:
             # Fallback to empty results
             return {'npcs': [], 'locations': [], 'organizations': [], 'artifacts': [], 'deities': [], 'threats': [], 'events': [], 'items': []}
     
+    def _save_entities_direct(self, processed_entities: Dict[str, List[Dict[str, Any]]], 
+                             campaign_id: str, world_id: str, content_type: str, source_content_id: str):
+        """Save processed entities directly to PostgreSQL database tables"""
+        try:
+            from db.db import get_db_connection
+            
+            conn = get_db_connection()
+            cur = conn.cursor()
+            
+            if self.debug:
+                print("💾 Saving NPCs directly to npcs table...")
+            
+            # Save NPCs to dedicated npc table
+            for npc in processed_entities.get('npcs', []):
+                try:
+                    cur.execute("""
+                        INSERT INTO npcs (npc_id, campaign_id, name, class, level, hp, max_hp, ac,
+                                         strength, dexterity, constitution, intelligence, wisdom, charisma,
+                                         status, disposition, backstory, personality_traits, flaws, bonds,
+                                         notable_abilities, relationships, lore, tags, source_content_type,
+                                         current_location_id, last_seen)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (npc_id) DO NOTHING;
+                    """, (
+                        npc['npc_id'], campaign_id, npc['name'], npc.get('class'), npc.get('level'),
+                        npc.get('hp'), npc.get('max_hp'), npc.get('ac'), npc.get('strength'), 
+                        npc.get('dexterity'), npc.get('constitution'), npc.get('intelligence'),
+                        npc.get('wisdom'), npc.get('charisma'), npc.get('status'), npc.get('disposition'),
+                        npc.get('backstory'),                     npc.get('personality_traits', []),  # PostgreSQL will handle array conversion
+                        npc.get('flaws', []), npc.get('bonds', []),
+                        npc.get('notable_abilities', []), 
+                        psycopg2.extras.Json(npc.get('relationships', [])), npc.get('lore'),
+                        npc.get('tags', []), content_type, npc.get('current_location_id'), npc.get('last_seen')
+                    ))
+                except Exception as e:
+                    if self.debug:
+                        print(f"⚠️ Failed to save NPC {npc.get('name', 'Unknown')}: {e}")
+                    continue
+            
+            if self.debug:
+                print("💾 Saving locations directly to locations table...")
+            
+            # Save Locations to dedicated locations table
+            for location in processed_entities.get('locations', []):
+                try:
+                    cur.execute("""
+                        INSERT INTO locations (location_id, campaign_id, name, description, notable_features,
+                                             connections, location_type, size, inhabitants, notable_items,
+                                             atmosphere, relationships, lore, tags, source_content_type)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (location_id) DO NOTHING;
+                    """, (
+                        location['location_id'], campaign_id, location['name'], location.get('description'),
+                        location.get('notable_features'),                     psycopg2.extras.Json(location.get('connections', {})),  # Convert dict to JSON
+                        location.get('location_type'), location.get('size'), 
+                        location.get('inhabitants', []),  # PostgreSQL will handle array conversion
+                        location.get('notable_items', []), location.get('atmosphere'),
+                        psycopg2.extras.Json(location.get('relationships', [])), location.get('lore'),
+                        location.get('tags', []), content_type
+                    ))
+                except Exception as e:
+                    if self.debug:
+                        print(f"⚠️ Failed to save location {location.get('name', 'Unknown')}: {e}")
+                    continue
+            
+            if self.debug:
+                print("💾 Saving other entities directly to extracted_entities table...")
+            
+            # Save other entities (artifacts, organizations, deities, threats, events, items) to extracted_entities
+            for entity_type in ['organizations', 'artifacts', 'deities', 'threats', 'events', 'items']:
+                for entity in processed_entities.get(entity_type, []):
+                    try:
+                        # Store additional entity data as JSON in extraction_context temporarily
+                        entity_json = json.dumps(entity)
+                        
+                        cur.execute("""
+                            INSERT INTO extracted_entities (entity_id, world_id, campaign_id, source_content_id,
+                                                          entity_type, entity_name, description, status, tags, 
+                                                          extraction_context)
+                            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            ON CONFLICT (entity_id) DO NOTHING;
+                        """, (
+                            entity['entity_id'], world_id, campaign_id, source_content_id,  # Use source_content_id for linking
+                            entity_type[:-1],  # Remove 's' from plural  
+                            entity['entity_name'], entity.get('description'), entity.get('status', 'extracted'),
+                            entity.get('tags', []), entity_json  # Store full entity as JSON in extraction_context
+                        ))
+                    except Exception as e:
+                        if self.debug:
+                            print(f"⚠️ Failed to save {entity_type[:-1]} {entity.get('entity_name', 'Unknown')}: {e}")
+                        continue
+            
+            conn.commit()
+            cur.close()
+            conn.close()
+            
+            pass
+                
+        except Exception as e:
+            print(f"❌ Failed to save entities directly: {e}")
+            import traceback
+            traceback.print_exc()
+    
+    def _vectorize_entities_direct(self, processed_entities: Dict[str, List[Dict[str, Any]]], 
+                                  campaign_id: str, world_id: str, content_type: str):
+        """Send processed entities directly to vectorizer"""
+        try:
+            from services.vector_service import VectorService
+            
+            vector_service = VectorService(debug=self.debug)
+            
+            if self.debug:
+                print("🔍 Vectorizing entities directly...")
+            
+            # Vectorize NPCs with rich personality data
+            for npc in processed_entities.get('npcs', []):
+                npc_text = self._create_npc_vector_text(npc)
+                vector_id = f"npc_{npc['npc_id']}"
+                
+                metadata = {
+                    "content_id": npc['npc_id'],
+                    "campaign_id": campaign_id,
+                    "world_id": world_id,
+                    "content_type": "npc_profile",
+                    "entity_type": "npc",
+                    "entity_name": npc['name'],
+                    "tags": npc.get('tags', [])[:10],
+                    "text_snippet": npc_text[:500] + "..." if len(npc_text) > 500 else npc_text,
+                    "is_entity": True
+                }
+                
+                embedding = vector_service.generate_embedding(npc_text)
+                vector_service.index.upsert(vectors=[(vector_id, embedding, metadata)])
+            
+            # Vectorize Locations with rich descriptive data
+            for location in processed_entities.get('locations', []):
+                location_text = self._create_location_vector_text(location)
+                vector_id = f"location_{location['location_id']}"
+                
+                metadata = {
+                    "content_id": location['location_id'],
+                    "campaign_id": campaign_id,
+                    "world_id": world_id,
+                    "content_type": "location_profile",
+                    "entity_type": "location",
+                    "entity_name": location['name'],
+                    "tags": location.get('tags', [])[:10],
+                    "text_snippet": location_text[:500] + "..." if len(location_text) > 500 else location_text,
+                    "is_entity": True
+                }
+                
+                embedding = vector_service.generate_embedding(location_text)
+                vector_service.index.upsert(vectors=[(vector_id, embedding, metadata)])
+            
+            # Vectorize other entities
+            for entity_type in ['organizations', 'artifacts', 'deities', 'threats', 'events', 'items']:
+                for entity in processed_entities.get(entity_type, []):
+                    entity_text = self._create_entity_vector_text(entity)
+                    vector_id = f"{entity_type[:-1]}_{entity['entity_id']}"  # Remove 's'
+                    
+                    metadata = {
+                        "content_id": entity['entity_id'],
+                        "campaign_id": campaign_id,
+                        "world_id": world_id,
+                        "content_type": f"{entity_type[:-1]}_profile",
+                        "entity_type": entity_type[:-1],
+                        "entity_name": entity['entity_name'],
+                        "tags": entity.get('tags', [])[:10],
+                        "text_snippet": entity_text[:500] + "..." if len(entity_text) > 500 else entity_text,
+                        "is_entity": True
+                    }
+                    
+                    embedding = vector_service.generate_embedding(entity_text)
+                    vector_service.index.upsert(vectors=[(vector_id, embedding, metadata)])
+            
+            pass
+                
+        except Exception as e:
+            print(f"❌ Failed to vectorize entities directly: {e}")
+    
+    def _create_npc_vector_text(self, npc: Dict[str, Any]) -> str:
+        """Create rich text for NPC vectorization"""
+        parts = []
+        
+        if npc.get('name'):
+            parts.append(f"Name: {npc['name']}")
+        if npc.get('class'):
+            parts.append(f"Class: {npc['class']}")
+        if npc.get('backstory'):
+            parts.append(f"Background: {npc['backstory']}")
+        if npc.get('personality_traits'):
+            parts.append(f"Personality: {', '.join(npc['personality_traits'])}")
+        if npc.get('lore'):
+            parts.append(f"Lore: {npc['lore']}")
+        if npc.get('notable_abilities'):
+            parts.append(f"Abilities: {', '.join(npc['notable_abilities'])}")
+        
+        return " | ".join(parts)
+    
+    def _create_location_vector_text(self, location: Dict[str, Any]) -> str:
+        """Create rich text for location vectorization"""
+        parts = []
+        
+        if location.get('name'):
+            parts.append(f"Name: {location['name']}")
+        if location.get('description'):
+            parts.append(f"Description: {location['description']}")
+        if location.get('notable_features'):
+            parts.append(f"Features: {location['notable_features']}")
+        if location.get('atmosphere'):
+            parts.append(f"Atmosphere: {location['atmosphere']}")
+        if location.get('lore'):
+            parts.append(f"Lore: {location['lore']}")
+        
+        return " | ".join(parts)
+    
+    def _create_entity_vector_text(self, entity: Dict[str, Any]) -> str:
+        """Create rich text for other entity vectorization"""
+        parts = []
+        
+        if entity.get('entity_name'):
+            parts.append(f"Name: {entity['entity_name']}")
+        if entity.get('description'):
+            parts.append(f"Description: {entity['description']}")
+        if entity.get('history'):
+            parts.append(f"History: {entity['history']}")
+        if entity.get('properties'):
+            parts.append(f"Properties: {', '.join(entity['properties']) if isinstance(entity['properties'], list) else entity['properties']}")
+        
+        return " | ".join(parts)
+    
     def _batch_process_entities(self, raw_entities: List[Dict[str, Any]], campaign_id: str,
                                content: str, content_type: str, existing_context: str) -> Dict[str, List[Dict[str, Any]]]:
         """Single AI call to process a batch of entities (8 or fewer) with structured format templates"""
         
         # Define JSON format templates for each entity type
         npc_format = {
-            "npc_id": "UUID (generated)",
+            "npc_id": "generate a real UUID",
             "campaign_id": "UUID", 
             "name": "Complete NPC Name",
             "class": "Cleric/Fighter/Wizard/Commoner/etc",
@@ -118,7 +347,7 @@ class EntityProcessorAgent:
         }
         
         location_format = {
-            "location_id": "UUID (generated)",
+            "location_id": "generate a real UUID",
             "campaign_id": "UUID",
             "name": "Complete Location Name", 
             "description": "Rich description of the location",
@@ -135,7 +364,7 @@ class EntityProcessorAgent:
         }
         
         artifact_format = {
-            "entity_id": "UUID (generated)",
+            "entity_id": "generate a real UUID",
             "campaign_id": "UUID",
             "entity_type": "artifact",
             "entity_name": "Artifact Name",
@@ -151,7 +380,7 @@ class EntityProcessorAgent:
         }
         
         organization_format = {
-            "entity_id": "UUID (generated)", 
+            "entity_id": "generate a real UUID", 
             "campaign_id": "UUID",
             "entity_type": "organization",
             "entity_name": "Organization Name",
@@ -211,7 +440,7 @@ Return JSON with this structure:
   "items": [list of item records]
 }}
 
-CRITICAL: Generate UUIDs for all _id fields, maintain relationships between entities, ensure rich detail for gameplay use."""
+CRITICAL: Generate REAL UUIDs (like '550e8400-e29b-41d4-a716-446655440000') for all _id fields, maintain relationships between entities, ensure rich detail for gameplay use."""
 
         try:
             response = self.client.chat.completions.create(
@@ -258,7 +487,8 @@ CRITICAL: Generate UUIDs for all _id fields, maintain relationships between enti
                 
                 # Ensure required fields
                 if entity_type == 'npcs':
-                    if 'npc_id' not in entity or not entity['npc_id']:
+                    # Validate and fix UUID if needed
+                    if 'npc_id' not in entity or not entity['npc_id'] or not self._is_valid_uuid(entity['npc_id']):
                         entity['npc_id'] = str(uuid.uuid4())
                     entity['campaign_id'] = campaign_id
                     entity['current_location_id'] = None
@@ -266,13 +496,15 @@ CRITICAL: Generate UUIDs for all _id fields, maintain relationships between enti
                     entity['source_content_type'] = content_type
                     
                 elif entity_type == 'locations':
-                    if 'location_id' not in entity or not entity['location_id']:
+                    # Validate and fix UUID if needed
+                    if 'location_id' not in entity or not entity['location_id'] or not self._is_valid_uuid(entity['location_id']):
                         entity['location_id'] = str(uuid.uuid4()) 
                     entity['campaign_id'] = campaign_id
                     entity['source_content_type'] = content_type
                     
                 else:  # artifacts, organizations, deities, threats, events, items
-                    if 'entity_id' not in entity or not entity['entity_id']:
+                    # Validate and fix UUID if needed
+                    if 'entity_id' not in entity or not entity['entity_id'] or not self._is_valid_uuid(entity['entity_id']):
                         entity['entity_id'] = str(uuid.uuid4())
                     entity['campaign_id'] = campaign_id
                     entity['source_content_type'] = content_type
@@ -282,6 +514,14 @@ CRITICAL: Generate UUIDs for all _id fields, maintain relationships between enti
                 processed_result[entity_type].append(entity)
         
         return processed_result
+    
+    def _is_valid_uuid(self, uuid_string: str) -> bool:
+        """Check if a string is a valid UUID"""
+        try:
+            uuid.UUID(uuid_string)
+            return True
+        except (ValueError, TypeError):
+            return False
     
     def _get_existing_entities_context(self, campaign_id: str) -> str:
         """Get context of existing entities for duplicate detection and relationship building"""

@@ -1,0 +1,615 @@
+{
+  "world_id": "5f5740db-f3b8-4c78-baee-b2490421861d",
+  "campaign_id": "f37fa40d-8ea6-4bd4-af5d-215614b433f4",
+  "universe_data": {
+    "world_info": {
+      "world_name": "Elaris",
+      "world_description": "Elaris is a world where the veils between realms are thin, allowing the whispers of the cosmos to weave through the land. It is an ancient sphere, cradled in the arms of an eternal sky where the light of twin moons bathes the nights in silver, while the sun's embrace brings warmth to a landscape rich in mystery and magic. The continent of Elaris is a tapestry of varied terrains, from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast. Time moves like a river here, marked by the rhythms of the great celestial clock that hangs in the heavens, influencing the fates of all who dwell beneath.",
+      "theme_description": "The world of Elaris thrives on the tension between harmony and chaos, where the pursuit of knowledge and power often leads to unintended consequences. At its heart is the struggle to balance the elemental forces that shape existence, as ancient prophecies predict a time of convergence where heroes must rise to avert calamity. This is a realm where destiny and free will collide, forging narratives of adventure, betrayal, and redemption.",
+      "theme_list": "balance, prophecy, destiny, adventure, chaos, harmony",
+      "natural_laws": "The natural laws of Elaris are governed by the Eternal Weave, an intricate network of magical and elemental forces that connect all living things. Planar connections are commonplace, with portals to other realms appearing and disappearing like fleeting dreams. Time itself is malleable, influenced by the orbits of the twin moons, which are believed to be the eyes of ancient deities watching over the world.",
+      "custom_details": "The land is dotted with ancient ruins, remnants of civilizations past, where secrets of forgotten magics and lost technologies lie hidden, waiting to be discovered by those brave enough to seek them."
+    },
+    "magic_system": {
+      "commonality": "Magic is woven into the very fabric of Elaris, present in the whispers of the wind and the dance of the stars. It is a part of daily life for many, with even the simplest villages relying on minor enchantments to aid in farming and crafts.",
+      "mechanics": "Magic operates through the manipulation of the Eternal Weave, requiring intense focus and an understanding of elemental forces. Spells are cast through a combination of incantations, gestures, and the use of magical foci, which are often attuned to the caster's innate abilities.",
+      "limitations": "The use of magic is limited by the caster's knowledge and attunement to the Weave. Overuse can lead to physical and mental exhaustion, or worse, a rift in the Weave itself that can have catastrophic consequences.",
+      "sources": "Magic flows from the Eternal Weave, powered by the elements, celestial bodies, and the life force of the world. Ancient sites of power, often tied to the ruins of lost cities, amplify magical abilities.",
+      "magic_level": "High"
+    },
+    "pantheon": {
+      "structure": "Elaris is home to a diverse pantheon, where each deity represents an aspect of the world, from the fierce god of storms to the gentle goddess of the harvest. Temples dedicated to these deities are centers of learning and power, where priests and scholars alike explore the mysteries of the universe.",
+      "major_deities": [
+        "Zephron, the Storm Bringer",
+        "Lunara, the Silver Maiden",
+        "Thalor, Keeper of Secrets",
+        "Vessa, the Earth Mother"
+      ],
+      "religious_conflicts": [
+        "The followers of Zephron and Vessa often clash over the balance of nature, with Zephron's tempests threatening the lands Vessa seeks to nurture.",
+        "Thalor's worshippers, shrouded in mystery, are viewed with suspicion, accused of hoarding knowledge that could benefit all."
+      ],
+      "divine_influence": "The gods of Elaris are active, their presence felt in the natural phenomena that shape daily life. They communicate through dreams, omens, and the voices of their chosen oracles, guiding mortals to fulfill their destinies."
+    },
+    "global_threats": [
+      {
+        "primary_threat": "The Convergence of Realms",
+        "threat_details": "As the twin moons align, ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King. His minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land.",
+        "world_impact": "The convergence threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace.",
+        "resistance_forces": "An alliance of mages, warriors, and scholars, known as the League of the Dawn, rises to combat the Shadowborn. They scour the land for ancient artifacts and lost knowledge, hoping to avert the impending catastrophe."
+      }
+    ],
+    "size": {
+      "scope": "continental",
+      "description": "Elaris is a vast continent divided by powerful mountain ranges, lush forests, and sprawling deserts, each housing its own unique cultures and creatures. Its regions are as diverse as its people, from the icy tundras of the North to the verdant jungles in the South.",
+      "region_count": 8,
+      "major_city_count": 12,
+      "settlement_count": 85
+    }
+  },
+  "processed_sections": [
+    {
+      "section_key": "world_info",
+      "content_type": "world_overview",
+      "source_type": "universe_builder",
+      "title": "World Overview - Elaris",
+      "narrative_content": "Elaris is a world where the veils between realms are thin, allowing the whispers of the cosmos to weave through the land. It is an ancient sphere, cradled in the arms of an eternal sky where the light of twin moons bathes the nights in silver, while the sun's embrace brings warmth to a landscape rich in mystery and magic. The continent of Elaris is a tapestry of varied terrains, from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast. Time moves like a river here, marked by the rhythms of the great celestial clock that hangs in the heavens, influencing the fates of all who dwell beneath.",
+      "original_metadata": {
+        "world_name": "Elaris",
+        "world_description": "Elaris is a world where the veils between realms are thin, allowing the whispers of the cosmos to weave through the land. It is an ancient sphere, cradled in the arms of an eternal sky where the light of twin moons bathes the nights in silver, while the sun's embrace brings warmth to a landscape rich in mystery and magic. The continent of Elaris is a tapestry of varied terrains, from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast. Time moves like a river here, marked by the rhythms of the great celestial clock that hangs in the heavens, influencing the fates of all who dwell beneath.",
+        "theme_description": "The world of Elaris thrives on the tension between harmony and chaos, where the pursuit of knowledge and power often leads to unintended consequences. At its heart is the struggle to balance the elemental forces that shape existence, as ancient prophecies predict a time of convergence where heroes must rise to avert calamity. This is a realm where destiny and free will collide, forging narratives of adventure, betrayal, and redemption.",
+        "theme_list": "balance, prophecy, destiny, adventure, chaos, harmony",
+        "natural_laws": "The natural laws of Elaris are governed by the Eternal Weave, an intricate network of magical and elemental forces that connect all living things. Planar connections are commonplace, with portals to other realms appearing and disappearing like fleeting dreams. Time itself is malleable, influenced by the orbits of the twin moons, which are believed to be the eyes of ancient deities watching over the world.",
+        "custom_details": "The land is dotted with ancient ruins, remnants of civilizations past, where secrets of forgotten magics and lost technologies lie hidden, waiting to be discovered by those brave enough to seek them."
+      },
+      "content_id": "656b4809-62e6-4b26-81e7-4b002a31061d",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "twin_moons",
+        "eternal_weave",
+        "magic_system",
+        "elemental_forces",
+        "magic_foci",
+        "incantations",
+        "eldergrove",
+        "amber_coast",
+        "celestial_clock",
+        "diverse_pantheon",
+        "manipulation_of_magic",
+        "realm_veils",
+        "ancient_world"
+      ]
+    },
+    {
+      "section_key": "magic_system",
+      "content_type": "magic_system",
+      "source_type": "universe_builder",
+      "title": "Magic System",
+      "narrative_content": "Magic operates through the manipulation of the Eternal Weave, requiring intense focus and an understanding of elemental forces. Spells are cast through a combination of incantations, gestures, and the use of magical foci, which are often attuned to the caster's innate abilities.",
+      "original_metadata": {
+        "commonality": "Magic is woven into the very fabric of Elaris, present in the whispers of the wind and the dance of the stars. It is a part of daily life for many, with even the simplest villages relying on minor enchantments to aid in farming and crafts.",
+        "mechanics": "Magic operates through the manipulation of the Eternal Weave, requiring intense focus and an understanding of elemental forces. Spells are cast through a combination of incantations, gestures, and the use of magical foci, which are often attuned to the caster's innate abilities.",
+        "limitations": "The use of magic is limited by the caster's knowledge and attunement to the Weave. Overuse can lead to physical and mental exhaustion, or worse, a rift in the Weave itself that can have catastrophic consequences.",
+        "sources": "Magic flows from the Eternal Weave, powered by the elements, celestial bodies, and the life force of the world. Ancient sites of power, often tied to the ruins of lost cities, amplify magical abilities.",
+        "magic_level": "High"
+      },
+      "content_id": "9c48eb79-cbeb-4fc4-a86a-8f672ce70b47",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "twin_moons",
+        "eternal_weave",
+        "magic_system",
+        "elemental_forces",
+        "magic_foci",
+        "incantations",
+        "eldergrove",
+        "amber_coast",
+        "celestial_clock",
+        "diverse_pantheon",
+        "manipulation_of_magic",
+        "realm_veils",
+        "ancient_world"
+      ]
+    },
+    {
+      "section_key": "pantheon",
+      "content_type": "pantheon",
+      "source_type": "universe_builder",
+      "title": "Divine Pantheon",
+      "narrative_content": "Elaris is home to a diverse pantheon, where each deity represents an aspect of the world, from the fierce god of storms to the gentle goddess of the harvest. Temples dedicated to these deities are centers of learning and power, where priests and scholars alike explore the mysteries of the universe.",
+      "original_metadata": {
+        "structure": "Elaris is home to a diverse pantheon, where each deity represents an aspect of the world, from the fierce god of storms to the gentle goddess of the harvest. Temples dedicated to these deities are centers of learning and power, where priests and scholars alike explore the mysteries of the universe.",
+        "major_deities": [
+          "Zephron, the Storm Bringer",
+          "Lunara, the Silver Maiden",
+          "Thalor, Keeper of Secrets",
+          "Vessa, the Earth Mother"
+        ],
+        "religious_conflicts": [
+          "The followers of Zephron and Vessa often clash over the balance of nature, with Zephron's tempests threatening the lands Vessa seeks to nurture.",
+          "Thalor's worshippers, shrouded in mystery, are viewed with suspicion, accused of hoarding knowledge that could benefit all."
+        ],
+        "divine_influence": "The gods of Elaris are active, their presence felt in the natural phenomena that shape daily life. They communicate through dreams, omens, and the voices of their chosen oracles, guiding mortals to fulfill their destinies."
+      },
+      "content_id": "6a08339d-5a56-416b-bd67-f5e3984c24bd",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "twin_moons",
+        "eternal_weave",
+        "magic_system",
+        "elemental_forces",
+        "magic_foci",
+        "incantations",
+        "eldergrove",
+        "amber_coast",
+        "celestial_clock",
+        "diverse_pantheon",
+        "manipulation_of_magic",
+        "realm_veils",
+        "ancient_world"
+      ]
+    },
+    {
+      "section_key": "global_threats",
+      "content_type": "global_threats",
+      "source_type": "universe_builder",
+      "title": "Global Threats",
+      "narrative_content": "As the twin moons align, ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King. His minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land. The convergence threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace. Known as: The Convergence of Realms",
+      "original_metadata": [
+        {
+          "primary_threat": "The Convergence of Realms",
+          "threat_details": "As the twin moons align, ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King. His minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land.",
+          "world_impact": "The convergence threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace.",
+          "resistance_forces": "An alliance of mages, warriors, and scholars, known as the League of the Dawn, rises to combat the Shadowborn. They scour the land for ancient artifacts and lost knowledge, hoping to avert the impending catastrophe."
+        }
+      ],
+      "content_id": "1fd86c5e-ea07-4aad-a47a-26f39efa33f6",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "twin_moons",
+        "eternal_weave",
+        "magic_system",
+        "elemental_forces",
+        "magic_foci",
+        "incantations",
+        "eldergrove",
+        "amber_coast",
+        "celestial_clock",
+        "diverse_pantheon",
+        "manipulation_of_magic",
+        "realm_veils",
+        "ancient_world"
+      ]
+    },
+    {
+      "section_key": "size",
+      "content_type": "world_scale",
+      "source_type": "universe_builder",
+      "title": "World Scale",
+      "narrative_content": "Elaris is a vast continent divided by powerful mountain ranges, lush forests, and sprawling deserts, each housing its own unique cultures and creatures. Its regions are as diverse as its people, from the icy tundras of the North to the verdant jungles in the South.",
+      "original_metadata": {
+        "scope": "continental",
+        "description": "Elaris is a vast continent divided by powerful mountain ranges, lush forests, and sprawling deserts, each housing its own unique cultures and creatures. Its regions are as diverse as its people, from the icy tundras of the North to the verdant jungles in the South.",
+        "region_count": 8,
+        "major_city_count": 12,
+        "settlement_count": 85
+      },
+      "content_id": "6c50cc52-ad21-4b9d-a6cc-cf8bd60347b1",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "twin_moons",
+        "eternal_weave",
+        "magic_system",
+        "elemental_forces",
+        "magic_foci",
+        "incantations",
+        "eldergrove",
+        "amber_coast",
+        "celestial_clock",
+        "diverse_pantheon",
+        "manipulation_of_magic",
+        "realm_veils",
+        "ancient_world"
+      ]
+    }
+  ],
+  "all_tags": [
+    "universe_content",
+    "elaris",
+    "twin_moons",
+    "eternal_weave",
+    "magic_system",
+    "elemental_forces",
+    "magic_foci",
+    "incantations",
+    "eldergrove",
+    "amber_coast",
+    "celestial_clock",
+    "diverse_pantheon",
+    "manipulation_of_magic",
+    "realm_veils",
+    "ancient_world"
+  ],
+  "all_entities_grouped": {
+    "npcs": [],
+    "locations": [
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440001",
+        "campaign_id": "f37fa40d-8ea6-4bd4-af5d-215614b433f4",
+        "name": "Eldergrove",
+        "description": "Eldergrove is a vast, mist-laden forest known for its ancient and mystical qualities. The air is thick with the scent of pine and the whispers of old magic. Towering trees with gnarled roots create a canopy that filters the sunlight into ethereal patterns on the forest floor.",
+        "notable_features": "Ancient trees, mystical mist, hidden glades",
+        "connections": {
+          "south": "Amber Coast"
+        },
+        "location_type": "forest",
+        "size": "massive",
+        "inhabitants": [
+          "elves",
+          "forest spirits",
+          "mystical creatures"
+        ],
+        "notable_items": [
+          "ancient relics",
+          "magical herbs"
+        ],
+        "atmosphere": "mysterious",
+        "relationships": [
+          {
+            "target": "Amber Coast",
+            "type": "connected_to"
+          }
+        ],
+        "lore": "Eldergrove is said to be one of the oldest forests in Elaris, a place where the boundaries between realms are thin. It is a haven for those seeking knowledge of the ancient world and the Eternal Weave.",
+        "tags": [
+          "elaris",
+          "eldergrove",
+          "ancient_world",
+          "realm_veils"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440002",
+        "campaign_id": "f37fa40d-8ea6-4bd4-af5d-215614b433f4",
+        "name": "Amber Coast",
+        "description": "The Amber Coast is a stunning region characterized by its shimmering sands and warm, golden hues. The coastline stretches as far as the eye can see, with gentle waves lapping against the shore.",
+        "notable_features": "Shimmering sands, coastal cliffs, vibrant sunsets",
+        "connections": {
+          "north": "Eldergrove"
+        },
+        "location_type": "coastline",
+        "size": "large",
+        "inhabitants": [
+          "merfolk",
+          "traders",
+          "sea creatures"
+        ],
+        "notable_items": [
+          "rare shells",
+          "amber stones"
+        ],
+        "atmosphere": "peaceful",
+        "relationships": [
+          {
+            "target": "Eldergrove",
+            "type": "connected_to"
+          }
+        ],
+        "lore": "The Amber Coast is a place of beauty and tranquility, known for its breathtaking sunsets and the rare amber stones that wash ashore. It is a popular destination for traders and adventurers alike.",
+        "tags": [
+          "elaris",
+          "amber_coast",
+          "ancient_world"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      }
+    ],
+    "organizations": [],
+    "artifacts": [],
+    "deities": [],
+    "threats": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440003",
+        "campaign_id": "f37fa40d-8ea6-4bd4-af5d-215614b433f4",
+        "entity_type": "threat",
+        "entity_name": "Void King",
+        "description": "The Void King is a malevolent entity ruling a chaotic dimension, threatening to merge with Elaris. His presence is felt through the spreading darkness and the corruption of the Eternal Weave.",
+        "artifact_type": "entity",
+        "rarity": "legendary",
+        "properties": [
+          "chaos manipulation",
+          "dark magic"
+        ],
+        "requirements": "None",
+        "history": "The Void King has long sought to expand his dominion into Elaris, using his minions, the Shadowborn, to weaken the realm's defenses.",
+        "relationships": [
+          {
+            "target": "Shadowborn",
+            "type": "commands"
+          }
+        ],
+        "status": "active",
+        "tags": [
+          "elaris",
+          "threat",
+          "realm_veils",
+          "ancient_world"
+        ],
+        "source_content_type": "universe_content"
+      },
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440004",
+        "campaign_id": "f37fa40d-8ea6-4bd4-af5d-215614b433f4",
+        "entity_type": "threat",
+        "entity_name": "Shadowborn",
+        "description": "The Shadowborn are the minions of the Void King, spreading darkness across Elaris. They are creatures of shadow and malice, serving their master with unwavering loyalty.",
+        "artifact_type": "entity",
+        "rarity": "rare",
+        "properties": [
+          "shadow manipulation",
+          "stealth"
+        ],
+        "requirements": "None",
+        "history": "Created by the Void King, the Shadowborn are tasked with preparing Elaris for the Convergence of Realms, ensuring the realm is ripe for their master's arrival.",
+        "relationships": [
+          {
+            "target": "Void King",
+            "type": "serves"
+          }
+        ],
+        "status": "active",
+        "tags": [
+          "elaris",
+          "threat",
+          "realm_veils",
+          "ancient_world"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "events": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440005",
+        "campaign_id": "f37fa40d-8ea6-4bd4-af5d-215614b433f4",
+        "entity_type": "event",
+        "entity_name": "The Convergence of Realms",
+        "description": "An event where the realms threaten to merge, causing chaos and darkness. The Convergence of Realms is a time of great peril for Elaris, as the balance of magic is disrupted.",
+        "artifact_type": "event",
+        "rarity": "legendary",
+        "properties": [
+          "realm merging",
+          "chaos"
+        ],
+        "requirements": "None",
+        "history": "Foretold by ancient prophecies, the Convergence of Realms marks a period where the barriers between dimensions weaken, allowing the Void King to attempt his invasion.",
+        "relationships": [
+          {
+            "target": "Void King",
+            "type": "initiated_by"
+          }
+        ],
+        "status": "imminent",
+        "tags": [
+          "elaris",
+          "event",
+          "realm_veils",
+          "ancient_world"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "items": []
+  },
+  "all_chunks": [
+    {
+      "index": 0,
+      "text": "Elaris is a world where the veils between realms are thin, allowing the whispers of the cosmos to weave through the land. Elaris is an ancient sphere, cradled in the arms of an eternal sky where the light of twin moons bathes the nights in silver, while the sun's embrace brings warmth to a landscape rich in mystery and magic. The continent of Elaris is a tapestry of varied terrains, from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast. Time moves like a river here, marked by the rhythms of the great celestial clock that hangs in the heavens, influencing the fates of all who dwell beneath. Magic operates through the manipulation of the Eternal Weave, requiring intense focus and an understanding of elemental forces. Spells are cast through a combination of incantations, gestures, and the use of magical foci, which are often attuned to the caster's innate abilities.",
+      "topic": "Introduction to Elaris and its magical landscape",
+      "word_count": 154,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "diverse_pantheon",
+        "amber_coast",
+        "eternal_weave",
+        "realm_veils",
+        "incantations",
+        "elaris",
+        "elemental_forces",
+        "celestial_clock",
+        "universe_content",
+        "magic_system",
+        "twin_moons",
+        "eldergrove",
+        "manipulation_of_magic",
+        "ancient_world",
+        "magic_foci"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Introduction to Elaris and its magical landscape",
+        "chunk_index": 0,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 1,
+      "text": "Elaris is home to a diverse pantheon, where each deity represents an aspect of the world, from the fierce god of storms to the gentle goddess of the harvest. Temples dedicated to these deities are centers of learning and power, where priests and scholars alike explore the mysteries of the universe. As the twin moons align, ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King. The Void King's minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land. The convergence threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace.",
+      "topic": "The pantheon of Elaris and the threat of the Void King",
+      "word_count": 128,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "diverse_pantheon",
+        "amber_coast",
+        "eternal_weave",
+        "realm_veils",
+        "incantations",
+        "elaris",
+        "elemental_forces",
+        "celestial_clock",
+        "universe_content",
+        "magic_system",
+        "twin_moons",
+        "eldergrove",
+        "manipulation_of_magic",
+        "ancient_world",
+        "magic_foci"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The pantheon of Elaris and the threat of the Void King",
+        "chunk_index": 1,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 2,
+      "text": "Known as: The Convergence of Realms, Elaris is a vast continent divided by powerful mountain ranges, lush forests, and sprawling deserts, each housing its own unique cultures and creatures. The regions of Elaris are as diverse as its people, from the icy tundras of the North to the verdant jungles in the South. The Convergence of Realms threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace. The manipulation of the Eternal Weave is crucial in maintaining the balance of magic in Elaris, requiring intense focus and an understanding of elemental forces.",
+      "topic": "Geography of Elaris and the impact of the Convergence",
+      "word_count": 111,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "diverse_pantheon",
+        "amber_coast",
+        "eternal_weave",
+        "realm_veils",
+        "incantations",
+        "elaris",
+        "elemental_forces",
+        "celestial_clock",
+        "universe_content",
+        "magic_system",
+        "twin_moons",
+        "eldergrove",
+        "manipulation_of_magic",
+        "ancient_world",
+        "magic_foci"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Geography of Elaris and the impact of the Convergence",
+        "chunk_index": 2,
+        "entity_names": []
+      }
+    }
+  ],
+  "combined_narrative": "Elaris is a world where the veils between realms are thin, allowing the whispers of the cosmos to weave through the land. It is an ancient sphere, cradled in the arms of an eternal sky where the light of twin moons bathes the nights in silver, while the sun's embrace brings warmth to a landscape rich in mystery and magic. The continent of Elaris is a tapestry of varied terrains, from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast. Time moves like a river here, marked by the rhythms of the great celestial clock that hangs in the heavens, influencing the fates of all who dwell beneath. Magic operates through the manipulation of the Eternal Weave, requiring intense focus and an understanding of elemental forces. Spells are cast through a combination of incantations, gestures, and the use of magical foci, which are often attuned to the caster's innate abilities. Elaris is home to a diverse pantheon, where each deity represents an aspect of the world, from the fierce god of storms to the gentle goddess of the harvest. Temples dedicated to these deities are centers of learning and power, where priests and scholars alike explore the mysteries of the universe. As the twin moons align, ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King. His minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land. The convergence threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace. Known as: The Convergence of Realms Elaris is a vast continent divided by powerful mountain ranges, lush forests, and sprawling deserts, each housing its own unique cultures and creatures. Its regions are as diverse as its people, from the icy tundras of the North to the verdant jungles in the South.",
+  "raw_tag_response": {
+    "model": "gpt-4-0613",
+    "usage": {
+      "completion_tokens": 83,
+      "prompt_tokens": 481,
+      "total_tokens": 564,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"tags\": [\"universe_content\", \"elaris\", \"twin_moons\", \"eternal_weave\", \"magic_system\", \"elemental_forces\", \"magic_foci\", \"incantations\", \"eldergrove\", \"amber_coast\", \"celestial_clock\", \"diverse_pantheon\", \"manipulation_of_magic\", \"realm_veils\", \"ancient_world\"]}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\"tags\": [\"universe_content\", \"elaris\", \"twin_moons\", \"eternal_weave\", \"magic_system\", \"elemental_forces\", \"magic_foci\", \"incantations\", \"eldergrove\", \"amber_coast\", \"celestial_clock\", \"diverse_pantheon\", \"manipulation_of_magic\", \"realm_veils\", \"ancient_world\"]}"
+  },
+  "raw_entity_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 480,
+      "prompt_tokens": 1010,
+      "total_tokens": 1490,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Eldergrove\",\n      \"entity_type\": \"location\",\n      \"description\": \"Mist-laden forests known for their ancient and mystical qualities.\",\n      \"extraction_context\": \"from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast.\",\n      \"suggested_tags\": [\"elaris\", \"eldergrove\", \"ancient_world\", \"realm_veils\"]\n    },\n    {\n      \"entity_name\": \"Amber Coast\",\n      \"entity_type\": \"location\",\n      \"description\": \"A region characterized by its shimmering sands.\",\n      \"extraction_context\": \"from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast.\",\n      \"suggested_tags\": [\"elaris\", \"amber_coast\", \"ancient_world\"]\n    },\n    {\n      \"entity_name\": \"Void King\",\n      \"entity_type\": \"threat\",\n      \"description\": \"A malevolent entity ruling a chaotic dimension, threatening to merge with Elaris.\",\n      \"extraction_context\": \"ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King.\",\n      \"suggested_tags\": [\"elaris\", \"threat\", \"realm_veils\", \"ancient_world\"]\n    },\n    {\n      \"entity_name\": \"Shadowborn\",\n      \"entity_type\": \"threat\",\n      \"description\": \"Minions of the Void King, spreading darkness across Elaris.\",\n      \"extraction_context\": \"His minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land.\",\n      \"suggested_tags\": [\"elaris\", \"threat\", \"realm_veils\", \"ancient_world\"]\n    },\n    {\n      \"entity_name\": \"The Convergence of Realms\",\n      \"entity_type\": \"event\",\n      \"description\": \"An event where the realms threaten to merge, causing chaos and darkness.\",\n      \"extraction_context\": \"Known as: The Convergence of Realms Elaris is a vast continent divided by powerful mountain ranges.\",\n      \"suggested_tags\": [\"elaris\", \"event\", \"realm_veils\", \"ancient_world\"]\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Eldergrove\",\n      \"entity_type\": \"location\",\n      \"description\": \"Mist-laden forests known for their ancient and mystical qualities.\",\n      \"extraction_context\": \"from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast.\",\n      \"suggested_tags\": [\"elaris\", \"eldergrove\", \"ancient_world\", \"realm_veils\"]\n    },\n    {\n      \"entity_name\": \"Amber Coast\",\n      \"entity_type\": \"location\",\n      \"description\": \"A region characterized by its shimmering sands.\",\n      \"extraction_context\": \"from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast.\",\n      \"suggested_tags\": [\"elaris\", \"amber_coast\", \"ancient_world\"]\n    },\n    {\n      \"entity_name\": \"Void King\",\n      \"entity_type\": \"threat\",\n      \"description\": \"A malevolent entity ruling a chaotic dimension, threatening to merge with Elaris.\",\n      \"extraction_context\": \"ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King.\",\n      \"suggested_tags\": [\"elaris\", \"threat\", \"realm_veils\", \"ancient_world\"]\n    },\n    {\n      \"entity_name\": \"Shadowborn\",\n      \"entity_type\": \"threat\",\n      \"description\": \"Minions of the Void King, spreading darkness across Elaris.\",\n      \"extraction_context\": \"His minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land.\",\n      \"suggested_tags\": [\"elaris\", \"threat\", \"realm_veils\", \"ancient_world\"]\n    },\n    {\n      \"entity_name\": \"The Convergence of Realms\",\n      \"entity_type\": \"event\",\n      \"description\": \"An event where the realms threaten to merge, causing chaos and darkness.\",\n      \"extraction_context\": \"Known as: The Convergence of Realms Elaris is a vast continent divided by powerful mountain ranges.\",\n      \"suggested_tags\": [\"elaris\", \"event\", \"realm_veils\", \"ancient_world\"]\n    }\n  ]\n}"
+  },
+  "raw_chunk_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 646,
+      "prompt_tokens": 853,
+      "total_tokens": 1499,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elaris is a world where the veils between realms are thin, allowing the whispers of the cosmos to weave through the land. Elaris is an ancient sphere, cradled in the arms of an eternal sky where the light of twin moons bathes the nights in silver, while the sun's embrace brings warmth to a landscape rich in mystery and magic. The continent of Elaris is a tapestry of varied terrains, from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast. Time moves like a river here, marked by the rhythms of the great celestial clock that hangs in the heavens, influencing the fates of all who dwell beneath. Magic operates through the manipulation of the Eternal Weave, requiring intense focus and an understanding of elemental forces. Spells are cast through a combination of incantations, gestures, and the use of magical foci, which are often attuned to the caster's innate abilities.\",\n      \"topic\": \"Introduction to Elaris and its magical landscape\",\n      \"word_count\": 160,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"Elaris is home to a diverse pantheon, where each deity represents an aspect of the world, from the fierce god of storms to the gentle goddess of the harvest. Temples dedicated to these deities are centers of learning and power, where priests and scholars alike explore the mysteries of the universe. As the twin moons align, ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King. The Void King's minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land. The convergence threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace.\",\n      \"topic\": \"The pantheon of Elaris and the threat of the Void King\",\n      \"word_count\": 180,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Known as: The Convergence of Realms, Elaris is a vast continent divided by powerful mountain ranges, lush forests, and sprawling deserts, each housing its own unique cultures and creatures. The regions of Elaris are as diverse as its people, from the icy tundras of the North to the verdant jungles in the South. The Convergence of Realms threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace. The manipulation of the Eternal Weave is crucial in maintaining the balance of magic in Elaris, requiring intense focus and an understanding of elemental forces.\",\n      \"topic\": \"Geography of Elaris and the impact of the Convergence\",\n      \"word_count\": 160,\n      \"chunk_type\": \"descriptive\"\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elaris is a world where the veils between realms are thin, allowing the whispers of the cosmos to weave through the land. Elaris is an ancient sphere, cradled in the arms of an eternal sky where the light of twin moons bathes the nights in silver, while the sun's embrace brings warmth to a landscape rich in mystery and magic. The continent of Elaris is a tapestry of varied terrains, from the mist-laden forests of Eldergrove to the shimmering sands of the Amber Coast. Time moves like a river here, marked by the rhythms of the great celestial clock that hangs in the heavens, influencing the fates of all who dwell beneath. Magic operates through the manipulation of the Eternal Weave, requiring intense focus and an understanding of elemental forces. Spells are cast through a combination of incantations, gestures, and the use of magical foci, which are often attuned to the caster's innate abilities.\",\n      \"topic\": \"Introduction to Elaris and its magical landscape\",\n      \"word_count\": 160,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"Elaris is home to a diverse pantheon, where each deity represents an aspect of the world, from the fierce god of storms to the gentle goddess of the harvest. Temples dedicated to these deities are centers of learning and power, where priests and scholars alike explore the mysteries of the universe. As the twin moons align, ancient prophecies foretell the merging of Elaris with a chaotic dimension ruled by the malevolent entity known as the Void King. The Void King's minions, the Shadowborn, seek to prepare the world for their master's arrival, spreading darkness across the land. The convergence threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace.\",\n      \"topic\": \"The pantheon of Elaris and the threat of the Void King\",\n      \"word_count\": 180,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Known as: The Convergence of Realms, Elaris is a vast continent divided by powerful mountain ranges, lush forests, and sprawling deserts, each housing its own unique cultures and creatures. The regions of Elaris are as diverse as its people, from the icy tundras of the North to the verdant jungles in the South. The Convergence of Realms threatens to engulf Elaris in eternal night, disrupting the balance of magic and unleashing untold horrors. Crops wither, creatures mutate, and despair seeps into the hearts of the populace. The manipulation of the Eternal Weave is crucial in maintaining the balance of magic in Elaris, requiring intense focus and an understanding of elemental forces.\",\n      \"topic\": \"Geography of Elaris and the impact of the Convergence\",\n      \"word_count\": 160,\n      \"chunk_type\": \"descriptive\"\n    }\n  ]\n}"
+  }
+}

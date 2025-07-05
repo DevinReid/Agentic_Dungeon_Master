@@ -28,17 +28,14 @@ class ContentChunkerAgent:
         if self.debug:
             print("📋 ContentChunkerAgent initialized")
     
-    def create_chunks(self, content: str, content_type: str, tags: List[str], 
-                     entities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        
+    def create_chunks(self, content: str, content_type: str, tags: List[str]) -> List[Dict[str, Any]]:
         """
-            Create semantically coherent chunks for vector embedding
+        Create semantically coherent chunks for vector embedding
         
         Args:
             content: The narrative text content
             content_type: Type of content ('pantheon', 'magic_system', etc.)
             tags: Tags associated with this content
-            entities: Entities extracted from this content
             
         Returns:
             List of chunk dictionaries with metadata
@@ -48,10 +45,10 @@ class ContentChunkerAgent:
         
         try:
             # Single AI call for semantic chunking with pronoun resolution
-            chunks = self._ai_semantic_chunk(content, content_type, tags, entities)
+            chunks = self._ai_semantic_chunk(content, content_type, tags)
             
             # Validate and enrich chunks with metadata
-            enriched_chunks = self._enrich_chunks(chunks, content_type, tags, entities)
+            enriched_chunks = self._enrich_chunks(chunks, content_type, tags)
             
             if self.debug:
                 print(f"✅ Created {len(enriched_chunks)} chunks")
@@ -62,14 +59,19 @@ class ContentChunkerAgent:
             
         except Exception as e:
             print(f"❌ Content chunking failed: {e}")
+            print(f"❌ DEBUG: Exception type: {type(e)}")
+            print(f"❌ DEBUG: Exception args: {e.args}")
+            import traceback
+            print(f"❌ DEBUG: Full traceback:")
+            traceback.print_exc()
+            
             # Fallback to simple word-count chunking (no AI processing)
-            return self._simple_chunk_fallback(content, content_type, tags, entities)
+            return self._simple_chunk_fallback(content, content_type, tags)
     
-    def _ai_semantic_chunk(self, content: str, content_type: str, tags: List[str], 
-                          entities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        # AI call that analyzes semantic structure and creates chunks with pronoun resolution
+    def _ai_semantic_chunk(self, content: str, content_type: str, tags: List[str]) -> List[Dict[str, Any]]:
+        """AI call that analyzes semantic structure and creates chunks with pronoun resolution"""
         
-        entity_names = [entity['entity_name'] for entity in entities]
+        # AI call that analyzes semantic structure and creates chunks with pronoun resolution
         
         # Simple quote escaping to avoid JSON parsing issues
         escaped_content = content.replace('"', "'").replace('\n', ' ').replace('\r', '')
@@ -79,31 +81,28 @@ class ContentChunkerAgent:
                             CONTENT: {escaped_content}
 
                             TAGS: {', '.join(tags)}
-                            ENTITIES: {', '.join(entity_names)}
 
-                            TASK: Analyze the semantic structure and create optimal chunks simultaneously with pronoun resolution.
+                            TASK: Analyze the semantic structure and create optimal chunks with pronoun resolution.
 
                             CHUNKING RULES:
                             1. Target {self.target_chunk_size} words per chunk (flexible based on semantic boundaries)
-                            2. Keep related entities together in same chunk
-                            3. Each chunk should focus on one main concept/topic
-                            4. Include {self.overlap_size} word overlap between consecutive chunks for context
-                            5. Don't exceed {self.max_chunk_size} words per chunk
-                            6. Find natural semantic boundaries (topic shifts, entity transitions)
-                            7. Preserve narrative flow and context
-                            8. CRITICAL: Replace pronouns (he, she, they, it, there, then, this, that) with appropriate proper nouns for better vector search
+                            2. Each chunk should focus on one main concept/topic
+                            3. Include {self.overlap_size} word overlap between consecutive chunks for context
+                            4. Don't exceed {self.max_chunk_size} words per chunk
+                            5. Find natural semantic boundaries (topic shifts, entity transitions)
+                            6. Preserve narrative flow and context
+                            7. CRITICAL: Replace pronouns (he, she, they, it, there, then, this, that) with appropriate proper nouns for better vector search
 
                             PRONOUN RESOLUTION:
                             - "He ruled wisely" → "Lord Dino ruled wisely"
                             - "It was magnificent" → "The Crystal Palace was magnificent" 
                             - "They gathered there" → "The Council gathered in the Sacred Grove"
-                            - Only replace pronouns with clear referents from the entity list
+                            - Only replace pronouns with clear referents from the content
                             - Maintain natural readability
 
                             For each chunk, provide:
                             - text: The chunk content with proper boundaries AND resolved pronouns
                             - topic: Main topic/focus of this chunk  
-                            - entities_mentioned: Entities mentioned in this chunk
                             - word_count: Approximate word count
                             - chunk_type: 'entity_focused', 'narrative', 'descriptive', 'mechanical'
 
@@ -113,7 +112,6 @@ class ContentChunkerAgent:
                                 {{
                                 "text": "chunk content here with semantic boundaries and resolved pronouns...",
                                 "topic": "Solara's divine domains and powers",
-                                "entities_mentioned": ["Solara", "Temple of Dawn"],
                                 "word_count": 380,
                                 "chunk_type": "entity_focused"
                                 }}
@@ -129,26 +127,36 @@ class ContentChunkerAgent:
                 response_format={"type": "json_object"}
             )
             
+            # Capture raw response for debug output
+            self._last_raw_response = {
+                'model': response.model,
+                'usage': response.usage.dict() if response.usage else None,
+                'choices': [choice.dict() for choice in response.choices],
+                'raw_content': response.choices[0].message.content.strip()
+            }
+            
             result = json.loads(response.choices[0].message.content.strip())
-            return result.get('chunks', [])
+            chunks = result.get('chunks', [])
+            
+            return chunks
             
         except Exception as e:
             if self.debug:
                 print(f"❌ AI semantic chunking failed: {e}")
+                print(f"❌ DEBUG: Exception type: {type(e)}")
+                import traceback
+                traceback.print_exc()
             return []
     
     def _enrich_chunks(self, chunks: List[Dict[str, Any]], content_type: str, 
-                      content_tags: List[str], entities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+                      content_tags: List[str]) -> List[Dict[str, Any]]:
         """Enrich chunks with additional metadata"""
         
         enriched = []
-        entity_map = {entity['entity_name']: entity for entity in entities}
         
         for i, chunk in enumerate(chunks):
             # Validate chunk structure
             if not isinstance(chunk, dict) or 'text' not in chunk:
-                if self.debug:
-                    print(f"⚠️ Skipping malformed chunk: {chunk}")
                 continue
             
             # Calculate actual word count
@@ -156,26 +164,10 @@ class ContentChunkerAgent:
             
             # Skip chunks that are too large
             if actual_word_count > self.max_chunk_size:
-                if self.debug:
-                    print(f"⚠️ Chunk {i+1} too large: {actual_word_count} words")
                 continue
             
-            # Determine entities mentioned in this chunk
-            chunk_entities = []
-            mentioned_entities = chunk.get('entities_mentioned', [])
-            
-            for entity_name in mentioned_entities:
-                if entity_name in entity_map:
-                    chunk_entities.append({
-                        'name': entity_name,
-                        'type': entity_map[entity_name]['entity_type'],
-                        'tags': entity_map[entity_name]['tags']
-                    })
-            
-            # Create chunk tags (combination of content tags + entity tags)
+            # Create chunk tags (use content tags)
             chunk_tags = content_tags.copy()
-            for chunk_entity in chunk_entities:
-                chunk_tags.extend(chunk_entity['tags'])
             
             # Remove duplicates and clean up
             chunk_tags = list(set([tag.lower().replace(' ', '_') for tag in chunk_tags]))
@@ -188,12 +180,12 @@ class ContentChunkerAgent:
                 'chunk_type': chunk.get('chunk_type', 'narrative'),
                 'content_type': content_type,
                 'tags': chunk_tags,
-                'entities_mentioned': chunk_entities,
+                'entities_mentioned': [],  # No entity enrichment needed
                 'embedding_metadata': {
                     'content_type': content_type,
                     'chunk_topic': chunk.get('topic', ''),
                     'chunk_index': i,
-                    'entity_names': [e['name'] for e in chunk_entities]
+                    'entity_names': []  # No entity names needed
                 }
             }
             
@@ -201,8 +193,7 @@ class ContentChunkerAgent:
         
         return enriched
     
-    def _simple_chunk_fallback(self, content: str, content_type: str, tags: List[str], 
-                               entities: List[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
+    def _simple_chunk_fallback(self, content: str, content_type: str, tags: List[str]) -> List[Dict[str, Any]]:
         """Simple fallback chunking when AI chunking fails"""
         
         words = content.split()
@@ -245,7 +236,6 @@ class ContentChunkerAgent:
             if start >= len(words):
                 break
         
-        if self.debug:
-            print(f"📋 Fallback chunking created {len(chunks)} chunks")
+        return chunks
         
         return chunks 

@@ -1008,3 +1008,99 @@ def search_world_content(campaign_id, query, content_types=None, limit=5):
         print(f"🔍 Fallback search found {len(fallback_results)} text matches")
         return fallback_results
 
+def save_processed_world_lightweight(campaign_id: str, processed_sections: List[Dict[str, Any]], 
+                                    world_name: str = None) -> str:
+    """
+    Save lightweight ContentProcessor output to database (tags and content only)
+    Used with distributed architecture where entities are saved directly by EntityProcessor
+    and chunks are vectorized directly by ContentChunker
+    
+    Args:
+        campaign_id: Campaign UUID
+        processed_sections: Output from ContentProcessor.process_universe_content_distributed()
+        world_name: Optional world name override
+        
+    Returns:
+        world_id: UUID of created world
+    """
+    import psycopg2.extras
+    
+    if not processed_sections:
+        raise ValueError("No processed sections to save")
+    
+    # Extract world metadata from first section
+    first_section = processed_sections[0]
+    if not isinstance(first_section, dict):
+        print(f"❌ ERROR: First section is not a dict, it's: {type(first_section)}")
+        print(f"❌ ERROR: First section content: {first_section}")
+        raise ValueError(f"Expected dict for section, got {type(first_section)}")
+    
+    world_metadata = first_section.get('original_metadata', {})
+    
+    if not world_name:
+        world_name = world_metadata.get('world_name', 'Generated World')
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        # Phase 1: Create world record
+        print("💾 Creating world record...")
+        scope = world_metadata.get('scope', 'regional')
+        theme_list = world_metadata.get('theme_list', '')
+        magic_level = world_metadata.get('magic_level', 'medium')
+        
+        cur.execute("""
+            INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
+                               region_count, major_city_count, settlement_count, magic_level)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING world_id;
+        """, (campaign_id, world_name, scope, theme_list, 
+              world_metadata.get('region_count', 1),
+              world_metadata.get('major_city_count', 1), 
+              world_metadata.get('settlement_count', 3),
+              magic_level))
+        
+        world_id = cur.fetchone()[0]
+        
+        # Phase 2: Save lightweight content sections (tags and narrative only)
+        for i, section in enumerate(processed_sections):
+            print(f"💾 Saving lightweight {section['content_type']} (tags and narrative only)...")
+            
+            # DEBUG: Check section structure
+            if not isinstance(section, dict):
+                print(f"❌ ERROR: Section {i} is not a dict, it's: {type(section)}")
+                print(f"❌ ERROR: Section {i} content: {section}")
+                continue
+            
+            # Save main content with tags (no entities/chunks)
+            cur.execute("""
+                INSERT INTO world_content (world_id, campaign_id, content_type, source_type,
+                                         title, content, metadata, tags)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                RETURNING content_id;
+            """, (world_id, campaign_id, section['content_type'], section['source_type'],
+                  section['title'], section['narrative_content'],
+                  psycopg2.extras.Json(section['original_metadata']),
+                  section['tags']))
+            
+            content_id = cur.fetchone()[0]
+            
+            # Update tag vocabulary
+            _update_tag_vocabulary_batch(campaign_id, section['tags'], 
+                                       section['content_type'], cur)
+        
+        conn.commit()
+        print(f"✅ World '{world_name}' created with ID: {world_id}")
+        print(f"📊 Saved {len(processed_sections)} content sections (lightweight - entities and chunks handled separately)")
+        
+        return str(world_id)
+        
+    except Exception as e:
+        conn.rollback()
+        print(f"❌ Failed to save world: {e}")
+        raise
+    finally:
+        cur.close()
+        conn.close()
+

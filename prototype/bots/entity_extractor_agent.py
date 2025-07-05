@@ -25,21 +25,23 @@ class EntityExtractorAgent:
             print("🔍 EntityExtractorAgent initialized")
     
     def extract_entities(self, content: str, content_type: str, existing_tags: List[str], 
-                        campaign_id: str) -> Dict[str, List[Dict[str, Any]]]:
-       
-        # *Extract and process entities into complete database-ready records
+                        campaign_id: str, world_id: str = None, save_direct: bool = False,
+                        source_content_id: str = None) -> Dict[str, List[Dict[str, Any]]]:
+        """
+        Extract and process entities into complete database-ready records
         
-        # * Args:
-        # *    content: The narrative text content
-        # *    content_type: Type of content being processed  
-        # *    existing_tags: Tags from content for consistency
-        # *    campaign_id: Campaign UUID for context
+        Args:
+            content: The narrative text content
+            content_type: Type of content being processed  
+            existing_tags: Tags from content for consistency
+            campaign_id: Campaign UUID for context
+            world_id: World UUID for direct saves (optional)
+            save_direct: If True, EntityProcessor will save directly to PostgreSQL
+            source_content_id: ID of source content for entity linking (optional)
             
-        # * Returns:
-        # *    Dict with processed entities grouped by type, ready for database insertion
-        
-        if self.debug:
-            print(f"🔍 Extracting and processing entities from {content_type}")
+        Returns:
+            Dict with processed entities grouped by type, ready for database insertion
+        """
         
         try:
             # Pass 1: Extract raw entities using existing method
@@ -54,7 +56,15 @@ class EntityExtractorAgent:
             # Pass 2: Batch process into complete database records
             from .entity_processor_agent import EntityProcessorAgent
             processor = EntityProcessorAgent(debug=self.debug)
-            processed_entities = processor.process_entities(raw_entities, campaign_id, content, content_type)
+            processed_entities = processor.process_entities(
+                raw_entities=raw_entities, 
+                campaign_id=campaign_id, 
+                content=content, 
+                content_type=content_type,
+                world_id=world_id,
+                save_direct=save_direct,
+                source_content_id=source_content_id
+            )
             
             if self.debug:
                 total_entities = sum(len(entities) for entities in processed_entities.values())
@@ -134,6 +144,14 @@ Return ONLY a JSON object:
                 max_tokens=4000,  # High limit to ensure complete JSON. If we hit this, implement content chunking.
                 response_format={"type": "json_object"}
             )
+            
+            # Capture raw response for debug output
+            self._last_raw_response = {
+                'model': response.model,
+                'usage': response.usage.dict() if response.usage else None,
+                'choices': [choice.dict() for choice in response.choices],
+                'raw_content': response.choices[0].message.content.strip()
+            }
             
             result = json.loads(response.choices[0].message.content.strip())
             return result.get('entities', [])

@@ -157,6 +157,7 @@ CREATE TABLE worlds (
     major_city_count INTEGER DEFAULT 1, 
     settlement_count INTEGER DEFAULT 3,
     magic_level TEXT DEFAULT 'medium', -- 'none', 'low', 'medium', 'high'
+    full_json JSONB,               -- NEW: Full universe/world JSON for backup/versioning
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(campaign_id) -- One world per campaign

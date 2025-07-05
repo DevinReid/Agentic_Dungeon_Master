@@ -120,6 +120,14 @@ Return ONLY a JSON object:
                 max_tokens=200
             )
             
+            # Capture raw response for debug output
+            self._last_raw_response = {
+                'model': response.model,
+                'usage': response.usage.dict() if response.usage else None,
+                'choices': [choice.dict() for choice in response.choices],
+                'raw_content': response.choices[0].message.content.strip()
+            }
+            
             result = json.loads(response.choices[0].message.content.strip())
             return result.get('tags', [content_type])
             
