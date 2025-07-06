@@ -14,18 +14,18 @@ def handle_region_building_for_campaign(campaign_id, campaign_name, world_id, un
     return orchestrator.handle_region_planning_for_campaign(campaign_id, campaign_name, world_id, universe_data)
 
 
-def create_new_character(campaign_id, username):
-    """Create a new character for a campaign"""
+# def create_new_character(campaign_id, username):
+#     """Create a new character for a campaign"""
     
-    # Get character details from CLI
-    name = cli.ui_get_char_name()
-    char_class = cli.ui_get_char_class()
+#     # Get character details from CLI
+#     name = cli.ui_get_char_name()
+#     char_class = cli.ui_get_char_class()
     
-    # Start game session with campaign context
-    game_session = GameSession(campaign_id, username)
-    game_session.setup_character(name, char_class)
+#     # Start game session with campaign context
+#     game_session = GameSession(campaign_id, username)
+#     game_session.setup_character(name, char_class)
     
-    return game_session
+#     return game_session
 
 def load_existing_character(campaign_id, username):
     """Load existing character for a campaign"""
@@ -535,129 +535,129 @@ def handle_options_menu(username):
         
         # Continue the options menu loop for other choices
 
-def campaign_menu():
-    """Handle campaign selection/creation using scrollable CLI menu"""
+# def campaign_menu():
+#     """Handle campaign selection/creation using scrollable CLI menu"""
     
-    # For simplicity, use a default username (could ask user in future)
-    username = "Player1"  # Could be extended to multi-user
+#     # For simplicity, use a default username (could ask user in future)
+#     username = "Player1"  # Could be extended to multi-user
     
-    while True:
-        choice = cli.ui_main_menu()
+#     while True:
+#         choice = cli.ui_main_menu()
         
-        campaign_manager = CampaignManager()
+#         campaign_manager = CampaignManager()
         
-        if choice == "Play":
-            # Continue most recent campaign
-            recent_campaign = campaign_manager.get_most_recent_campaign_for_user(username)
+#         if choice == "Play":
+#             # Continue most recent campaign
+#             recent_campaign = campaign_manager.get_most_recent_campaign_for_user(username)
             
-            if not recent_campaign:
-                print("No recent campaigns found! Create a new one first.")
-                continue
+#             if not recent_campaign:
+#                 print("No recent campaigns found! Create a new one first.")
+#                 continue
             
-            campaign_id, name, description, created_at, last_played, creator, role = recent_campaign
-            print(f"Continuing: {name}")
+#             campaign_id, name, description, created_at, last_played, creator, role = recent_campaign
+#             print(f"Continuing: {name}")
             
-            return run_campaign(campaign_id, username, is_new=False)
+#             return run_campaign(campaign_id, username, is_new=False)
             
-        elif choice == "Start New Campaign":
-            # Create new campaign
-            campaign_name = input("\nEnter campaign name: ").strip()
-            if not campaign_name:
-                print("Campaign name cannot be empty!")
-                continue
+#         elif choice == "Start New Campaign":
+#             # Create new campaign
+#             campaign_name = input("\nEnter campaign name: ").strip()
+#             if not campaign_name:
+#                 print("Campaign name cannot be empty!")
+#                 continue
                 
-            description = input("Enter campaign description (optional): ").strip()
+#             description = input("Enter campaign description (optional): ").strip()
             
-            campaign_id = campaign_manager.create_new_campaign(campaign_name, username, description)
-            print(f"Created campaign: {campaign_name}")
+#             campaign_id = campaign_manager.create_new_campaign(campaign_name, username, description)
+#             print(f"Created campaign: {campaign_name}")
             
-            # NEW: World creation choice
-            world_created = handle_world_creation_for_campaign(campaign_id, campaign_name)
-            if not world_created:
-                print("Campaign creation cancelled.")
-                continue
+#             # NEW: World creation choice
+#             world_created = handle_world_creation_for_campaign(campaign_id, campaign_name)
+#             if not world_created:
+#                 print("Campaign creation cancelled.")
+#                 continue
             
-            return run_campaign(campaign_id, username, is_new=True)
+#             return run_campaign(campaign_id, username, is_new=True)
                 
-        elif choice == "Load Previous Campaign":
-            # Select existing campaign
-            campaigns = campaign_manager.list_user_campaigns(username)
+#         elif choice == "Load Previous Campaign":
+#             # Select existing campaign
+#             campaigns = campaign_manager.list_user_campaigns(username)
             
-            if not campaigns:
-                print("No campaigns found! Create a new one first.")
-                continue
+#             if not campaigns:
+#                 print("No campaigns found! Create a new one first.")
+#                 continue
                 
-            print("\nYOUR CAMPAIGNS:")
-            for i, campaign in enumerate(campaigns, 1):
-                campaign_id, name, description, created_at, last_played, creator, role = campaign
-                last_played_str = last_played.strftime("%Y-%m-%d %H:%M") if last_played else "Never"
-                print(f"{i}. {name} ({role}) - Last played: {last_played_str}")
-                if description:
-                    print(f"   Description: {description}")
+#             print("\nYOUR CAMPAIGNS:")
+#             for i, campaign in enumerate(campaigns, 1):
+#                 campaign_id, name, description, created_at, last_played, creator, role = campaign
+#                 last_played_str = last_played.strftime("%Y-%m-%d %H:%M") if last_played else "Never"
+#                 print(f"{i}. {name} ({role}) - Last played: {last_played_str}")
+#                 if description:
+#                     print(f"   Description: {description}")
                     
-            try:
-                selection = int(input(f"\nSelect campaign (1-{len(campaigns)}): ")) - 1
-                if 0 <= selection < len(campaigns):
-                    selected_campaign = campaigns[selection]
-                    campaign_id = selected_campaign[0]
-                    return run_campaign(campaign_id, username, is_new=False)
-                else:
-                    print("Invalid selection!")
-            except ValueError:
-                print("Please enter a valid number!")
+#             try:
+#                 selection = int(input(f"\nSelect campaign (1-{len(campaigns)}): ")) - 1
+#                 if 0 <= selection < len(campaigns):
+#                     selected_campaign = campaigns[selection]
+#                     campaign_id = selected_campaign[0]
+#                     return run_campaign(campaign_id, username, is_new=False)
+#                 else:
+#                     print("Invalid selection!")
+#             except ValueError:
+#                 print("Please enter a valid number!")
                 
-        elif choice == "Options":
-            # Handle options menu
-            handle_options_menu(username)
-            continue
+#         elif choice == "Options":
+#             # Handle options menu
+#             handle_options_menu(username)
+#             continue
             
-        elif choice == "Quit":
-            print("Goodbye!")
-            return
+#         elif choice == "Quit":
+#             print("Goodbye!")
+#             return
 
-def run_campaign(campaign_id, username, is_new=False):
-    """Run a campaign session"""
+# def run_campaign(campaign_id, username, is_new=False):
+#     """Run a campaign session"""
     
-    campaign_manager = CampaignManager()
+#     campaign_manager = CampaignManager()
     
-    while True:
-        # Show campaign info
-        print(f"\nCampaign ID: {str(campaign_id)[:8]}... | User: {username}")
+#     while True:
+#         # Show campaign info
+#         print(f"\nCampaign ID: {str(campaign_id)[:8]}... | User: {username}")
         
-        # Use appropriate scrollable menu based on campaign type
-        if is_new:
-            choice = cli.ui_character_menu_new_campaign()
-        else:
-            choice = cli.ui_character_menu_existing_campaign()
+#         # Use appropriate scrollable menu based on campaign type
+#         if is_new:
+#             choice = cli.ui_character_menu_new_campaign()
+#         else:
+#             choice = cli.ui_character_menu_existing_campaign()
         
-        is_new = False  # Reset flag after first iteration
+#         is_new = False  # Reset flag after first iteration
         
-        if choice == "🔴 Create New Character":
-            # Create new character
-            game_session = create_new_character(campaign_id, username)
-            if game_session:
-                # Update campaign last played time
-                campaign_manager.update_last_played(campaign_id)
-                run_game_session(game_session, is_new_character=True)
+#         if choice == "🔴 Create New Character":
+#             # Create new character
+#             game_session = create_new_character(campaign_id, username)
+#             if game_session:
+#                 # Update campaign last played time
+#                 campaign_manager.update_last_played(campaign_id)
+#                 run_game_session(game_session, is_new_character=True)
                 
-        elif choice == "🔴 Load Existing Character":
-            # Load existing character (only available for existing campaigns)
-            game_session = load_existing_character(campaign_id, username)
-            if game_session:
-                # Update campaign last played time
-                campaign_manager.update_last_played(campaign_id)
-                run_game_session(game_session, is_new_character=False)
+#         elif choice == "🔴 Load Existing Character":
+#             # Load existing character (only available for existing campaigns)
+#             game_session = load_existing_character(campaign_id, username)
+#             if game_session:
+#                 # Update campaign last played time
+#                 campaign_manager.update_last_played(campaign_id)
+#                 run_game_session(game_session, is_new_character=False)
                 
-        elif choice == "Create New Character":
-            # Create new character for existing campaign
-            game_session = create_new_character(campaign_id, username)
-            if game_session:
-                # Update campaign last played time
-                campaign_manager.update_last_played(campaign_id)
-                run_game_session(game_session)
+#         elif choice == "Create New Character":
+#             # Create new character for existing campaign
+#             game_session = create_new_character(campaign_id, username)
+#             if game_session:
+#                 # Update campaign last played time
+#                 campaign_manager.update_last_played(campaign_id)
+#                 run_game_session(game_session)
                 
-        elif choice == "Back to Main Menu":
-            return campaign_menu()  # Back to main menu
+#         elif choice == "Back to Main Menu":
+#             return campaign_menu()  # Back to main menu
 
 def run_game_session(game_session, is_new_character=False):
     """Run the actual game session"""

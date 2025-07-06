@@ -1,6 +1,9 @@
-
+import cli
+from game_session import GameSession
+from character_creator import CharacterCreator
 from db.db import (create_campaign, list_campaigns, get_most_recent_campaign, 
                    update_campaign_last_played, get_or_create_user)
+from start_menu import start_menu
 
 class CampaignManager:
     def __init__(self):
@@ -22,11 +25,21 @@ class CampaignManager:
         user_id = get_or_create_user(username)
         return list_campaigns(user_id)
     
-    def get_most_recent_campaign_for_user(self, username):
-        """Get the most recently played campaign for a user"""
+    # ? refactor
+    def continue_most_recent_campaign(self, username):
+        """Continue the most recent campaign for a user"""
         user_id = get_or_create_user(username)
-        return get_most_recent_campaign(user_id)
-    
+        recent_campaign = get_most_recent_campaign(user_id)
+        
+        if not recent_campaign:
+            print("No recent campaigns found! Create a new one first.")
+            return None
+        
+        campaign_id, name, description, created_at, last_played, creator, role = recent_campaign
+        print(f"Continuing: {name}")
+        
+        return self.select_character(campaign_id, username, is_new=False)
+        
     def update_last_played(self, campaign_id):
         """Update when campaign was last played"""
         update_campaign_last_played(campaign_id)
@@ -38,3 +51,54 @@ class CampaignManager:
             return any(str(c[0]) == str(campaign_id) for c in campaigns)
         except:
             return False
+
+    def select_character(self, campaign_id, username, is_new=False):
+        """Run a campaign session"""
+        
+        campaign_manager = CampaignManager()
+        
+        while True:
+            # Show campaign info
+            print(f"\nCampaign ID: {str(campaign_id)[:8]}... | User: {username}")
+            
+            # Use appropriate scrollable menu based on campaign type
+            if is_new:
+                choice = cli.ui_character_menu_new_campaign()
+            else:
+                choice = cli.ui_character_menu_existing_campaign()
+            
+            is_new = False  # Reset flag after first iteration
+            
+            if choice == "🔴 Create New Character":
+                # Create new character
+                game_session = CharacterCreator(campaign_id, username).create_new_character()
+                if game_session:
+                    # Update campaign last played time
+                    campaign_manager.update_last_played(campaign_id)
+                    run_game_session(game_session, is_new_character=True)
+                    
+            elif choice == "🔴 Load Existing Character":
+                # Load existing character (only available for existing campaigns)
+                game_session = self.load_existing_character(campaign_id, username)
+                if game_session:
+                    # Update campaign last played time
+                    campaign_manager.update_last_played(campaign_id)
+                    run_game_session(game_session, is_new_character=False)
+                    
+                    
+            elif choice == "Back to Main Menu":
+                return start_menu()  # Back to main menu
+
+
+    def load_existing_character(campaign_id, username):
+        """Load existing character for a campaign"""
+        
+        # Create game session with campaign context - it will auto-load character
+        game_session = GameSession(campaign_id, username)
+        
+        if not game_session.character:
+            print("No character found in this campaign!")
+            return None
+            
+        print(f"Loaded character: {game_session.player_name} ({game_session.player_class})")
+        return game_session

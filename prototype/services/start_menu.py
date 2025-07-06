@@ -1,5 +1,5 @@
 import cli
-from db.db import CampaignManager
+from campaign_manager import CampaignManager
 
 
 def start_menu():
@@ -14,17 +14,10 @@ def start_menu():
         campaign_manager = CampaignManager()
         
         if choice == "Play":
-            # Continue most recent campaign
-            recent_campaign = campaign_manager.get_most_recent_campaign_for_user(username)
-            
-            if not recent_campaign:
-                print("No recent campaigns found! Create a new one first.")
-                continue
-            
-            campaign_id, name, description, created_at, last_played, creator, role = recent_campaign
-            print(f"Continuing: {name}")
-            
-            return run_campaign(campaign_id, username, is_new=False)
+            result = campaign_manager.continue_most_recent_campaign(username)
+            if result:
+                return result  # campaign_manager handles the run_campaign call
+            continue
             
         elif choice == "Start New Campaign":
             # Create new campaign

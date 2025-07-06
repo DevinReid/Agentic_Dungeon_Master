@@ -45,20 +45,7 @@ class GameSession:
         self.player_name = name
         self.player_class = char_class
         
-        # Clear any existing characters in this campaign for this user (for testing)
-        existing_char = get_character_in_campaign(self.campaign_id, self.user_id)
-        if existing_char:
-            clear_characters_in_campaign(self.campaign_id)
-        
-        # Create new character
-        hp = 30
-        self.character_id = create_character(self.campaign_id, self.user_id, name, char_class, hp)
-        
-        # Generate stats
-        stats = self.story.generate_stats(char_class, 1)
-        stats["ac"] = stats["ac"] + 2
-        stats["hp"] = stats["hp"] + 50
-        stats["max_hp"] = stats["hp"]
+ 
         
         # Update character with generated stats
         update_character_stats(self.character_id, stats)
