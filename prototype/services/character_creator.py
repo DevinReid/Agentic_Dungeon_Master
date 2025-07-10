@@ -1,5 +1,5 @@
 import cli
-from game_session import GameSession
+from services.game_session import GameSession
 from db.db import (get_character_in_campaign, clear_characters_in_campaign, 
                    create_character, update_character_stats, get_or_create_user)
 

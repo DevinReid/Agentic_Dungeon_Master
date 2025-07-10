@@ -1,0 +1,619 @@
+{
+  "world_id": "0bd71685-2301-4cd1-8bb4-673c3f3490e6",
+  "campaign_id": "e23f1a62-6092-4e41-a903-edf08c26a552",
+  "universe_data": {
+    "world_info": {
+      "world_name": "Elaris",
+      "world_description": "Elaris, a verdant and mystical realm, is a small continent teeming with life and magic. It is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, the celestial deities carved this world from the primal chaos, each leaving an indelible mark upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets. The echoes of a forgotten age stir once more, promising both peril and possibility.",
+      "theme_description": "In Elaris, magic weaves through the fabric of reality, binding the mundane to the miraculous. Heroes rise and fall, their legends etched into the tapestry of time, as they battle forces ancient and arcane. The gods look down from their celestial thrones, their fates intertwined with the mortal realm. This high fantasy world invites epic quests, where courage and cunning are paramount against the backdrop of an awakening evil.",
+      "theme_list": "magic, heroism, legend, divine influence, ancient evil",
+      "natural_laws": "The world of Elaris operates by principles where magic flows through ley lines, invisible currents that crisscross the land. These ley lines connect to the planar realms, allowing skilled practitioners to tap into otherworldly forces. However, the balance of magic must be maintained, for excessive use can lead to catastrophic rifts.",
+      "custom_details": "Elaris serves as the classic fantasy adventure setting for the test4 campaign, offering a rich tapestry of quests, myths, and magical phenomena. Heroes will traverse through lush kingdoms, uncovering relics of power, and confronting the stirrings of an ancient evil that threatens the fragile peace."
+    },
+    "magic_system": {
+      "commonality": "In Elaris, magic is as common as the air. Every town boasts at least a wizard or healer, and magical academies dot the landscape, offering training to those with the talent.",
+      "mechanics": "Magic is harnessed through spells and rituals, drawing energy from ley lines and celestial influences. Spellcasters must understand the intricate weavings of magical formulae to channel these forces effectively.",
+      "limitations": "Magic is not without its costs. Overuse can drain the user's life force or attract the attention of malevolent entities. Spells require components or sacrifices, and powerful magic often demands rare materials or significant preparation.",
+      "sources": "Magic in Elaris springs from the ley lines, celestial alignment, and the divine favor of gods. Some rare individuals possess innate magical abilities, a gift from the gods themselves.",
+      "magic_level": "High"
+    },
+    "pantheon": {
+      "structure": "The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic.",
+      "major_deities": [
+        "Solara, Goddess of the Sun",
+        "Thalor, God of the Sea",
+        "Gaea, Mother of Earth",
+        "Mystara, Keeper of Magic"
+      ],
+      "religious_conflicts": [
+        "The worshippers of Solara and Thalor often clash over their respective dominions of light and water.",
+        "Followers of Gaea and Mystara debate the extent to which magic should intervene in the natural order."
+      ],
+      "divine_influence": "The gods of Elaris are actively involved in the world, their wills manifesting through natural phenomena, divine omens, and the empowerment or cursing of mortals."
+    },
+    "global_threats": [
+      {
+        "primary_threat": "The Awakening of the Void Lord",
+        "threat_details": "An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains. Once a mighty sorcerer turned into a corrupted entity, it seeks to unravel the fabric of reality.",
+        "world_impact": "The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land. Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages.",
+        "resistance_forces": "An alliance of heroes and scholars from the three kingdoms, led by the enigmatic Order of the Silver Flame, unites to uncover forgotten lore and forge alliances necessary to combat this looming threat."
+      }
+    ],
+    "size": {
+      "scope": "regional",
+      "description": "Elaris is a vibrant, small continent comprising three distinct kingdoms, each with its own culture and aspirations. These are supported by a network of cities and settlements that span lush forests, fertile plains, and imposing mountain ranges.",
+      "region_count": 3,
+      "major_city_count": 5,
+      "settlement_count": 18
+    }
+  },
+  "processed_sections": [
+    {
+      "section_key": "world_info",
+      "content_type": "world_overview",
+      "source_type": "universe_builder",
+      "title": "World Overview - Elaris",
+      "narrative_content": "Elaris, a verdant and mystical realm, is a small continent teeming with life and magic. It is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, the celestial deities carved this world from the primal chaos, each leaving an indelible mark upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets. The echoes of a forgotten age stir once more, promising both peril and possibility.",
+      "original_metadata": {
+        "world_name": "Elaris",
+        "world_description": "Elaris, a verdant and mystical realm, is a small continent teeming with life and magic. It is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, the celestial deities carved this world from the primal chaos, each leaving an indelible mark upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets. The echoes of a forgotten age stir once more, promising both peril and possibility.",
+        "theme_description": "In Elaris, magic weaves through the fabric of reality, binding the mundane to the miraculous. Heroes rise and fall, their legends etched into the tapestry of time, as they battle forces ancient and arcane. The gods look down from their celestial thrones, their fates intertwined with the mortal realm. This high fantasy world invites epic quests, where courage and cunning are paramount against the backdrop of an awakening evil.",
+        "theme_list": "magic, heroism, legend, divine influence, ancient evil",
+        "natural_laws": "The world of Elaris operates by principles where magic flows through ley lines, invisible currents that crisscross the land. These ley lines connect to the planar realms, allowing skilled practitioners to tap into otherworldly forces. However, the balance of magic must be maintained, for excessive use can lead to catastrophic rifts.",
+        "custom_details": "Elaris serves as the classic fantasy adventure setting for the test4 campaign, offering a rich tapestry of quests, myths, and magical phenomena. Heroes will traverse through lush kingdoms, uncovering relics of power, and confronting the stirrings of an ancient evil that threatens the fragile peace."
+      },
+      "content_id": "5688c4a7-621f-4e34-8468-2f61ce9d6452",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "ancient_forests",
+        "majestic_mountains",
+        "celestial_deities",
+        "three_kingdoms",
+        "magic_system",
+        "ley_lines",
+        "celestial_influences",
+        "pantheon",
+        "void_lord",
+        "ironspire_mountains",
+        "ancient_evil",
+        "divine_domains"
+      ]
+    },
+    {
+      "section_key": "magic_system",
+      "content_type": "magic_system",
+      "source_type": "universe_builder",
+      "title": "Magic System",
+      "narrative_content": "Magic is harnessed through spells and rituals, drawing energy from ley lines and celestial influences. Spellcasters must understand the intricate weavings of magical formulae to channel these forces effectively.",
+      "original_metadata": {
+        "commonality": "In Elaris, magic is as common as the air. Every town boasts at least a wizard or healer, and magical academies dot the landscape, offering training to those with the talent.",
+        "mechanics": "Magic is harnessed through spells and rituals, drawing energy from ley lines and celestial influences. Spellcasters must understand the intricate weavings of magical formulae to channel these forces effectively.",
+        "limitations": "Magic is not without its costs. Overuse can drain the user's life force or attract the attention of malevolent entities. Spells require components or sacrifices, and powerful magic often demands rare materials or significant preparation.",
+        "sources": "Magic in Elaris springs from the ley lines, celestial alignment, and the divine favor of gods. Some rare individuals possess innate magical abilities, a gift from the gods themselves.",
+        "magic_level": "High"
+      },
+      "content_id": "a2417ef3-1e2d-4f98-ad78-66e03656ad3a",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "ancient_forests",
+        "majestic_mountains",
+        "celestial_deities",
+        "three_kingdoms",
+        "magic_system",
+        "ley_lines",
+        "celestial_influences",
+        "pantheon",
+        "void_lord",
+        "ironspire_mountains",
+        "ancient_evil",
+        "divine_domains"
+      ]
+    },
+    {
+      "section_key": "pantheon",
+      "content_type": "pantheon",
+      "source_type": "universe_builder",
+      "title": "Divine Pantheon",
+      "narrative_content": "The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic.",
+      "original_metadata": {
+        "structure": "The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic.",
+        "major_deities": [
+          "Solara, Goddess of the Sun",
+          "Thalor, God of the Sea",
+          "Gaea, Mother of Earth",
+          "Mystara, Keeper of Magic"
+        ],
+        "religious_conflicts": [
+          "The worshippers of Solara and Thalor often clash over their respective dominions of light and water.",
+          "Followers of Gaea and Mystara debate the extent to which magic should intervene in the natural order."
+        ],
+        "divine_influence": "The gods of Elaris are actively involved in the world, their wills manifesting through natural phenomena, divine omens, and the empowerment or cursing of mortals."
+      },
+      "content_id": "3b88431c-8678-4cfa-a680-3e4e1af3f01e",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "ancient_forests",
+        "majestic_mountains",
+        "celestial_deities",
+        "three_kingdoms",
+        "magic_system",
+        "ley_lines",
+        "celestial_influences",
+        "pantheon",
+        "void_lord",
+        "ironspire_mountains",
+        "ancient_evil",
+        "divine_domains"
+      ]
+    },
+    {
+      "section_key": "global_threats",
+      "content_type": "global_threats",
+      "source_type": "universe_builder",
+      "title": "Global Threats",
+      "narrative_content": "An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains. Once a mighty sorcerer turned into a corrupted entity, it seeks to unravel the fabric of reality. The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land. Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages. Known as: The Awakening of the Void Lord",
+      "original_metadata": [
+        {
+          "primary_threat": "The Awakening of the Void Lord",
+          "threat_details": "An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains. Once a mighty sorcerer turned into a corrupted entity, it seeks to unravel the fabric of reality.",
+          "world_impact": "The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land. Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages.",
+          "resistance_forces": "An alliance of heroes and scholars from the three kingdoms, led by the enigmatic Order of the Silver Flame, unites to uncover forgotten lore and forge alliances necessary to combat this looming threat."
+        }
+      ],
+      "content_id": "e8d8b753-e2f3-4d08-96ae-b59b9a99c16c",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "ancient_forests",
+        "majestic_mountains",
+        "celestial_deities",
+        "three_kingdoms",
+        "magic_system",
+        "ley_lines",
+        "celestial_influences",
+        "pantheon",
+        "void_lord",
+        "ironspire_mountains",
+        "ancient_evil",
+        "divine_domains"
+      ]
+    },
+    {
+      "section_key": "size",
+      "content_type": "world_scale",
+      "source_type": "universe_builder",
+      "title": "World Scale",
+      "narrative_content": "Elaris is a vibrant, small continent comprising three distinct kingdoms, each with its own culture and aspirations. These are supported by a network of cities and settlements that span lush forests, fertile plains, and imposing mountain ranges.",
+      "original_metadata": {
+        "scope": "regional",
+        "description": "Elaris is a vibrant, small continent comprising three distinct kingdoms, each with its own culture and aspirations. These are supported by a network of cities and settlements that span lush forests, fertile plains, and imposing mountain ranges.",
+        "region_count": 3,
+        "major_city_count": 5,
+        "settlement_count": 18
+      },
+      "content_id": "08083b5b-d309-4eee-bfbb-1f27db058e15",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "ancient_forests",
+        "majestic_mountains",
+        "celestial_deities",
+        "three_kingdoms",
+        "magic_system",
+        "ley_lines",
+        "celestial_influences",
+        "pantheon",
+        "void_lord",
+        "ironspire_mountains",
+        "ancient_evil",
+        "divine_domains"
+      ]
+    }
+  ],
+  "all_tags": [
+    "universe_content",
+    "elaris",
+    "ancient_forests",
+    "majestic_mountains",
+    "celestial_deities",
+    "three_kingdoms",
+    "magic_system",
+    "ley_lines",
+    "celestial_influences",
+    "pantheon",
+    "void_lord",
+    "ironspire_mountains",
+    "ancient_evil",
+    "divine_domains"
+  ],
+  "all_entities_grouped": {
+    "npcs": [],
+    "locations": [
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440001",
+        "campaign_id": "e23f1a62-6092-4e41-a903-edf08c26a552",
+        "name": "Elaris",
+        "description": "Elaris is a verdant and mystical realm, a small continent teeming with life and magic. It is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, celestial deities carved this world from primal chaos, leaving indelible marks upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets.",
+        "notable_features": "Ancient forests, majestic mountains, ley lines, celestial influences",
+        "connections": {
+          "north": "Ironspire Mountains"
+        },
+        "location_type": "continent",
+        "size": "massive",
+        "inhabitants": [
+          "humans",
+          "elves",
+          "dwarves",
+          "various magical creatures"
+        ],
+        "notable_items": [
+          "artifacts of ancient magic",
+          "ley line nodes"
+        ],
+        "atmosphere": "mysterious",
+        "relationships": [
+          {
+            "target": "Pantheon of Elaris",
+            "type": "contains"
+          },
+          {
+            "target": "Ironspire Mountains",
+            "type": "contains"
+          }
+        ],
+        "lore": "Elaris was shaped by celestial deities, with its history marked by the rise and fall of kingdoms and the ebb and flow of magical energies.",
+        "tags": [
+          "universe_content",
+          "elaris",
+          "ancient_forests",
+          "majestic_mountains"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440002",
+        "campaign_id": "e23f1a62-6092-4e41-a903-edf08c26a552",
+        "name": "Ironspire Mountains",
+        "description": "The Ironspire Mountains are a formidable range where the ancient evil known as the Void Lord stirs from its slumber. These mountains are steeped in mystery and danger, with treacherous paths and hidden caves.",
+        "notable_features": "Treacherous paths, hidden caves, ancient ruins",
+        "connections": {
+          "south": "Elaris"
+        },
+        "location_type": "mountain range",
+        "size": "large",
+        "inhabitants": [
+          "mountain trolls",
+          "giant eagles",
+          "Void Lord's minions"
+        ],
+        "notable_items": [
+          "artifacts of dark magic",
+          "ancient relics"
+        ],
+        "atmosphere": "ominous",
+        "relationships": [
+          {
+            "target": "Void Lord",
+            "type": "contains"
+          }
+        ],
+        "lore": "The Ironspire Mountains have long been a place of legend, rumored to house ancient evils and powerful magic.",
+        "tags": [
+          "ironspire_mountains",
+          "ancient_evil",
+          "void_lord"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      }
+    ],
+    "organizations": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440003",
+        "campaign_id": "e23f1a62-6092-4e41-a903-edf08c26a552",
+        "entity_type": "organization",
+        "entity_name": "Pantheon of Elaris",
+        "description": "The Pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic. They are revered by the inhabitants of Elaris and play a crucial role in the world's balance.",
+        "organization_type": "religious",
+        "size": "massive",
+        "influence": "continental",
+        "structure": "Hierarchical, with each deity having a specific domain and followers",
+        "goals": [
+          "Maintain the balance of nature and magic",
+          "Guide the inhabitants of Elaris"
+        ],
+        "notable_members": [
+          "Deity of the Sun",
+          "Deity of the Sea",
+          "Deity of the Earth",
+          "Deity of Magic"
+        ],
+        "relationships": [
+          {
+            "target": "Elaris",
+            "type": "resides_in"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "pantheon",
+          "celestial_deities",
+          "divine_domains"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "artifacts": [],
+    "deities": [],
+    "threats": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440004",
+        "campaign_id": "e23f1a62-6092-4e41-a903-edf08c26a552",
+        "entity_type": "threat",
+        "entity_name": "Void Lord",
+        "description": "The Void Lord is an ancient evil, once a mighty sorcerer turned into a corrupted entity, seeking to unravel the fabric of reality. It stirs from its aeons-long slumber beneath the Ironspire Mountains, threatening to plunge the world into chaos.",
+        "artifact_type": "corrupted entity",
+        "rarity": "legendary",
+        "properties": [
+          "Reality manipulation",
+          "Dark magic"
+        ],
+        "requirements": "None",
+        "history": "Once a powerful sorcerer, the Void Lord was corrupted by dark forces and sealed beneath the Ironspire Mountains by the Pantheon of Elaris.",
+        "relationships": [
+          {
+            "target": "Ironspire Mountains",
+            "type": "located_in"
+          },
+          {
+            "target": "The Awakening of the Void Lord",
+            "type": "causes"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "void_lord",
+          "ancient_evil",
+          "threat"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "events": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440005",
+        "campaign_id": "e23f1a62-6092-4e41-a903-edf08c26a552",
+        "entity_type": "event",
+        "entity_name": "The Awakening of the Void Lord",
+        "description": "The event of the Void Lord stirring from its aeons-long slumber, causing fear across the kingdoms. The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land.",
+        "artifact_type": "cataclysmic event",
+        "rarity": "legendary",
+        "properties": [
+          "Widespread fear",
+          "Environmental chaos"
+        ],
+        "requirements": "None",
+        "history": "The Awakening of the Void Lord marks the return of an ancient evil, threatening to unravel the world.",
+        "relationships": [
+          {
+            "target": "Void Lord",
+            "type": "caused_by"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "void_lord",
+          "ancient_evil",
+          "event"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "items": []
+  },
+  "all_chunks": [
+    {
+      "index": 0,
+      "text": "Elaris is a verdant and mystical realm, a small continent teeming with life and magic. Elaris is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, the celestial deities carved Elaris from the primal chaos, each leaving an indelible mark upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets. The echoes of a forgotten age stir once more, promising both peril and possibility. Magic is harnessed through spells and rituals, drawing energy from ley lines and celestial influences. Spellcasters must understand the intricate weavings of magical formulae to channel these forces effectively.",
+      "topic": "Introduction to Elaris and its magical landscape",
+      "word_count": 112,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "majestic_mountains",
+        "void_lord",
+        "magic_system",
+        "universe_content",
+        "pantheon",
+        "elaris",
+        "celestial_deities",
+        "three_kingdoms",
+        "ironspire_mountains",
+        "divine_domains",
+        "celestial_influences",
+        "ancient_evil",
+        "ancient_forests",
+        "ley_lines"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Introduction to Elaris and its magical landscape",
+        "chunk_index": 0,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 1,
+      "text": "The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic. An ancient evil known as the Void Lord stirs from the aeons-long slumber beneath the Ironspire Mountains. The Void Lord was once a mighty sorcerer turned into a corrupted entity, seeking to unravel the fabric of reality. The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land. Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages.",
+      "topic": "The pantheon and the threat of the Void Lord",
+      "word_count": 98,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "majestic_mountains",
+        "void_lord",
+        "magic_system",
+        "universe_content",
+        "pantheon",
+        "elaris",
+        "celestial_deities",
+        "three_kingdoms",
+        "ironspire_mountains",
+        "divine_domains",
+        "celestial_influences",
+        "ancient_evil",
+        "ancient_forests",
+        "ley_lines"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The pantheon and the threat of the Void Lord",
+        "chunk_index": 1,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 2,
+      "text": "Elaris is a vibrant, small continent comprising three distinct kingdoms, each with its own culture and aspirations. These kingdoms are supported by a network of cities and settlements that span lush forests, fertile plains, and imposing mountain ranges. The kingdoms must navigate the challenges posed by the awakening of the Void Lord and the dark forces that accompany the Void Lord's return. The kingdoms' leaders and inhabitants must rely on their understanding of magic and the guidance of the pantheon to protect Elaris from the impending threat.",
+      "topic": "The three kingdoms and their response to the Void Lord",
+      "word_count": 87,
+      "chunk_type": "entity_focused",
+      "content_type": "universe_content",
+      "tags": [
+        "majestic_mountains",
+        "void_lord",
+        "magic_system",
+        "universe_content",
+        "pantheon",
+        "elaris",
+        "celestial_deities",
+        "three_kingdoms",
+        "ironspire_mountains",
+        "divine_domains",
+        "celestial_influences",
+        "ancient_evil",
+        "ancient_forests",
+        "ley_lines"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The three kingdoms and their response to the Void Lord",
+        "chunk_index": 2,
+        "entity_names": []
+      }
+    }
+  ],
+  "combined_narrative": "Elaris, a verdant and mystical realm, is a small continent teeming with life and magic. It is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, the celestial deities carved this world from the primal chaos, each leaving an indelible mark upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets. The echoes of a forgotten age stir once more, promising both peril and possibility. Magic is harnessed through spells and rituals, drawing energy from ley lines and celestial influences. Spellcasters must understand the intricate weavings of magical formulae to channel these forces effectively. The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic. An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains. Once a mighty sorcerer turned into a corrupted entity, it seeks to unravel the fabric of reality. The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land. Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages. Known as: The Awakening of the Void Lord Elaris is a vibrant, small continent comprising three distinct kingdoms, each with its own culture and aspirations. These are supported by a network of cities and settlements that span lush forests, fertile plains, and imposing mountain ranges.",
+  "raw_tag_response": {
+    "model": "gpt-4-0613",
+    "usage": {
+      "completion_tokens": 79,
+      "prompt_tokens": 474,
+      "total_tokens": 553,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"tags\": [\"universe_content\", \"elaris\", \"ancient_forests\", \"majestic_mountains\", \"celestial_deities\", \"three_kingdoms\", \"magic_system\", \"ley_lines\", \"celestial_influences\", \"pantheon\", \"void_lord\", \"ironspire_mountains\", \"ancient_evil\", \"divine_domains\"]}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\"tags\": [\"universe_content\", \"elaris\", \"ancient_forests\", \"majestic_mountains\", \"celestial_deities\", \"three_kingdoms\", \"magic_system\", \"ley_lines\", \"celestial_influences\", \"pantheon\", \"void_lord\", \"ironspire_mountains\", \"ancient_evil\", \"divine_domains\"]}"
+  },
+  "raw_entity_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 532,
+      "prompt_tokens": 900,
+      "total_tokens": 1432,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Elaris\",\n      \"entity_type\": \"location\",\n      \"description\": \"A verdant and mystical realm, a small continent teeming with life and magic.\",\n      \"extraction_context\": \"Elaris, a verdant and mystical realm, is a small continent teeming with life and magic.\",\n      \"suggested_tags\": [\"universe_content\", \"elaris\", \"ancient_forests\", \"majestic_mountains\"]\n    },\n    {\n      \"entity_name\": \"Ironspire Mountains\",\n      \"entity_type\": \"location\",\n      \"description\": \"Mountains where the ancient evil known as the Void Lord stirs from its slumber.\",\n      \"extraction_context\": \"An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains.\",\n      \"suggested_tags\": [\"ironspire_mountains\", \"ancient_evil\", \"void_lord\"]\n    },\n    {\n      \"entity_name\": \"Void Lord\",\n      \"entity_type\": \"threat\",\n      \"description\": \"An ancient evil, once a mighty sorcerer turned into a corrupted entity, seeking to unravel the fabric of reality.\",\n      \"extraction_context\": \"An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains.\",\n      \"suggested_tags\": [\"void_lord\", \"ancient_evil\", \"threat\"]\n    },\n    {\n      \"entity_name\": \"The Awakening of the Void Lord\",\n      \"entity_type\": \"event\",\n      \"description\": \"The event of the Void Lord stirring from its aeons-long slumber, causing fear across the kingdoms.\",\n      \"extraction_context\": \"Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages.\",\n      \"suggested_tags\": [\"void_lord\", \"ancient_evil\", \"event\"]\n    },\n    {\n      \"entity_name\": \"Pantheon of Elaris\",\n      \"entity_type\": \"organization\",\n      \"description\": \"A collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic.\",\n      \"extraction_context\": \"The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic.\",\n      \"suggested_tags\": [\"pantheon\", \"celestial_deities\", \"divine_domains\"]\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Elaris\",\n      \"entity_type\": \"location\",\n      \"description\": \"A verdant and mystical realm, a small continent teeming with life and magic.\",\n      \"extraction_context\": \"Elaris, a verdant and mystical realm, is a small continent teeming with life and magic.\",\n      \"suggested_tags\": [\"universe_content\", \"elaris\", \"ancient_forests\", \"majestic_mountains\"]\n    },\n    {\n      \"entity_name\": \"Ironspire Mountains\",\n      \"entity_type\": \"location\",\n      \"description\": \"Mountains where the ancient evil known as the Void Lord stirs from its slumber.\",\n      \"extraction_context\": \"An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains.\",\n      \"suggested_tags\": [\"ironspire_mountains\", \"ancient_evil\", \"void_lord\"]\n    },\n    {\n      \"entity_name\": \"Void Lord\",\n      \"entity_type\": \"threat\",\n      \"description\": \"An ancient evil, once a mighty sorcerer turned into a corrupted entity, seeking to unravel the fabric of reality.\",\n      \"extraction_context\": \"An ancient evil known as the Void Lord stirs from its aeons-long slumber beneath the Ironspire Mountains.\",\n      \"suggested_tags\": [\"void_lord\", \"ancient_evil\", \"threat\"]\n    },\n    {\n      \"entity_name\": \"The Awakening of the Void Lord\",\n      \"entity_type\": \"event\",\n      \"description\": \"The event of the Void Lord stirring from its aeons-long slumber, causing fear across the kingdoms.\",\n      \"extraction_context\": \"Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages.\",\n      \"suggested_tags\": [\"void_lord\", \"ancient_evil\", \"event\"]\n    },\n    {\n      \"entity_name\": \"Pantheon of Elaris\",\n      \"entity_type\": \"organization\",\n      \"description\": \"A collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic.\",\n      \"extraction_context\": \"The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic.\",\n      \"suggested_tags\": [\"pantheon\", \"celestial_deities\", \"divine_domains\"]\n    }\n  ]\n}"
+  },
+  "raw_chunk_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 505,
+      "prompt_tokens": 749,
+      "total_tokens": 1254,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elaris is a verdant and mystical realm, a small continent teeming with life and magic. Elaris is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, the celestial deities carved Elaris from the primal chaos, each leaving an indelible mark upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets. The echoes of a forgotten age stir once more, promising both peril and possibility. Magic is harnessed through spells and rituals, drawing energy from ley lines and celestial influences. Spellcasters must understand the intricate weavings of magical formulae to channel these forces effectively.\",\n      \"topic\": \"Introduction to Elaris and its magical landscape\",\n      \"word_count\": 120,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic. An ancient evil known as the Void Lord stirs from the aeons-long slumber beneath the Ironspire Mountains. The Void Lord was once a mighty sorcerer turned into a corrupted entity, seeking to unravel the fabric of reality. The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land. Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages.\",\n      \"topic\": \"The pantheon and the threat of the Void Lord\",\n      \"word_count\": 130,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Elaris is a vibrant, small continent comprising three distinct kingdoms, each with its own culture and aspirations. These kingdoms are supported by a network of cities and settlements that span lush forests, fertile plains, and imposing mountain ranges. The kingdoms must navigate the challenges posed by the awakening of the Void Lord and the dark forces that accompany the Void Lord's return. The kingdoms' leaders and inhabitants must rely on their understanding of magic and the guidance of the pantheon to protect Elaris from the impending threat.\",\n      \"topic\": \"The three kingdoms and their response to the Void Lord\",\n      \"word_count\": 130,\n      \"chunk_type\": \"entity_focused\"\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elaris is a verdant and mystical realm, a small continent teeming with life and magic. Elaris is a land where ancient forests whisper secrets of old, and majestic mountains stand guard over the valleys. Long ago, the celestial deities carved Elaris from the primal chaos, each leaving an indelible mark upon its creation. Now, three kingdoms vie for power amidst a landscape punctuated by grand cities and humble hamlets. The echoes of a forgotten age stir once more, promising both peril and possibility. Magic is harnessed through spells and rituals, drawing energy from ley lines and celestial influences. Spellcasters must understand the intricate weavings of magical formulae to channel these forces effectively.\",\n      \"topic\": \"Introduction to Elaris and its magical landscape\",\n      \"word_count\": 120,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"The pantheon of Elaris is a collection of divine beings, each presiding over distinct domains such as the sun, the sea, the earth, and the mysteries of magic. An ancient evil known as the Void Lord stirs from the aeons-long slumber beneath the Ironspire Mountains. The Void Lord was once a mighty sorcerer turned into a corrupted entity, seeking to unravel the fabric of reality. The skies darken with unnatural storms, crops wither, and creatures of darkness roam the land. Fear spreads across the kingdoms as whispers of the Void Lord's return reach even the smallest of villages.\",\n      \"topic\": \"The pantheon and the threat of the Void Lord\",\n      \"word_count\": 130,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Elaris is a vibrant, small continent comprising three distinct kingdoms, each with its own culture and aspirations. These kingdoms are supported by a network of cities and settlements that span lush forests, fertile plains, and imposing mountain ranges. The kingdoms must navigate the challenges posed by the awakening of the Void Lord and the dark forces that accompany the Void Lord's return. The kingdoms' leaders and inhabitants must rely on their understanding of magic and the guidance of the pantheon to protect Elaris from the impending threat.\",\n      \"topic\": \"The three kingdoms and their response to the Void Lord\",\n      \"word_count\": 130,\n      \"chunk_type\": \"entity_focused\"\n    }\n  ]\n}"
+  }
+}

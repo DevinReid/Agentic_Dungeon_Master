@@ -1,0 +1,705 @@
+{
+  "world_id": "b05b87e8-22a7-48e0-9629-16e3cbb46ad0",
+  "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+  "universe_data": {
+    "world_info": {
+      "world_name": "Elarion",
+      "world_description": "Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration. A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands. From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist, forged together by the relentless passage of time and the ceaseless tide of magic.",
+      "theme_description": "In Elarion, the boundaries between legend and reality blur. Heroes rise from humble origins to challenge the darkness, wielding power granted by the world's omnipresent magic. This is a realm where the deeds of the brave are etched into the stars, where the whispers of ancient prophecies guide the footsteps of the bold. As ancient evils stir beneath the earth's surface, the call to adventure rings out, urging champions to seize their destinies and forge new tales of valor and triumph.",
+      "theme_list": "Magic-infused reality, Legendary heroes, Ancient prophecies, Divine influences, Epic confrontations",
+      "natural_laws": "The world of Elarion is connected to the Astral Veil, a shimmering dimension where the threads of magic are spun. This ethereal plane echoes the intentions of its inhabitants, manifesting their desires and fears. Magic is drawn from this plane, and its use requires a delicate balance, lest it unravel the very fabric of reality.",
+      "custom_details": "Elarion embodies the essence of classic fantasy adventure. Wandering bards sing tales of bygone eras in cozy inns, while mysterious enchantments and forgotten ruins beckon explorers to uncover their secrets. The test1 campaign will delve into these rich traditions, offering players a world ripe for exploration and heroism."
+    },
+    "magic_system": {
+      "commonality": "In nearly every town across Elarion, one might find a tower crowned with a flickering beacon of arcane light or a humble cottage where a healer tends to the wounded. Magic is as much a part of the daily rhythm as the rising and setting sun.",
+      "mechanics": "Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos. Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations, binding them to their will through concentration and discipline.",
+      "limitations": "Weaving the Astral Veil requires immense mental fortitude and precise knowledge. Overreach or distraction can result in catastrophic surges, leading to unintended transformations or ruptures in reality. The presence of arcane rifts, areas where magic fluctuates wildly, serves as a cautionary tale for the reckless.",
+      "sources": "Magic originates from the Astral Veil, a dimension of swirling potentialities that reflects the will of the gods and the passions of mortals. It is also said that certain mystical loci, scattered across Elarion, pulse with concentrated power, acting as conduits for divine influence.",
+      "magic_level": "High"
+    },
+    "pantheon": {
+      "structure": "Elarion's pantheon is a vibrant tapestry of divine beings, each claiming dominion over distinct aspects of life and the world. Temples and shrines dedicated to these deities are ubiquitous, serving as centers of worship and power.",
+      "major_deities": [
+        "Aeloria, the Lightbringer",
+        "Thalor, the Earthshaper",
+        "Nimira, the Veilweaver",
+        "Vaelrus, the Stormlord",
+        "Lyara, the Lifebinder"
+      ],
+      "religious_conflicts": [
+        "The followers of Vaelrus and Aeloria often clash over the interpretation of celestial omens, each claiming the favor of the heavens.",
+        "The cult of Nimira faces persecution by more orthodox religious sects, who distrust the secretive ways of the Veilweavers."
+      ],
+      "divine_influence": "The gods of Elarion are palpably active, their whims and desires shaping the fate of mortals. Miracles and divine interventions are not uncommon, serving as both blessings and warnings to the pious and irreverent alike."
+    },
+    "global_threats": [
+      {
+        "primary_threat": "The Awakening of Malakar the Devourer",
+        "threat_details": "Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell. Legends speak of its hunger to consume all life, an echo of an era when it roamed free. Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar, heralding its resurgence.",
+        "world_impact": "Whispers of Malakar's awakening spread fear across Elarion. Crops wither, storms rage unnaturally, and creatures once dormant emerge with unsettling regularity. The social order teeters as dread takes root in the hearts of the populace.",
+        "resistance_forces": "The Order of the Dawn, a coalition of paladins, mages, and lorekeepers, stands as the bulwark against this encroaching darkness. United by ancient oaths, they seek to uncover the mysteries of Malakar's prison and marshal their forces for the battles to come."
+      }
+    ],
+    "size": {
+      "scope": "regional",
+      "description": "Elarion is a small continent, a tapestry of diverse landscapes and cultures woven together by shared histories and destinies. It is a land of three great kingdoms, each with its own ambitions and legends, anchored by five bustling cities and a scattering of settlements that dot the land like stars in the night sky.",
+      "region_count": 3,
+      "major_city_count": 5,
+      "settlement_count": 17
+    }
+  },
+  "processed_sections": [
+    {
+      "section_key": "world_info",
+      "content_type": "world_overview",
+      "source_type": "universe_builder",
+      "title": "World Overview - Elarion",
+      "narrative_content": "Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration. A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands. From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist, forged together by the relentless passage of time and the ceaseless tide of magic.",
+      "original_metadata": {
+        "world_name": "Elarion",
+        "world_description": "Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration. A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands. From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist, forged together by the relentless passage of time and the ceaseless tide of magic.",
+        "theme_description": "In Elarion, the boundaries between legend and reality blur. Heroes rise from humble origins to challenge the darkness, wielding power granted by the world's omnipresent magic. This is a realm where the deeds of the brave are etched into the stars, where the whispers of ancient prophecies guide the footsteps of the bold. As ancient evils stir beneath the earth's surface, the call to adventure rings out, urging champions to seize their destinies and forge new tales of valor and triumph.",
+        "theme_list": "Magic-infused reality, Legendary heroes, Ancient prophecies, Divine influences, Epic confrontations",
+        "natural_laws": "The world of Elarion is connected to the Astral Veil, a shimmering dimension where the threads of magic are spun. This ethereal plane echoes the intentions of its inhabitants, manifesting their desires and fears. Magic is drawn from this plane, and its use requires a delicate balance, lest it unravel the very fabric of reality.",
+        "custom_details": "Elarion embodies the essence of classic fantasy adventure. Wandering bards sing tales of bygone eras in cozy inns, while mysterious enchantments and forgotten ruins beckon explorers to uncover their secrets. The test1 campaign will delve into these rich traditions, offering players a world ripe for exploration and heroism."
+      },
+      "content_id": "8685a015-a634-45f9-a7cb-d0398e306383",
+      "tags": [
+        "universe_content",
+        "elarion",
+        "magic_system",
+        "astral_veil",
+        "weavers",
+        "pantheon",
+        "divine_influence",
+        "stormcrag_mountains",
+        "evergreen_glades",
+        "ancient_cities",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "magic_and_mundane",
+        "time_and_magic"
+      ]
+    },
+    {
+      "section_key": "magic_system",
+      "content_type": "magic_system",
+      "source_type": "universe_builder",
+      "title": "Magic System",
+      "narrative_content": "Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos. Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations, binding them to their will through concentration and discipline.",
+      "original_metadata": {
+        "commonality": "In nearly every town across Elarion, one might find a tower crowned with a flickering beacon of arcane light or a humble cottage where a healer tends to the wounded. Magic is as much a part of the daily rhythm as the rising and setting sun.",
+        "mechanics": "Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos. Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations, binding them to their will through concentration and discipline.",
+        "limitations": "Weaving the Astral Veil requires immense mental fortitude and precise knowledge. Overreach or distraction can result in catastrophic surges, leading to unintended transformations or ruptures in reality. The presence of arcane rifts, areas where magic fluctuates wildly, serves as a cautionary tale for the reckless.",
+        "sources": "Magic originates from the Astral Veil, a dimension of swirling potentialities that reflects the will of the gods and the passions of mortals. It is also said that certain mystical loci, scattered across Elarion, pulse with concentrated power, acting as conduits for divine influence.",
+        "magic_level": "High"
+      },
+      "content_id": "67966cdc-3c81-44b2-a3af-8e7b6c835cf3",
+      "tags": [
+        "universe_content",
+        "elarion",
+        "magic_system",
+        "astral_veil",
+        "weavers",
+        "pantheon",
+        "divine_influence",
+        "stormcrag_mountains",
+        "evergreen_glades",
+        "ancient_cities",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "magic_and_mundane",
+        "time_and_magic"
+      ]
+    },
+    {
+      "section_key": "pantheon",
+      "content_type": "pantheon",
+      "source_type": "universe_builder",
+      "title": "Divine Pantheon",
+      "narrative_content": "Elarion's pantheon is a vibrant tapestry of divine beings, each claiming dominion over distinct aspects of life and the world. Temples and shrines dedicated to these deities are ubiquitous, serving as centers of worship and power.",
+      "original_metadata": {
+        "structure": "Elarion's pantheon is a vibrant tapestry of divine beings, each claiming dominion over distinct aspects of life and the world. Temples and shrines dedicated to these deities are ubiquitous, serving as centers of worship and power.",
+        "major_deities": [
+          "Aeloria, the Lightbringer",
+          "Thalor, the Earthshaper",
+          "Nimira, the Veilweaver",
+          "Vaelrus, the Stormlord",
+          "Lyara, the Lifebinder"
+        ],
+        "religious_conflicts": [
+          "The followers of Vaelrus and Aeloria often clash over the interpretation of celestial omens, each claiming the favor of the heavens.",
+          "The cult of Nimira faces persecution by more orthodox religious sects, who distrust the secretive ways of the Veilweavers."
+        ],
+        "divine_influence": "The gods of Elarion are palpably active, their whims and desires shaping the fate of mortals. Miracles and divine interventions are not uncommon, serving as both blessings and warnings to the pious and irreverent alike."
+      },
+      "content_id": "2b7a571b-a966-48df-9de8-3409f3bf9655",
+      "tags": [
+        "universe_content",
+        "elarion",
+        "magic_system",
+        "astral_veil",
+        "weavers",
+        "pantheon",
+        "divine_influence",
+        "stormcrag_mountains",
+        "evergreen_glades",
+        "ancient_cities",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "magic_and_mundane",
+        "time_and_magic"
+      ]
+    },
+    {
+      "section_key": "global_threats",
+      "content_type": "global_threats",
+      "source_type": "universe_builder",
+      "title": "Global Threats",
+      "narrative_content": "Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell. Legends speak of its hunger to consume all life, an echo of an era when it roamed free. Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar, heralding its resurgence. Whispers of Malakar's awakening spread fear across Elarion. Crops wither, storms rage unnaturally, and creatures once dormant emerge with unsettling regularity. The social order teeters as dread takes root in the hearts of the populace. Known as: The Awakening of Malakar the Devourer",
+      "original_metadata": [
+        {
+          "primary_threat": "The Awakening of Malakar the Devourer",
+          "threat_details": "Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell. Legends speak of its hunger to consume all life, an echo of an era when it roamed free. Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar, heralding its resurgence.",
+          "world_impact": "Whispers of Malakar's awakening spread fear across Elarion. Crops wither, storms rage unnaturally, and creatures once dormant emerge with unsettling regularity. The social order teeters as dread takes root in the hearts of the populace.",
+          "resistance_forces": "The Order of the Dawn, a coalition of paladins, mages, and lorekeepers, stands as the bulwark against this encroaching darkness. United by ancient oaths, they seek to uncover the mysteries of Malakar's prison and marshal their forces for the battles to come."
+        }
+      ],
+      "content_id": "8ddb664a-297e-4820-a9c9-e97fc1ee1098",
+      "tags": [
+        "universe_content",
+        "elarion",
+        "magic_system",
+        "astral_veil",
+        "weavers",
+        "pantheon",
+        "divine_influence",
+        "stormcrag_mountains",
+        "evergreen_glades",
+        "ancient_cities",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "magic_and_mundane",
+        "time_and_magic"
+      ]
+    },
+    {
+      "section_key": "size",
+      "content_type": "world_scale",
+      "source_type": "universe_builder",
+      "title": "World Scale",
+      "narrative_content": "Elarion is a small continent, a tapestry of diverse landscapes and cultures woven together by shared histories and destinies. It is a land of three great kingdoms, each with its own ambitions and legends, anchored by five bustling cities and a scattering of settlements that dot the land like stars in the night sky.",
+      "original_metadata": {
+        "scope": "regional",
+        "description": "Elarion is a small continent, a tapestry of diverse landscapes and cultures woven together by shared histories and destinies. It is a land of three great kingdoms, each with its own ambitions and legends, anchored by five bustling cities and a scattering of settlements that dot the land like stars in the night sky.",
+        "region_count": 3,
+        "major_city_count": 5,
+        "settlement_count": 17
+      },
+      "content_id": "db572e26-a23d-4778-8e1d-8c6b16acb02f",
+      "tags": [
+        "universe_content",
+        "elarion",
+        "magic_system",
+        "astral_veil",
+        "weavers",
+        "pantheon",
+        "divine_influence",
+        "stormcrag_mountains",
+        "evergreen_glades",
+        "ancient_cities",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "magic_and_mundane",
+        "time_and_magic"
+      ]
+    }
+  ],
+  "all_tags": [
+    "universe_content",
+    "elarion",
+    "magic_system",
+    "astral_veil",
+    "weavers",
+    "pantheon",
+    "divine_influence",
+    "stormcrag_mountains",
+    "evergreen_glades",
+    "ancient_cities",
+    "mysticism",
+    "heroic_legends",
+    "enchanted_realm",
+    "magic_and_mundane",
+    "time_and_magic"
+  ],
+  "all_entities_grouped": {
+    "npcs": [],
+    "locations": [
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440001",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "name": "Elarion",
+        "description": "Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration.",
+        "notable_features": "Verdant valleys, ancient cities, magical energies",
+        "connections": {
+          "north": "Stormcrag Mountains",
+          "south": "Evergreen Glades"
+        },
+        "location_type": "continent",
+        "size": "massive",
+        "inhabitants": [
+          "humans",
+          "elves",
+          "dwarves",
+          "Weavers"
+        ],
+        "notable_items": [
+          "Astral Veil"
+        ],
+        "atmosphere": "mystical",
+        "relationships": [
+          {
+            "target": "Astral Veil",
+            "type": "contains"
+          },
+          {
+            "target": "Weavers",
+            "type": "inhabited_by"
+          }
+        ],
+        "lore": "A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands.",
+        "tags": [
+          "universe_content",
+          "elarion",
+          "enchanted_realm",
+          "magic_and_mundane"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440002",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "name": "Stormcrag Mountains",
+        "description": "Brooding peaks that are part of Elarion's diverse landscapes.",
+        "notable_features": "Towering peaks, harsh weather",
+        "connections": {
+          "south": "Elarion"
+        },
+        "location_type": "mountain",
+        "size": "large",
+        "inhabitants": [
+          "mountain creatures"
+        ],
+        "notable_items": [],
+        "atmosphere": "ominous",
+        "relationships": [
+          {
+            "target": "Elarion",
+            "type": "connected_to"
+          }
+        ],
+        "lore": "These mountains are known for their harsh weather and towering peaks.",
+        "tags": [
+          "stormcrag_mountains",
+          "elarion",
+          "enchanted_realm"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440003",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "name": "Evergreen Glades",
+        "description": "Lush depths that are part of Elarion's diverse landscapes.",
+        "notable_features": "Dense forests, vibrant flora",
+        "connections": {
+          "north": "Elarion"
+        },
+        "location_type": "forest",
+        "size": "large",
+        "inhabitants": [
+          "forest creatures"
+        ],
+        "notable_items": [],
+        "atmosphere": "peaceful",
+        "relationships": [
+          {
+            "target": "Elarion",
+            "type": "connected_to"
+          }
+        ],
+        "lore": "The Evergreen Glades are known for their lush vegetation and vibrant flora.",
+        "tags": [
+          "evergreen_glades",
+          "elarion",
+          "enchanted_realm"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440004",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "name": "Shadowfell",
+        "description": "Obsidian peaks beneath which Malakar stirs.",
+        "notable_features": "Dark peaks, eerie atmosphere",
+        "connections": {},
+        "location_type": "mountain",
+        "size": "medium",
+        "inhabitants": [
+          "dark creatures"
+        ],
+        "notable_items": [],
+        "atmosphere": "ominous",
+        "relationships": [
+          {
+            "target": "Malakar",
+            "type": "contains"
+          }
+        ],
+        "lore": "Legends speak of Malakar stirring beneath these obsidian peaks.",
+        "tags": [
+          "threat",
+          "location",
+          "mysticism"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      }
+    ],
+    "organizations": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440006",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "entity_type": "organization",
+        "entity_name": "Weavers",
+        "description": "Practitioners who shape magical energies through intricate rituals and ancient incantations.",
+        "organization_type": "guild",
+        "size": "medium",
+        "influence": "continental",
+        "structure": "Hierarchical with a council of elder Weavers",
+        "goals": [
+          "Mastery of magical energies",
+          "Preservation of ancient rituals"
+        ],
+        "notable_members": [],
+        "relationships": [
+          {
+            "target": "Astral Veil",
+            "type": "uses"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "magic_system",
+          "weavers",
+          "mysticism"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "artifacts": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440005",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "entity_type": "artifact",
+        "entity_name": "Astral Veil",
+        "description": "A conduit to the raw energies that suffuse the cosmos, through which magic is channeled in Elarion.",
+        "artifact_type": "wondrous_item",
+        "rarity": "legendary",
+        "properties": [
+          "Channels cosmic energies",
+          "Enhances magical abilities"
+        ],
+        "requirements": "Only usable by Weavers",
+        "history": "The Astral Veil has been used by generations of Weavers to channel and control magical energies.",
+        "relationships": [
+          {
+            "target": "Elarion",
+            "type": "located_in"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "magic_system",
+          "astral_veil",
+          "mysticism"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "deities": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440007",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "entity_type": "deitie",
+        "entity_name": "Malakar",
+        "description": "A cataclysmic entity from an age long past, known for its hunger to consume all life.",
+        "artifact_type": "deity",
+        "rarity": "legendary",
+        "properties": [
+          "Cataclysmic power",
+          "Hunger to consume life"
+        ],
+        "requirements": "None",
+        "history": "Malakar is a deity from an age long past, feared for its destructive nature.",
+        "relationships": [
+          {
+            "target": "Shadowfell",
+            "type": "located_in"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "pantheon",
+          "threat",
+          "divine_influence"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "threats": [],
+    "events": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440008",
+        "campaign_id": "96b22e2a-5c7f-4c98-9d57-a84293a2904c",
+        "entity_type": "event",
+        "entity_name": "The Awakening of Malakar the Devourer",
+        "description": "A prophesied event where Malakar's seals will weaken, heralding its resurgence.",
+        "artifact_type": "event",
+        "rarity": "legendary",
+        "properties": [
+          "Weakening of Malakar's seals",
+          "Potential resurgence of Malakar"
+        ],
+        "requirements": "None",
+        "history": "Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar.",
+        "relationships": [
+          {
+            "target": "Malakar",
+            "type": "related_to"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "threat",
+          "event",
+          "prophecy"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "items": []
+  },
+  "all_chunks": [
+    {
+      "index": 0,
+      "text": "Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration. A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands. From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist, forged together by the relentless passage of time and the ceaseless tide of magic. Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos. Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations, binding them to their will through concentration and discipline.",
+      "topic": "Elarion's mystical landscape and magic system",
+      "word_count": 163,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "magic_system",
+        "universe_content",
+        "weavers",
+        "time_and_magic",
+        "ancient_cities",
+        "evergreen_glades",
+        "stormcrag_mountains",
+        "pantheon",
+        "divine_influence",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "astral_veil",
+        "elarion",
+        "magic_and_mundane"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Elarion's mystical landscape and magic system",
+        "chunk_index": 0,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 1,
+      "text": "Elarion's pantheon is a vibrant tapestry of divine beings, each claiming dominion over distinct aspects of life and the world. Temples and shrines dedicated to these deities are ubiquitous, serving as centers of worship and power. Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell. Legends speak of Malakar's hunger to consume all life, an echo of an era when Malakar roamed free. Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar, heralding Malakar's resurgence. Whispers of Malakar's awakening spread fear across Elarion. Crops wither, storms rage unnaturally, and creatures once dormant emerge with unsettling regularity. The social order teeters as dread takes root in the hearts of the populace.",
+      "topic": "The pantheon and the threat of Malakar",
+      "word_count": 124,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "magic_system",
+        "universe_content",
+        "weavers",
+        "time_and_magic",
+        "ancient_cities",
+        "evergreen_glades",
+        "stormcrag_mountains",
+        "pantheon",
+        "divine_influence",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "astral_veil",
+        "elarion",
+        "magic_and_mundane"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The pantheon and the threat of Malakar",
+        "chunk_index": 1,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 2,
+      "text": "Known as: The Awakening of Malakar the Devourer, Elarion is a small continent, a tapestry of diverse landscapes and cultures woven together by shared histories and destinies. Elarion is a land of three great kingdoms, each with its own ambitions and legends, anchored by five bustling cities and a scattering of settlements that dot the land like stars in the night sky. The narrative of Elarion is one of balance between the extraordinary and the mundane, where time and magic intertwine to shape the destiny of its inhabitants.",
+      "topic": "Elarion's geography and cultural tapestry",
+      "word_count": 88,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "magic_system",
+        "universe_content",
+        "weavers",
+        "time_and_magic",
+        "ancient_cities",
+        "evergreen_glades",
+        "stormcrag_mountains",
+        "pantheon",
+        "divine_influence",
+        "mysticism",
+        "heroic_legends",
+        "enchanted_realm",
+        "astral_veil",
+        "elarion",
+        "magic_and_mundane"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Elarion's geography and cultural tapestry",
+        "chunk_index": 2,
+        "entity_names": []
+      }
+    }
+  ],
+  "combined_narrative": "Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration. A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands. From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist, forged together by the relentless passage of time and the ceaseless tide of magic. Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos. Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations, binding them to their will through concentration and discipline. Elarion's pantheon is a vibrant tapestry of divine beings, each claiming dominion over distinct aspects of life and the world. Temples and shrines dedicated to these deities are ubiquitous, serving as centers of worship and power. Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell. Legends speak of its hunger to consume all life, an echo of an era when it roamed free. Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar, heralding its resurgence. Whispers of Malakar's awakening spread fear across Elarion. Crops wither, storms rage unnaturally, and creatures once dormant emerge with unsettling regularity. The social order teeters as dread takes root in the hearts of the populace. Known as: The Awakening of Malakar the Devourer Elarion is a small continent, a tapestry of diverse landscapes and cultures woven together by shared histories and destinies. It is a land of three great kingdoms, each with its own ambitions and legends, anchored by five bustling cities and a scattering of settlements that dot the land like stars in the night sky.",
+  "raw_tag_response": {
+    "model": "gpt-4-0613",
+    "usage": {
+      "completion_tokens": 85,
+      "prompt_tokens": 484,
+      "total_tokens": 569,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"tags\": [\"universe_content\", \"elarion\", \"magic_system\", \"astral_veil\", \"weavers\", \"pantheon\", \"divine_influence\", \"stormcrag_mountains\", \"evergreen_glades\", \"ancient_cities\", \"mysticism\", \"heroic_legends\", \"enchanted_realm\", \"magic_and_mundane\", \"time_and_magic\"]}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\"tags\": [\"universe_content\", \"elarion\", \"magic_system\", \"astral_veil\", \"weavers\", \"pantheon\", \"divine_influence\", \"stormcrag_mountains\", \"evergreen_glades\", \"ancient_cities\", \"mysticism\", \"heroic_legends\", \"enchanted_realm\", \"magic_and_mundane\", \"time_and_magic\"]}"
+  },
+  "raw_entity_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 824,
+      "prompt_tokens": 1060,
+      "total_tokens": 1884,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Elarion\",\n      \"entity_type\": \"location\",\n      \"description\": \"A continent steeped in mysticism and memory, where magic and heroism are woven into its history.\",\n      \"extraction_context\": \"Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities.\",\n      \"suggested_tags\": [\"universe_content\", \"elarion\", \"enchanted_realm\", \"magic_and_mundane\"]\n    },\n    {\n      \"entity_name\": \"Astral Veil\",\n      \"entity_type\": \"artifact\",\n      \"description\": \"A conduit to the raw energies that suffuse the cosmos, through which magic is channeled in Elarion.\",\n      \"extraction_context\": \"Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos.\",\n      \"suggested_tags\": [\"magic_system\", \"astral_veil\", \"mysticism\"]\n    },\n    {\n      \"entity_name\": \"Weavers\",\n      \"entity_type\": \"organization\",\n      \"description\": \"Practitioners who shape magical energies through intricate rituals and ancient incantations.\",\n      \"extraction_context\": \"Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations.\",\n      \"suggested_tags\": [\"magic_system\", \"weavers\", \"mysticism\"]\n    },\n    {\n      \"entity_name\": \"Malakar\",\n      \"entity_type\": \"deity\",\n      \"description\": \"A cataclysmic entity from an age long past, known for its hunger to consume all life.\",\n      \"extraction_context\": \"Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell.\",\n      \"suggested_tags\": [\"pantheon\", \"threat\", \"divine_influence\"]\n    },\n    {\n      \"entity_name\": \"The Awakening of Malakar the Devourer\",\n      \"entity_type\": \"event\",\n      \"description\": \"A prophesied event where Malakar's seals will weaken, heralding its resurgence.\",\n      \"extraction_context\": \"Known as: The Awakening of Malakar the Devourer\",\n      \"suggested_tags\": [\"threat\", \"event\", \"prophecy\"]\n    },\n    {\n      \"entity_name\": \"Stormcrag Mountains\",\n      \"entity_type\": \"location\",\n      \"description\": \"Brooding peaks that are part of Elarion's diverse landscapes.\",\n      \"extraction_context\": \"From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist.\",\n      \"suggested_tags\": [\"stormcrag_mountains\", \"elarion\", \"enchanted_realm\"]\n    },\n    {\n      \"entity_name\": \"Evergreen Glades\",\n      \"entity_type\": \"location\",\n      \"description\": \"Lush depths that are part of Elarion's diverse landscapes.\",\n      \"extraction_context\": \"From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist.\",\n      \"suggested_tags\": [\"evergreen_glades\", \"elarion\", \"enchanted_realm\"]\n    },\n    {\n      \"entity_name\": \"Shadowfell\",\n      \"entity_type\": \"location\",\n      \"description\": \"Obsidian peaks beneath which Malakar stirs.\",\n      \"extraction_context\": \"Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell.\",\n      \"suggested_tags\": [\"threat\", \"location\", \"mysticism\"]\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Elarion\",\n      \"entity_type\": \"location\",\n      \"description\": \"A continent steeped in mysticism and memory, where magic and heroism are woven into its history.\",\n      \"extraction_context\": \"Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities.\",\n      \"suggested_tags\": [\"universe_content\", \"elarion\", \"enchanted_realm\", \"magic_and_mundane\"]\n    },\n    {\n      \"entity_name\": \"Astral Veil\",\n      \"entity_type\": \"artifact\",\n      \"description\": \"A conduit to the raw energies that suffuse the cosmos, through which magic is channeled in Elarion.\",\n      \"extraction_context\": \"Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos.\",\n      \"suggested_tags\": [\"magic_system\", \"astral_veil\", \"mysticism\"]\n    },\n    {\n      \"entity_name\": \"Weavers\",\n      \"entity_type\": \"organization\",\n      \"description\": \"Practitioners who shape magical energies through intricate rituals and ancient incantations.\",\n      \"extraction_context\": \"Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations.\",\n      \"suggested_tags\": [\"magic_system\", \"weavers\", \"mysticism\"]\n    },\n    {\n      \"entity_name\": \"Malakar\",\n      \"entity_type\": \"deity\",\n      \"description\": \"A cataclysmic entity from an age long past, known for its hunger to consume all life.\",\n      \"extraction_context\": \"Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell.\",\n      \"suggested_tags\": [\"pantheon\", \"threat\", \"divine_influence\"]\n    },\n    {\n      \"entity_name\": \"The Awakening of Malakar the Devourer\",\n      \"entity_type\": \"event\",\n      \"description\": \"A prophesied event where Malakar's seals will weaken, heralding its resurgence.\",\n      \"extraction_context\": \"Known as: The Awakening of Malakar the Devourer\",\n      \"suggested_tags\": [\"threat\", \"event\", \"prophecy\"]\n    },\n    {\n      \"entity_name\": \"Stormcrag Mountains\",\n      \"entity_type\": \"location\",\n      \"description\": \"Brooding peaks that are part of Elarion's diverse landscapes.\",\n      \"extraction_context\": \"From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist.\",\n      \"suggested_tags\": [\"stormcrag_mountains\", \"elarion\", \"enchanted_realm\"]\n    },\n    {\n      \"entity_name\": \"Evergreen Glades\",\n      \"entity_type\": \"location\",\n      \"description\": \"Lush depths that are part of Elarion's diverse landscapes.\",\n      \"extraction_context\": \"From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist.\",\n      \"suggested_tags\": [\"evergreen_glades\", \"elarion\", \"enchanted_realm\"]\n    },\n    {\n      \"entity_name\": \"Shadowfell\",\n      \"entity_type\": \"location\",\n      \"description\": \"Obsidian peaks beneath which Malakar stirs.\",\n      \"extraction_context\": \"Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell.\",\n      \"suggested_tags\": [\"threat\", \"location\", \"mysticism\"]\n    }\n  ]\n}"
+  },
+  "raw_chunk_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 636,
+      "prompt_tokens": 903,
+      "total_tokens": 1539,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration. A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands. From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist, forged together by the relentless passage of time and the ceaseless tide of magic. Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos. Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations, binding them to their will through concentration and discipline.\",\n      \"topic\": \"Elarion's mystical landscape and magic system\",\n      \"word_count\": 160,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"Elarion's pantheon is a vibrant tapestry of divine beings, each claiming dominion over distinct aspects of life and the world. Temples and shrines dedicated to these deities are ubiquitous, serving as centers of worship and power. Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell. Legends speak of Malakar's hunger to consume all life, an echo of an era when Malakar roamed free. Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar, heralding Malakar's resurgence. Whispers of Malakar's awakening spread fear across Elarion. Crops wither, storms rage unnaturally, and creatures once dormant emerge with unsettling regularity. The social order teeters as dread takes root in the hearts of the populace.\",\n      \"topic\": \"The pantheon and the threat of Malakar\",\n      \"word_count\": 180,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Known as: The Awakening of Malakar the Devourer, Elarion is a small continent, a tapestry of diverse landscapes and cultures woven together by shared histories and destinies. Elarion is a land of three great kingdoms, each with its own ambitions and legends, anchored by five bustling cities and a scattering of settlements that dot the land like stars in the night sky. The narrative of Elarion is one of balance between the extraordinary and the mundane, where time and magic intertwine to shape the destiny of its inhabitants.\",\n      \"topic\": \"Elarion's geography and cultural tapestry\",\n      \"word_count\": 100,\n      \"chunk_type\": \"descriptive\"\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elarion is a land steeped in mysticism and memory, a continent where the echoes of past glories reverberate through verdant valleys and towering spires of ancient cities. The tapestry of Elarion's history is woven with threads of magic and heroism, where ethereal energies infuse every stone and stream, and legends of old walk among the people as living inspiration. A pantheon of gods watches over this enchanted realm, each deity curving destinies and shaping the world's fabric through their divine hands. From the brooding peaks of the Stormcrag Mountains to the lush depths of the Evergreen Glades, Elarion is a world where the extraordinary and the mundane coexist, forged together by the relentless passage of time and the ceaseless tide of magic. Magic in Elarion is channeled through the Astral Veil, a conduit to the raw energies that suffuse the cosmos. Practitioners, known as Weavers, shape these energies through intricate rituals and ancient incantations, binding them to their will through concentration and discipline.\",\n      \"topic\": \"Elarion's mystical landscape and magic system\",\n      \"word_count\": 160,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"Elarion's pantheon is a vibrant tapestry of divine beings, each claiming dominion over distinct aspects of life and the world. Temples and shrines dedicated to these deities are ubiquitous, serving as centers of worship and power. Malakar, a cataclysmic entity from an age long past, stirs beneath the obsidian peaks of the Shadowfell. Legends speak of Malakar's hunger to consume all life, an echo of an era when Malakar roamed free. Prophecies foretell a coming alignment in the heavens that will weaken the seals binding Malakar, heralding Malakar's resurgence. Whispers of Malakar's awakening spread fear across Elarion. Crops wither, storms rage unnaturally, and creatures once dormant emerge with unsettling regularity. The social order teeters as dread takes root in the hearts of the populace.\",\n      \"topic\": \"The pantheon and the threat of Malakar\",\n      \"word_count\": 180,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Known as: The Awakening of Malakar the Devourer, Elarion is a small continent, a tapestry of diverse landscapes and cultures woven together by shared histories and destinies. Elarion is a land of three great kingdoms, each with its own ambitions and legends, anchored by five bustling cities and a scattering of settlements that dot the land like stars in the night sky. The narrative of Elarion is one of balance between the extraordinary and the mundane, where time and magic intertwine to shape the destiny of its inhabitants.\",\n      \"topic\": \"Elarion's geography and cultural tapestry\",\n      \"word_count\": 100,\n      \"chunk_type\": \"descriptive\"\n    }\n  ]\n}"
+  }
+}

@@ -1,0 +1,652 @@
+{
+  "world_id": "ae8fa3e9-7d17-4f5f-8679-d5f9f961ade6",
+  "campaign_id": "dd8c2933-2b4a-4261-8ede-45580620a741",
+  "universe_data": {
+    "world_info": {
+      "world_name": "Aetheria",
+      "world_description": "Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate the world. Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of this land, scattering its peoples and reshaping its geography. This world is a tapestry of legends, woven with threads of heroism and whispers of the arcane.",
+      "theme_description": "Aetheria is a high fantasy world where magic is not just a tool, but a fundamental aspect of life, infusing every corner of society. Heroes rise from humble beginnings to legendary status, driven by a destiny that often sees them stand against the looming shadows of the past. The world thrives on the contrast between the wonder of magic and the enduring struggle against malevolent forces.",
+      "theme_list": "magic, heroism, ancient secrets, destiny, light versus darkness",
+      "natural_laws": "Aetheria's physics are intertwined with magic, where the barriers between planes are thin, allowing glimpses into other realms. Time flows differently in some enchanted regions, influenced by the presence of ancient enchantments or divine interventions.",
+      "custom_details": "The world of Aetheria serves as a classic fantasy adventure setting, offering opportunities for grand quests and epic confrontations."
+    },
+    "magic_system": {
+      "commonality": "In Aetheria, magic is as common as the air itself. Every town boasts a wizard or a healer, whose arcane skills are essential to daily life.",
+      "mechanics": "Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things. Spells are woven from threads of intent and infused with power drawn from the land's latent energies.",
+      "limitations": "Magical power is finite and replenishes slowly. Overuse can lead to physical exhaustion or mental fatigue, and the most powerful spells require rare components or alignments with celestial events.",
+      "sources": "Magic is drawn from the natural world, divine patrons, and ancient artifacts left by the vanished civilizations. The weave of magic is maintained by the gods themselves, who infuse the land with their essence.",
+      "magic_level": "High"
+    },
+    "pantheon": {
+      "structure": "A sprawling pantheon of deities, each presiding over distinct domains such as light, darkness, nature, war, and wisdom. Temples and shrines dedicated to these gods are found in every settlement.",
+      "major_deities": [
+        "Solara, Goddess of Light and Hope",
+        "Umbra, God of Shadows and Secrets",
+        "Natura, Goddess of the Wilds",
+        "Aegis, God of Valor and Protection",
+        "Sage, God of Knowledge and Insight"
+      ],
+      "religious_conflicts": [
+        "The rivalry between Solara and Umbra followers, representing the eternal struggle between light and dark.",
+        "Tensions between Natura's druids and Aegis's paladins over the preservation of natural versus constructed order."
+      ],
+      "divine_influence": "The gods are active, often intervening in mortal affairs through omens, dreams, or direct manifestations, guiding or testing their followers."
+    },
+    "global_threats": [
+      {
+        "primary_threat": "The Rise of the Shadow Titan",
+        "threat_details": "An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria. Unleashed by the hubris of power-hungry sorcerers, the Titan's return is heralded by dark omens and unnatural storms.",
+        "world_impact": "Fear grips the land as tales of entire villages disappearing into shadow spread. Crops wither under the Titan's influence, and dark creatures emerge from hidden places to prey upon the unwary.",
+        "resistance_forces": "A coalition of heroes, wizards, and priests stands united against the Titan, driven by prophecies and the guidance of the gods. Secretive orders and remnants of ancient guardians awaken to join the cause."
+      }
+    ],
+    "size": {
+      "scope": "regional",
+      "description": "Aetheria is composed of three distinct kingdoms, each with its own unique culture and history. Its landscape is dotted with major cities that serve as hubs of commerce and arcane study, while smaller settlements thrive amidst the wilderness.",
+      "region_count": 3,
+      "major_city_count": 5,
+      "settlement_count": 18
+    }
+  },
+  "processed_sections": [
+    {
+      "section_key": "world_info",
+      "content_type": "world_overview",
+      "source_type": "universe_builder",
+      "title": "World Overview - Aetheria",
+      "narrative_content": "Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate the world. Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of this land, scattering its peoples and reshaping its geography. This world is a tapestry of legends, woven with threads of heroism and whispers of the arcane.",
+      "original_metadata": {
+        "world_name": "Aetheria",
+        "world_description": "Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate the world. Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of this land, scattering its peoples and reshaping its geography. This world is a tapestry of legends, woven with threads of heroism and whispers of the arcane.",
+        "theme_description": "Aetheria is a high fantasy world where magic is not just a tool, but a fundamental aspect of life, infusing every corner of society. Heroes rise from humble beginnings to legendary status, driven by a destiny that often sees them stand against the looming shadows of the past. The world thrives on the contrast between the wonder of magic and the enduring struggle against malevolent forces.",
+        "theme_list": "magic, heroism, ancient secrets, destiny, light versus darkness",
+        "natural_laws": "Aetheria's physics are intertwined with magic, where the barriers between planes are thin, allowing glimpses into other realms. Time flows differently in some enchanted regions, influenced by the presence of ancient enchantments or divine interventions.",
+        "custom_details": "The world of Aetheria serves as a classic fantasy adventure setting, offering opportunities for grand quests and epic confrontations."
+      },
+      "content_id": "cbc7f2f7-fbb5-470e-94b4-a05a977a8d3b",
+      "tags": [
+        "universe_content",
+        "aetheria",
+        "magic_system",
+        "elemental_magic",
+        "ethereal_currents",
+        "pantheon",
+        "light_domain",
+        "darkness_domain",
+        "nature_domain",
+        "war_domain",
+        "wisdom_domain",
+        "ancient_ruins",
+        "the_shattering",
+        "shadow_titan",
+        "ancient_evil"
+      ]
+    },
+    {
+      "section_key": "magic_system",
+      "content_type": "magic_system",
+      "source_type": "universe_builder",
+      "title": "Magic System",
+      "narrative_content": "Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things. Spells are woven from threads of intent and infused with power drawn from the land's latent energies.",
+      "original_metadata": {
+        "commonality": "In Aetheria, magic is as common as the air itself. Every town boasts a wizard or a healer, whose arcane skills are essential to daily life.",
+        "mechanics": "Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things. Spells are woven from threads of intent and infused with power drawn from the land's latent energies.",
+        "limitations": "Magical power is finite and replenishes slowly. Overuse can lead to physical exhaustion or mental fatigue, and the most powerful spells require rare components or alignments with celestial events.",
+        "sources": "Magic is drawn from the natural world, divine patrons, and ancient artifacts left by the vanished civilizations. The weave of magic is maintained by the gods themselves, who infuse the land with their essence.",
+        "magic_level": "High"
+      },
+      "content_id": "a44aebd5-48c4-4338-a488-ab5fef9a6d0d",
+      "tags": [
+        "universe_content",
+        "aetheria",
+        "magic_system",
+        "elemental_magic",
+        "ethereal_currents",
+        "pantheon",
+        "light_domain",
+        "darkness_domain",
+        "nature_domain",
+        "war_domain",
+        "wisdom_domain",
+        "ancient_ruins",
+        "the_shattering",
+        "shadow_titan",
+        "ancient_evil"
+      ]
+    },
+    {
+      "section_key": "pantheon",
+      "content_type": "pantheon",
+      "source_type": "universe_builder",
+      "title": "Divine Pantheon",
+      "narrative_content": "A sprawling pantheon of deities, each presiding over distinct domains such as light, darkness, nature, war, and wisdom. Temples and shrines dedicated to these gods are found in every settlement.",
+      "original_metadata": {
+        "structure": "A sprawling pantheon of deities, each presiding over distinct domains such as light, darkness, nature, war, and wisdom. Temples and shrines dedicated to these gods are found in every settlement.",
+        "major_deities": [
+          "Solara, Goddess of Light and Hope",
+          "Umbra, God of Shadows and Secrets",
+          "Natura, Goddess of the Wilds",
+          "Aegis, God of Valor and Protection",
+          "Sage, God of Knowledge and Insight"
+        ],
+        "religious_conflicts": [
+          "The rivalry between Solara and Umbra followers, representing the eternal struggle between light and dark.",
+          "Tensions between Natura's druids and Aegis's paladins over the preservation of natural versus constructed order."
+        ],
+        "divine_influence": "The gods are active, often intervening in mortal affairs through omens, dreams, or direct manifestations, guiding or testing their followers."
+      },
+      "content_id": "5ce85819-3b8a-469d-898f-af661d20ffde",
+      "tags": [
+        "universe_content",
+        "aetheria",
+        "magic_system",
+        "elemental_magic",
+        "ethereal_currents",
+        "pantheon",
+        "light_domain",
+        "darkness_domain",
+        "nature_domain",
+        "war_domain",
+        "wisdom_domain",
+        "ancient_ruins",
+        "the_shattering",
+        "shadow_titan",
+        "ancient_evil"
+      ]
+    },
+    {
+      "section_key": "global_threats",
+      "content_type": "global_threats",
+      "source_type": "universe_builder",
+      "title": "Global Threats",
+      "narrative_content": "An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria. Unleashed by the hubris of power-hungry sorcerers, the Titan's return is heralded by dark omens and unnatural storms. Fear grips the land as tales of entire villages disappearing into shadow spread. Crops wither under the Titan's influence, and dark creatures emerge from hidden places to prey upon the unwary. Known as: The Rise of the Shadow Titan",
+      "original_metadata": [
+        {
+          "primary_threat": "The Rise of the Shadow Titan",
+          "threat_details": "An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria. Unleashed by the hubris of power-hungry sorcerers, the Titan's return is heralded by dark omens and unnatural storms.",
+          "world_impact": "Fear grips the land as tales of entire villages disappearing into shadow spread. Crops wither under the Titan's influence, and dark creatures emerge from hidden places to prey upon the unwary.",
+          "resistance_forces": "A coalition of heroes, wizards, and priests stands united against the Titan, driven by prophecies and the guidance of the gods. Secretive orders and remnants of ancient guardians awaken to join the cause."
+        }
+      ],
+      "content_id": "59892fd1-c671-4378-9a40-b78cf963c993",
+      "tags": [
+        "universe_content",
+        "aetheria",
+        "magic_system",
+        "elemental_magic",
+        "ethereal_currents",
+        "pantheon",
+        "light_domain",
+        "darkness_domain",
+        "nature_domain",
+        "war_domain",
+        "wisdom_domain",
+        "ancient_ruins",
+        "the_shattering",
+        "shadow_titan",
+        "ancient_evil"
+      ]
+    },
+    {
+      "section_key": "size",
+      "content_type": "world_scale",
+      "source_type": "universe_builder",
+      "title": "World Scale",
+      "narrative_content": "Aetheria is composed of three distinct kingdoms, each with its own unique culture and history. Its landscape is dotted with major cities that serve as hubs of commerce and arcane study, while smaller settlements thrive amidst the wilderness.",
+      "original_metadata": {
+        "scope": "regional",
+        "description": "Aetheria is composed of three distinct kingdoms, each with its own unique culture and history. Its landscape is dotted with major cities that serve as hubs of commerce and arcane study, while smaller settlements thrive amidst the wilderness.",
+        "region_count": 3,
+        "major_city_count": 5,
+        "settlement_count": 18
+      },
+      "content_id": "bdf03c21-ad3c-4bc9-ab67-f54453f40145",
+      "tags": [
+        "universe_content",
+        "aetheria",
+        "magic_system",
+        "elemental_magic",
+        "ethereal_currents",
+        "pantheon",
+        "light_domain",
+        "darkness_domain",
+        "nature_domain",
+        "war_domain",
+        "wisdom_domain",
+        "ancient_ruins",
+        "the_shattering",
+        "shadow_titan",
+        "ancient_evil"
+      ]
+    }
+  ],
+  "all_tags": [
+    "universe_content",
+    "aetheria",
+    "magic_system",
+    "elemental_magic",
+    "ethereal_currents",
+    "pantheon",
+    "light_domain",
+    "darkness_domain",
+    "nature_domain",
+    "war_domain",
+    "wisdom_domain",
+    "ancient_ruins",
+    "the_shattering",
+    "shadow_titan",
+    "ancient_evil"
+  ],
+  "all_entities_grouped": {
+    "npcs": [],
+    "locations": [
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440001",
+        "campaign_id": "dd8c2933-2b4a-4261-8ede-45580620a741",
+        "name": "Aetheria",
+        "description": "Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate the world.",
+        "notable_features": "Lush forests, majestic mountains, ancient ruins, iridescent skies",
+        "connections": {},
+        "location_type": "realm",
+        "size": "massive",
+        "inhabitants": [
+          "humans",
+          "elves",
+          "dwarves",
+          "various magical creatures"
+        ],
+        "notable_items": [
+          "Ethereal Currents"
+        ],
+        "atmosphere": "mysterious",
+        "relationships": [
+          {
+            "target": "Temple of Solara",
+            "type": "contains"
+          },
+          {
+            "target": "Shadow Titan",
+            "type": "threatened_by"
+          }
+        ],
+        "lore": "Aetheria was once a unified land before the Shattering scattered its peoples and reshaped its geography.",
+        "tags": [
+          "aetheria",
+          "universe_content",
+          "ancient_ruins"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440002",
+        "campaign_id": "dd8c2933-2b4a-4261-8ede-45580620a741",
+        "name": "Temple of Solara",
+        "description": "A temple dedicated to the deity Solara, found in settlements across Aetheria. It serves as a place of worship and a beacon of hope and light.",
+        "notable_features": "Shrines, altars, stained glass windows depicting Solara",
+        "connections": {
+          "various": "settlements in Aetheria"
+        },
+        "location_type": "temple",
+        "size": "medium",
+        "inhabitants": [
+          "clerics",
+          "worshippers"
+        ],
+        "notable_items": [
+          "holy relics of Solara"
+        ],
+        "atmosphere": "peaceful",
+        "relationships": [
+          {
+            "target": "Pantheon of Aetheria",
+            "type": "dedicated_to"
+          }
+        ],
+        "lore": "The Temple of Solara is part of a network of temples dedicated to the pantheon of Aetheria.",
+        "tags": [
+          "temple",
+          "solara",
+          "light_domain",
+          "pantheon"
+        ],
+        "source_content_type": "universe_content",
+        "entity_type": "location"
+      }
+    ],
+    "organizations": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440004",
+        "campaign_id": "dd8c2933-2b4a-4261-8ede-45580620a741",
+        "entity_type": "organization",
+        "entity_name": "Pantheon of Aetheria",
+        "description": "A sprawling pantheon of deities presiding over distinct domains such as light, darkness, nature, war, and wisdom. The pantheon guides the spiritual and moral compass of Aetheria's inhabitants.",
+        "organization_type": "religious",
+        "size": "massive",
+        "influence": "continental",
+        "structure": "Hierarchical with high priests and priestesses leading worship",
+        "goals": [
+          "maintain balance of domains",
+          "guide followers in spiritual matters"
+        ],
+        "notable_members": [
+          "High Priest of Solara",
+          "Oracle of Wisdom"
+        ],
+        "relationships": [
+          {
+            "target": "Temple of Solara",
+            "type": "oversees"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "pantheon",
+          "light_domain",
+          "darkness_domain",
+          "nature_domain",
+          "war_domain",
+          "wisdom_domain"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "artifacts": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440003",
+        "campaign_id": "dd8c2933-2b4a-4261-8ede-45580620a741",
+        "entity_type": "artifact",
+        "entity_name": "Ethereal Currents",
+        "description": "Magical energies that flow through all things in Aetheria, used to channel magic. These currents are invisible to the naked eye but can be sensed by those attuned to magic.",
+        "artifact_type": "magic_system",
+        "rarity": "legendary",
+        "properties": [
+          "enhances magical abilities",
+          "connects all magical beings"
+        ],
+        "requirements": "requires magical attunement",
+        "history": "The Ethereal Currents have existed since the dawn of Aetheria, shaping the magical landscape of the realm.",
+        "relationships": [
+          {
+            "target": "Aetheria",
+            "type": "flows_through"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "ethereal_currents",
+          "magic_system",
+          "elemental_magic"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "deities": [],
+    "threats": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440005",
+        "campaign_id": "dd8c2933-2b4a-4261-8ede-45580620a741",
+        "entity_type": "threat",
+        "entity_name": "Shadow Titan",
+        "description": "An ancient evil seeking to reclaim its dominion over Aetheria, unleashed by power-hungry sorcerers. The Titan's return is heralded by dark omens and unnatural storms.",
+        "artifact_type": "ancient_evil",
+        "rarity": "legendary",
+        "properties": [
+          "controls shadows",
+          "summons dark creatures"
+        ],
+        "requirements": "can only be defeated by a hero of great power",
+        "history": "Once a ruler of Aetheria, the Shadow Titan was sealed away by ancient heroes. Its return threatens the balance of the realm.",
+        "relationships": [
+          {
+            "target": "Aetheria",
+            "type": "seeks_to_conquer"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "shadow_titan",
+          "ancient_evil",
+          "threat",
+          "the_shattering"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "events": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440006",
+        "campaign_id": "dd8c2933-2b4a-4261-8ede-45580620a741",
+        "entity_type": "event",
+        "entity_name": "The Shattering",
+        "description": "A great cataclysm that altered the fabric of Aetheria, scattering its peoples and reshaping its geography. This event marked the end of an era and the beginning of a new age.",
+        "artifact_type": "cataclysm",
+        "rarity": "legendary",
+        "properties": [
+          "geographical reshaping",
+          "cultural upheaval"
+        ],
+        "requirements": "n/a",
+        "history": "The Shattering occurred millennia ago, caused by a convergence of magical energies and cosmic forces.",
+        "relationships": [
+          {
+            "target": "Aetheria",
+            "type": "transformed"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "the_shattering",
+          "event",
+          "aetheria"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "items": []
+  },
+  "all_chunks": [
+    {
+      "index": 0,
+      "text": "Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate Aetheria. Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of Aetheria, scattering its peoples and reshaping its geography. This world is a tapestry of legends, woven with threads of heroism and whispers of the arcane. Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things. Spells are woven from threads of intent and infused with power drawn from Aetheria's latent energies.",
+      "topic": "Introduction to Aetheria and its magical landscape",
+      "word_count": 114,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "universe_content",
+        "ancient_ruins",
+        "nature_domain",
+        "the_shattering",
+        "darkness_domain",
+        "ethereal_currents",
+        "aetheria",
+        "pantheon",
+        "war_domain",
+        "ancient_evil",
+        "shadow_titan",
+        "wisdom_domain",
+        "magic_system",
+        "elemental_magic",
+        "light_domain"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Introduction to Aetheria and its magical landscape",
+        "chunk_index": 0,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 1,
+      "text": "A sprawling pantheon of deities presides over distinct domains such as light, darkness, nature, war, and wisdom. Temples and shrines dedicated to these gods are found in every settlement. An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria. The Shadow Titan was unleashed by the hubris of power-hungry sorcerers, and the Titan's return is heralded by dark omens and unnatural storms. Fear grips Aetheria as tales of entire villages disappearing into shadow spread. Crops wither under the Shadow Titan's influence, and dark creatures emerge from hidden places to prey upon the unwary.",
+      "topic": "The pantheon and the threat of the Shadow Titan",
+      "word_count": 102,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "universe_content",
+        "ancient_ruins",
+        "nature_domain",
+        "the_shattering",
+        "darkness_domain",
+        "ethereal_currents",
+        "aetheria",
+        "pantheon",
+        "war_domain",
+        "ancient_evil",
+        "shadow_titan",
+        "wisdom_domain",
+        "magic_system",
+        "elemental_magic",
+        "light_domain"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The pantheon and the threat of the Shadow Titan",
+        "chunk_index": 1,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 2,
+      "text": "Aetheria is composed of three distinct kingdoms, each with its own unique culture and history. Aetheria's landscape is dotted with major cities that serve as hubs of commerce and arcane study, while smaller settlements thrive amidst the wilderness. The kingdoms are united by the common threat of the Shadow Titan, which has forced them to collaborate in defense of their lands. The Rise of the Shadow Titan is a pivotal event in Aetheria's history, marking a time of great peril and potential unity among the kingdoms.",
+      "topic": "The kingdoms of Aetheria and their response to the Shadow Titan",
+      "word_count": 86,
+      "chunk_type": "entity_focused",
+      "content_type": "universe_content",
+      "tags": [
+        "universe_content",
+        "ancient_ruins",
+        "nature_domain",
+        "the_shattering",
+        "darkness_domain",
+        "ethereal_currents",
+        "aetheria",
+        "pantheon",
+        "war_domain",
+        "ancient_evil",
+        "shadow_titan",
+        "wisdom_domain",
+        "magic_system",
+        "elemental_magic",
+        "light_domain"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The kingdoms of Aetheria and their response to the Shadow Titan",
+        "chunk_index": 2,
+        "entity_names": []
+      }
+    }
+  ],
+  "combined_narrative": "Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate the world. Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of this land, scattering its peoples and reshaping its geography. This world is a tapestry of legends, woven with threads of heroism and whispers of the arcane. Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things. Spells are woven from threads of intent and infused with power drawn from the land's latent energies. A sprawling pantheon of deities, each presiding over distinct domains such as light, darkness, nature, war, and wisdom. Temples and shrines dedicated to these gods are found in every settlement. An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria. Unleashed by the hubris of power-hungry sorcerers, the Titan's return is heralded by dark omens and unnatural storms. Fear grips the land as tales of entire villages disappearing into shadow spread. Crops wither under the Titan's influence, and dark creatures emerge from hidden places to prey upon the unwary. Known as: The Rise of the Shadow Titan Aetheria is composed of three distinct kingdoms, each with its own unique culture and history. Its landscape is dotted with major cities that serve as hubs of commerce and arcane study, while smaller settlements thrive amidst the wilderness.",
+  "raw_tag_response": {
+    "model": "gpt-4-0613",
+    "usage": {
+      "completion_tokens": 76,
+      "prompt_tokens": 475,
+      "total_tokens": 551,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"tags\": [\"universe_content\", \"aetheria\", \"magic_system\", \"elemental_magic\", \"ethereal_currents\", \"pantheon\", \"light_domain\", \"darkness_domain\", \"nature_domain\", \"war_domain\", \"wisdom_domain\", \"ancient_ruins\", \"the_shattering\", \"shadow_titan\", \"ancient_evil\"]}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\"tags\": [\"universe_content\", \"aetheria\", \"magic_system\", \"elemental_magic\", \"ethereal_currents\", \"pantheon\", \"light_domain\", \"darkness_domain\", \"nature_domain\", \"war_domain\", \"wisdom_domain\", \"ancient_ruins\", \"the_shattering\", \"shadow_titan\", \"ancient_evil\"]}"
+  },
+  "raw_entity_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 634,
+      "prompt_tokens": 922,
+      "total_tokens": 1556,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Shadow Titan\",\n      \"entity_type\": \"threat\",\n      \"description\": \"An ancient evil seeking to reclaim its dominion over Aetheria, unleashed by power-hungry sorcerers.\",\n      \"extraction_context\": \"An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria.\",\n      \"suggested_tags\": [\"shadow_titan\", \"ancient_evil\", \"threat\", \"the_shattering\"]\n    },\n    {\n      \"entity_name\": \"The Shattering\",\n      \"entity_type\": \"event\",\n      \"description\": \"A great cataclysm that altered the fabric of Aetheria, scattering its peoples and reshaping its geography.\",\n      \"extraction_context\": \"Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of this land, scattering its peoples and reshaping its geography.\",\n      \"suggested_tags\": [\"the_shattering\", \"event\", \"aetheria\"]\n    },\n    {\n      \"entity_name\": \"Temple of Solara\",\n      \"entity_type\": \"location\",\n      \"description\": \"A temple dedicated to the deity Solara, found in settlements across Aetheria.\",\n      \"extraction_context\": \"Temples and shrines dedicated to these gods are found in every settlement.\",\n      \"suggested_tags\": [\"temple\", \"solara\", \"light_domain\", \"pantheon\"]\n    },\n    {\n      \"entity_name\": \"Aetheria\",\n      \"entity_type\": \"location\",\n      \"description\": \"A realm of vibrant landscapes with lush forests, majestic mountains, and ancient ruins.\",\n      \"extraction_context\": \"Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins.\",\n      \"suggested_tags\": [\"aetheria\", \"universe_content\", \"ancient_ruins\"]\n    },\n    {\n      \"entity_name\": \"Ethereal Currents\",\n      \"entity_type\": \"artifact\",\n      \"description\": \"Magical energies that flow through all things in Aetheria, used to channel magic.\",\n      \"extraction_context\": \"Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things.\",\n      \"suggested_tags\": [\"ethereal_currents\", \"magic_system\", \"elemental_magic\"]\n    },\n    {\n      \"entity_name\": \"Pantheon of Aetheria\",\n      \"entity_type\": \"organization\",\n      \"description\": \"A sprawling pantheon of deities presiding over distinct domains such as light, darkness, nature, war, and wisdom.\",\n      \"extraction_context\": \"A sprawling pantheon of deities, each presiding over distinct domains such as light, darkness, nature, war, and wisdom.\",\n      \"suggested_tags\": [\"pantheon\", \"light_domain\", \"darkness_domain\", \"nature_domain\", \"war_domain\", \"wisdom_domain\"]\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"entities\": [\n    {\n      \"entity_name\": \"Shadow Titan\",\n      \"entity_type\": \"threat\",\n      \"description\": \"An ancient evil seeking to reclaim its dominion over Aetheria, unleashed by power-hungry sorcerers.\",\n      \"extraction_context\": \"An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria.\",\n      \"suggested_tags\": [\"shadow_titan\", \"ancient_evil\", \"threat\", \"the_shattering\"]\n    },\n    {\n      \"entity_name\": \"The Shattering\",\n      \"entity_type\": \"event\",\n      \"description\": \"A great cataclysm that altered the fabric of Aetheria, scattering its peoples and reshaping its geography.\",\n      \"extraction_context\": \"Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of this land, scattering its peoples and reshaping its geography.\",\n      \"suggested_tags\": [\"the_shattering\", \"event\", \"aetheria\"]\n    },\n    {\n      \"entity_name\": \"Temple of Solara\",\n      \"entity_type\": \"location\",\n      \"description\": \"A temple dedicated to the deity Solara, found in settlements across Aetheria.\",\n      \"extraction_context\": \"Temples and shrines dedicated to these gods are found in every settlement.\",\n      \"suggested_tags\": [\"temple\", \"solara\", \"light_domain\", \"pantheon\"]\n    },\n    {\n      \"entity_name\": \"Aetheria\",\n      \"entity_type\": \"location\",\n      \"description\": \"A realm of vibrant landscapes with lush forests, majestic mountains, and ancient ruins.\",\n      \"extraction_context\": \"Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins.\",\n      \"suggested_tags\": [\"aetheria\", \"universe_content\", \"ancient_ruins\"]\n    },\n    {\n      \"entity_name\": \"Ethereal Currents\",\n      \"entity_type\": \"artifact\",\n      \"description\": \"Magical energies that flow through all things in Aetheria, used to channel magic.\",\n      \"extraction_context\": \"Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things.\",\n      \"suggested_tags\": [\"ethereal_currents\", \"magic_system\", \"elemental_magic\"]\n    },\n    {\n      \"entity_name\": \"Pantheon of Aetheria\",\n      \"entity_type\": \"organization\",\n      \"description\": \"A sprawling pantheon of deities presiding over distinct domains such as light, darkness, nature, war, and wisdom.\",\n      \"extraction_context\": \"A sprawling pantheon of deities, each presiding over distinct domains such as light, darkness, nature, war, and wisdom.\",\n      \"suggested_tags\": [\"pantheon\", \"light_domain\", \"darkness_domain\", \"nature_domain\", \"war_domain\", \"wisdom_domain\"]\n    }\n  ]\n}"
+  },
+  "raw_chunk_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 537,
+      "prompt_tokens": 773,
+      "total_tokens": 1310,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate Aetheria. Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of Aetheria, scattering its peoples and reshaping its geography. This world is a tapestry of legends, woven with threads of heroism and whispers of the arcane. Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things. Spells are woven from threads of intent and infused with power drawn from Aetheria's latent energies.\",\n      \"topic\": \"Introduction to Aetheria and its magical landscape\",\n      \"word_count\": 120,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"A sprawling pantheon of deities presides over distinct domains such as light, darkness, nature, war, and wisdom. Temples and shrines dedicated to these gods are found in every settlement. An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria. The Shadow Titan was unleashed by the hubris of power-hungry sorcerers, and the Titan's return is heralded by dark omens and unnatural storms. Fear grips Aetheria as tales of entire villages disappearing into shadow spread. Crops wither under the Shadow Titan's influence, and dark creatures emerge from hidden places to prey upon the unwary.\",\n      \"topic\": \"The pantheon and the threat of the Shadow Titan\",\n      \"word_count\": 160,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Aetheria is composed of three distinct kingdoms, each with its own unique culture and history. Aetheria's landscape is dotted with major cities that serve as hubs of commerce and arcane study, while smaller settlements thrive amidst the wilderness. The kingdoms are united by the common threat of the Shadow Titan, which has forced them to collaborate in defense of their lands. The Rise of the Shadow Titan is a pivotal event in Aetheria's history, marking a time of great peril and potential unity among the kingdoms.\",\n      \"topic\": \"The kingdoms of Aetheria and their response to the Shadow Titan\",\n      \"word_count\": 120,\n      \"chunk_type\": \"entity_focused\"\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "annotations": []
+        }
+      }
+    ],
+    "raw_content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Aetheria is a realm of vibrant landscapes where lush forests and majestic mountains are interwoven with ancient ruins, remnants of a once-glorious civilization. The skies often shimmer with iridescent hues, a testament to the magical energies that permeate Aetheria. Millennia ago, the great cataclysm, known as the Shattering, altered the very fabric of Aetheria, scattering its peoples and reshaping its geography. This world is a tapestry of legends, woven with threads of heroism and whispers of the arcane. Magic in Aetheria is channeled through the manipulation of elemental forces and the ethereal currents that flow through all things. Spells are woven from threads of intent and infused with power drawn from Aetheria's latent energies.\",\n      \"topic\": \"Introduction to Aetheria and its magical landscape\",\n      \"word_count\": 120,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"A sprawling pantheon of deities presides over distinct domains such as light, darkness, nature, war, and wisdom. Temples and shrines dedicated to these gods are found in every settlement. An ancient evil known as the Shadow Titan stirs beneath the mountains, seeking to reclaim its dominion over Aetheria. The Shadow Titan was unleashed by the hubris of power-hungry sorcerers, and the Titan's return is heralded by dark omens and unnatural storms. Fear grips Aetheria as tales of entire villages disappearing into shadow spread. Crops wither under the Shadow Titan's influence, and dark creatures emerge from hidden places to prey upon the unwary.\",\n      \"topic\": \"The pantheon and the threat of the Shadow Titan\",\n      \"word_count\": 160,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Aetheria is composed of three distinct kingdoms, each with its own unique culture and history. Aetheria's landscape is dotted with major cities that serve as hubs of commerce and arcane study, while smaller settlements thrive amidst the wilderness. The kingdoms are united by the common threat of the Shadow Titan, which has forced them to collaborate in defense of their lands. The Rise of the Shadow Titan is a pivotal event in Aetheria's history, marking a time of great peril and potential unity among the kingdoms.\",\n      \"topic\": \"The kingdoms of Aetheria and their response to the Shadow Titan\",\n      \"word_count\": 120,\n      \"chunk_type\": \"entity_focused\"\n    }\n  ]\n}"
+  }
+}

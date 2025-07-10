@@ -1,9 +1,8 @@
 import cli
-from game_session import GameSession
-from character_creator import CharacterCreator
+from services.game_session import GameSession
+from services.character_creator import CharacterCreator
 from db.db import (create_campaign, list_campaigns, get_most_recent_campaign, 
                    update_campaign_last_played, get_or_create_user)
-from start_menu import start_menu
 
 class CampaignManager:
     def __init__(self):
@@ -59,7 +58,7 @@ class CampaignManager:
         
         while True:
             # Show campaign info
-            print(f"\nCampaign ID: {str(campaign_id)[:8]}... | User: {username}")
+            print(f"\nCampaign ID: {campaign_id}... | User: {username}")
             
             # Use appropriate scrollable menu based on campaign type
             if is_new:
@@ -69,13 +68,13 @@ class CampaignManager:
             
             is_new = False  # Reset flag after first iteration
             
-            if choice == "🔴 Create New Character":
+            if choice == "Create New Character":
                 # Create new character
                 game_session = CharacterCreator(campaign_id, username).create_new_character()
                 if game_session:
                     # Update campaign last played time
                     campaign_manager.update_last_played(campaign_id)
-                    run_game_session(game_session, is_new_character=True)
+                    self.run_game_session(game_session, is_new_character=True)
                     
             elif choice == "🔴 Load Existing Character":
                 # Load existing character (only available for existing campaigns)
@@ -83,14 +82,14 @@ class CampaignManager:
                 if game_session:
                     # Update campaign last played time
                     campaign_manager.update_last_played(campaign_id)
-                    run_game_session(game_session, is_new_character=False)
+                    self.run_game_session(game_session, is_new_character=False)
                     
                     
             elif choice == "Back to Main Menu":
-                return start_menu()  # Back to main menu
+                return None  # Return to main menu
 
 
-    def load_existing_character(campaign_id, username):
+    def load_existing_character(self,campaign_id, username):
         """Load existing character for a campaign"""
         
         # Create game session with campaign context - it will auto-load character
@@ -102,3 +101,47 @@ class CampaignManager:
             
         print(f"Loaded character: {game_session.player_name} ({game_session.player_class})")
         return game_session
+    
+    
+    def run_game_session(self,game_session, is_new_character=False):
+        """Run the actual game session"""
+        
+        print(f"\nStarting session for {game_session.player_name} ({game_session.player_class})")
+        
+        cli.ui_intro_text()
+        cli.ui_player_character_sheet(game_session.character)
+        
+        # Run intro scene
+        if is_new_character:    
+            intro_text = game_session.run_intro_scene()
+            print(f"\n{intro_text}")
+        else:
+            print(f"\nWelcome back, {game_session.player_name}! Your adventure continues...")
+            print(f"\n{game_session.last_dm_text}") # add a summary here!
+        
+        # Main game loop
+        while True:
+            action = cli.ui_get_action()
+            
+            # Process the action (command handler will handle menu/other commands)
+            result = game_session.action_handler(action)
+            
+            if result == "exit_to_menu":
+                return  # Exit to campaign menu
+            elif result == "command_handled":
+                continue  # Command was handled, ask for next action
+            elif result == "combat":
+                # Start combat
+                combat_result = game_session.start_combat()
+                if combat_result == "exit_to_menu":
+                    return  # Player chose to exit to menu from combat
+                elif combat_result == "game_over":
+                    return  # Character died, exit to menu
+                else:
+                    # Combat ended, continue story
+                    print(f"\n{combat_result}")
+            elif result == "game_over":
+                return  # Game over, exit to menu
+            else:
+                # Normal story continuation
+                print(f"\n{result}")

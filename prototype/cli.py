@@ -2,7 +2,7 @@
 import typer
 from InquirerPy import inquirer
 from debug.debug_util import debug_log
-from services import character_creator
+from services.character_creator import CharacterCreator
 from utils.dice_utility import DiceUtility
 
 dice = DiceUtility()
@@ -48,7 +48,7 @@ def ui_character_menu_new_campaign():
     choice = inquirer.select(
         message="New Campaign - Choose an option:",
         choices=[
-            "🔴 Create New Character",
+            "Create New Character",
             "Back to Main Menu"
         ]
     ).execute()
@@ -80,7 +80,7 @@ def ui_get_char_name():
 def ui_get_char_class():
     return inquirer.select(
         message="Select your class:",
-        choices=character_creator.class_options
+        choices=["Wizard", "Ranger", "Fighter"]
     ).execute()
 
 def ui_setup_character():
@@ -406,7 +406,7 @@ class WorldBuilderCLI:
         world_params = self.get_world_parameters()
         
         # Call world builder orchestrator
-        from world_builder import WorldGenerationOrchestrator
+        from prototype.services.world_builder import WorldGenerationOrchestrator
         orchestrator = WorldGenerationOrchestrator()
         
         typer.echo("🔄 Generating complete world... (this may take a moment)")
@@ -502,7 +502,7 @@ class WorldBuilderCLI:
         if not campaign_id:
             return
             
-        from world_builder import WorldGenerationOrchestrator
+        from prototype.services.world_builder import WorldGenerationOrchestrator
         orchestrator = WorldGenerationOrchestrator()
         
         typer.echo("🔄 Generating Oakwood Village test settlement...")

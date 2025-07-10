@@ -129,6 +129,7 @@ def list_campaigns(user_id=None):
     return campaigns
 
 def get_most_recent_campaign(user_id):
+    ##Feels like this could go away##
     """Get the most recently played campaign for a user"""
     campaigns = list_campaigns(user_id)
     return campaigns[0] if campaigns else None
@@ -147,6 +148,33 @@ def update_campaign_last_played(campaign_id):
     conn.commit()
     cur.close()
     conn.close()
+
+def delete_campaign_from_database(campaign_id):
+    """Delete a campaign and all associated data from the database"""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        # Delete the campaign - CASCADE DELETE will handle all associated data
+        cur.execute("DELETE FROM campaigns WHERE campaign_id = %s", (campaign_id,))
+        
+        # Check if any rows were affected
+        if cur.rowcount == 0:
+            print("❌ Campaign not found in database!")
+            return False
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Database error: {str(e)}")
+        conn.rollback()
+        cur.close()
+        conn.close()
+        return False
 
 # =============================================================================
 # CHARACTER MANAGEMENT
@@ -841,18 +869,10 @@ def save_world_content(world_id, campaign_id, content_type, content_text, metada
     return content_id
 
 def get_world_by_campaign(campaign_id):
-    """Get world data for a campaign
-    
-    Args:
-        campaign_id: UUID of the campaign
-        
-    Returns:
-        Dictionary with world metadata and content, or None if no world exists
-    """
+    """Get world data for a campaign"""
     conn = get_db_connection()
     cur = conn.cursor()
     
-    # Get basic world info
     cur.execute("""
         SELECT world_id, world_name, scope, theme_list, region_count, 
                major_city_count, settlement_count, magic_level, created_at
@@ -860,48 +880,61 @@ def get_world_by_campaign(campaign_id):
         WHERE campaign_id = %s;
     """, (campaign_id,))
     
-    world_row = cur.fetchone()
-    if not world_row:
-        cur.close()
-        conn.close()
-        return None
-    
-    world_data = {
-        "world_id": world_row[0],
-        "world_name": world_row[1],
-        "scope": world_row[2],
-        "theme_list": world_row[3],
-        "region_count": world_row[4],
-        "major_city_count": world_row[5],
-        "settlement_count": world_row[6],
-        "magic_level": world_row[7],
-        "created_at": world_row[8],
-        "content": {}
-    }
-    
-    # Get all content for this world
-    cur.execute("""
-        SELECT content_id, content_type, title, content, metadata, created_at
-        FROM world_content 
-        WHERE world_id = %s
-        ORDER BY created_at;
-    """, (world_row[0],))
-    
-    content_rows = cur.fetchall()
-    for row in content_rows:
-        content_id, content_type, title, content, metadata, created_at = row
-        world_data["content"][content_type] = {
-            "content_id": content_id,
-            "title": title,
-            "content": content,
-            "metadata": metadata,
-            "created_at": created_at
-        }
-    
+    result = cur.fetchone()
     cur.close()
     conn.close()
     
-    return world_data
+    if result:
+        return {
+            "world_id": result[0],
+            "world_name": result[1],
+            "scope": result[2],
+            "theme_list": result[3],
+            "region_count": result[4],
+            "major_city_count": result[5],
+            "settlement_count": result[6],
+            "magic_level": result[7],
+            "created_at": result[8]
+        }
+    return None
+
+def create_world_record(campaign_id: str, universe_data: dict) -> str:
+    """Create the basic world record and return world_id"""
+    world_name = universe_data.get('world_info', {}).get('world_name', 'Generated World')
+    world_metadata = universe_data.get('world_info', {})
+    
+    print("💾 Creating world record first for entity direct saves...")
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        scope = world_metadata.get('scope', 'regional')
+        theme_list = world_metadata.get('theme_list', '')
+        magic_level = world_metadata.get('magic_level', 'medium')
+        
+        cur.execute("""
+            INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
+                               region_count, major_city_count, settlement_count, magic_level)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING world_id;
+        """, (campaign_id, world_name, scope, theme_list, 
+              world_metadata.get('region_count', 1),
+              world_metadata.get('major_city_count', 1), 
+              world_metadata.get('settlement_count', 3),
+              magic_level))
+        
+        world_id = cur.fetchone()[0]
+        conn.commit()
+        print(f"✅ World record created with ID: {world_id}")
+        return str(world_id)
+        
+    except Exception as e:
+        conn.rollback()
+        print(f"❌ Failed to create world record: {e}")
+        raise
+    finally:
+        cur.close()
+        conn.close()
 
 def search_world_content(campaign_id, query, content_types=None, limit=5):
     """Search world content using semantic search via Pinecone

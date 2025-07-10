@@ -39,17 +39,7 @@ class GameSession:
         
         # Try to load existing character
         self.load_character_stats()
-
-    def setup_character(self, name, char_class):
-        debug_log("setup_character() called.")
-        self.player_name = name
-        self.player_class = char_class
-        
- 
-        
-        # Update character with generated stats
-        update_character_stats(self.character_id, stats)
-        self.load_character_stats()
+  
 
     def run_intro_scene(self):
         debug_log("run_intro_scene() called.")
