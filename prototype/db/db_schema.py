@@ -14,6 +14,10 @@ from dotenv import load_dotenv
 # SQL Schema for dev_tools/setup_db.py to import
 SCHEMA_SQL = """
 -- Drop existing tables in dependency order
+DROP TABLE IF EXISTS tag_vocabulary CASCADE;
+DROP TABLE IF EXISTS extracted_entities CASCADE;
+DROP TABLE IF EXISTS world_content CASCADE;
+DROP TABLE IF EXISTS worlds CASCADE;
 DROP TABLE IF EXISTS relationships CASCADE;
 DROP TABLE IF EXISTS events CASCADE;  
 DROP TABLE IF EXISTS characters CASCADE;
@@ -195,21 +199,7 @@ CREATE TABLE extracted_entities (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 12. CONTENT_EMBEDDINGS - Vector embeddings for semantic search (requires pgvector extension)
--- TODO: Uncomment when pgvector extension is installed
-/*
-CREATE TABLE content_embeddings (
-    embedding_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    world_id UUID REFERENCES worlds(world_id) ON DELETE CASCADE,
-    campaign_id UUID REFERENCES campaigns(campaign_id) ON DELETE CASCADE,
-    source_content_id UUID REFERENCES world_content(content_id), -- Original essay
-    snippet_text TEXT NOT NULL,    -- "Lord Vanderlay lives on a hill in the arakus forest"
-    embedding vector(1536),        -- The actual vector (requires pgvector extension)
-    snippet_type TEXT DEFAULT 'fact', -- 'fact', 'relationship', 'description', 'conflict'
-    entities_mentioned TEXT[],     -- ['Lord Vanderlay', 'Arakus Forest'] for easy filtering
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-*/
+
 
 -- INDEXES FOR WORLD BUILDING TABLES
 CREATE INDEX idx_worlds_campaign ON worlds(campaign_id);
@@ -225,9 +215,6 @@ CREATE INDEX idx_world_content_tags ON world_content USING GIN (tags);
 CREATE INDEX idx_extracted_entities_tags ON extracted_entities USING GIN (tags);
 CREATE INDEX idx_npcs_tags ON npcs USING GIN (tags);
 CREATE INDEX idx_locations_tags ON locations USING GIN (tags);
--- TODO: Uncomment when pgvector extension is installed
--- CREATE INDEX idx_content_embeddings_world ON content_embeddings(world_id);
--- CREATE INDEX idx_content_embeddings_campaign ON content_embeddings(campaign_id);
 
 -- 13. TAG_VOCABULARY - Track tag usage patterns for AI consistency
 CREATE TABLE tag_vocabulary (
@@ -257,7 +244,6 @@ CREATE INDEX idx_tag_vocabulary_usage ON tag_vocabulary(usage_count DESC);
 -- Database Relationships:
 -- campaigns.campaign_id → world_content.campaign_id (one-to-many)
 -- world_content.content_id → extracted_entities.source_content_id (one-to-many)  
--- world_content.content_id → content_embeddings.source_content_id (one-to-many)
 -- extracted_entities.game_object_id → npcs.npc_id | locations.location_id (when generated)
 
 -- ========================================

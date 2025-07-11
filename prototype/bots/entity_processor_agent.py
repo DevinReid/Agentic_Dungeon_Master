@@ -9,7 +9,7 @@ Saves directly to PostgreSQL and vectorizer, bypassing ContentProcessor.
 
 import json
 import uuid
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
@@ -523,6 +523,8 @@ CRITICAL: Generate REAL UUIDs (like '550e8400-e29b-41d4-a716-446655440000') for 
         except (ValueError, TypeError):
             return False
     
+
+    # ! we might need a more robust solution for this
     def _get_existing_entities_context(self, campaign_id: str) -> str:
         """Get context of existing entities for duplicate detection and relationship building"""
         try:

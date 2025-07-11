@@ -1,6 +1,6 @@
 import os
 import psycopg2
-from typing import List, Dict, Any
+from typing import List
 
 from dotenv import load_dotenv
 
@@ -259,23 +259,7 @@ def clear_characters_in_campaign(campaign_id):
 # LOCATION MANAGEMENT
 # =============================================================================
 
-def create_location(campaign_id, name, description=None):
-    """Create a location in a campaign"""
-    conn = get_db_connection()
-    cur = conn.cursor()
-    
-    cur.execute("""
-        INSERT INTO locations (campaign_id, name, description)
-        VALUES (%s, %s, %s)
-        RETURNING location_id;
-    """, (campaign_id, name, description))
-    
-    location_id = cur.fetchone()[0]
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    return location_id
+
 
 def get_or_create_location(campaign_id, name, description=None):
     """Get existing location or create new one"""
@@ -372,6 +356,8 @@ def save_npc(campaign_id, npc_data, location_name="Starting Area"):
     
     return npc_id
 
+
+# ! this seems like it has some issues, we dont have locations named yet
 def get_npcs_at_location(campaign_id, location_name, status="alive"):
     """Get all NPCs at a specific location in campaign"""
     conn = get_db_connection()
@@ -407,7 +393,7 @@ def get_npcs_at_location(campaign_id, location_name, status="alive"):
 # =============================================================================
 # EVENT MANAGEMENT
 # =============================================================================
-
+# ? this is functionality for the story agent, we need to make sure it is working
 def save_event(campaign_id, event_type, description, location_name=None, 
                npcs_involved=None, character_ids=None, player_actions=None, 
                consequences=None, session_context=None):
@@ -430,7 +416,7 @@ def save_event(campaign_id, event_type, description, location_name=None,
     conn.commit()
     cur.close()
     conn.close()
-
+# ? this is functionality for the story agent, we need to make sure it is working
 def get_recent_events(campaign_id, limit=10):
     """Get recent events for AI context in campaign"""
     conn = get_db_connection()
@@ -459,7 +445,7 @@ def get_recent_events(campaign_id, limit=10):
 # =============================================================================
 # RELATIONSHIP MANAGEMENT
 # =============================================================================
-
+# ! this is functionality for the story agent, we need to make sure it is working - need to figure out wehat we need here
 def update_npc_relationship(campaign_id, npc_name, character_id, relationship_change, interaction_description):
     """Update relationship between NPC and character in campaign"""
     conn = get_db_connection()
@@ -511,7 +497,7 @@ def update_npc_relationship(campaign_id, npc_name, character_id, relationship_ch
     conn.commit()
     cur.close()
     conn.close()
-
+# ! need to decide on this relationship functionality
 def get_npc_relationships(campaign_id, character_id):
     """Get all NPC relationships for a character in campaign"""
     conn = get_db_connection()
@@ -538,282 +524,11 @@ def get_npc_relationships(campaign_id, character_id):
 
 
 # =============================================================================
-# WORLD BUILDING MANAGEMENT
+# WORLD CONTENT MANAGEMENT
 # =============================================================================
 
-def save_processed_world(campaign_id: str, processed_sections: List[Dict[str, Any]], 
-                        world_name: str = None) -> str:
-    """
-    Save ContentProcessor output to database with full enrichment
-    
-    Args:
-        campaign_id: Campaign UUID
-        processed_sections: Output from ContentProcessor.process_universe_content()
-        world_name: Optional world name override
-        
-    Returns:
-        world_id: UUID of created world
-    """
-    import psycopg2.extras
-    from services.vector_service import VectorService
-    
-    if not processed_sections:
-        raise ValueError("No processed sections to save")
-    
-    # Extract world metadata from first section
-    first_section = processed_sections[0]
-    world_metadata = first_section.get('original_metadata', {})
-    
-    if not world_name:
-        world_name = world_metadata.get('world_name', 'Generated World')
-    
-    conn = get_db_connection()
-    cur = conn.cursor()
-    
-    try:
-        # Phase 1: Create world record
-        print("💾 Creating world record...")
-        scope = world_metadata.get('scope', 'regional')
-        theme_list = world_metadata.get('theme_list', '')
-        magic_level = world_metadata.get('magic_level', 'medium')
-        
-        cur.execute("""
-            INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
-                               region_count, major_city_count, settlement_count, magic_level)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            RETURNING world_id;
-        """, (campaign_id, world_name, scope, theme_list, 
-              world_metadata.get('region_count', 1),
-              world_metadata.get('major_city_count', 1), 
-              world_metadata.get('settlement_count', 3),
-              magic_level))
-        
-        world_id = cur.fetchone()[0]
-        conn.commit()
-        
-        # Phase 2: Save each content section with full enrichment
-        vector_service = VectorService()
-        
-        for section in processed_sections:
-            print(f"💾 Saving {section['content_type']}...")
-            
-            # Save main content with tags
-            cur.execute("""
-                INSERT INTO world_content (world_id, campaign_id, content_type, source_type,
-                                         title, content, metadata, tags)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                RETURNING content_id;
-            """, (world_id, campaign_id, section['content_type'], section['source_type'],
-                  section['title'], section['narrative_content'],
-                  psycopg2.extras.Json(section['original_metadata']),
-                  section['tags']))
-            
-            content_id = cur.fetchone()[0]
-            
-            # Save extracted entities
-            for entity in section['entities']:
-                cur.execute("""
-                    INSERT INTO extracted_entities (world_id, campaign_id, source_content_id,
-                                                  entity_type, entity_name, description, status,
-                                                  tags, extraction_context)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-                """, (world_id, campaign_id, content_id,
-                      entity['entity_type'], entity['entity_name'], entity['description'],
-                      entity['status'], entity['tags'], entity.get('extraction_context', '')))
-            
-            # Create vector embeddings for each chunk
-            for chunk in section['chunks']:
-                try:
-                    vector_service.store_content_chunk_embedding(
-                        content_id=str(content_id),
-                        campaign_id=str(campaign_id),
-                        world_id=str(world_id),
-                        chunk_data=chunk
-                    )
-                except Exception as e:
-                    print(f"⚠️ Warning: Vector embedding failed for chunk: {e}")
-            
-            # Update tag vocabulary
-            _update_tag_vocabulary_batch(campaign_id, section['tags'], section['content_type'], cur)
-        
-        conn.commit()
-        print(f"✅ World saved with {len(processed_sections)} sections")
-        return str(world_id)
-        
-    except Exception as e:
-        conn.rollback()
-        print(f"❌ Failed to save processed world: {e}")
-        raise
-    finally:
-        cur.close()
-        conn.close()
-
-def save_processed_expansion(campaign_id: str, world_id: str, parent_content_id: str,
-                           processed_expansion: Dict[str, Any]) -> str:
-    """
-    Save expansion content processed by ContentProcessor
-    
-    Args:
-        campaign_id: Campaign UUID
-        world_id: World UUID
-        parent_content_id: ID of content this expands
-        processed_expansion: Output from ContentProcessor.process_expansion_content()
-        
-    Returns:
-        content_id: UUID of created expansion content
-    """
-    import psycopg2.extras
-    from services.vector_service import VectorService
-    
-    conn = get_db_connection()
-    cur = conn.cursor()
-    
-    try:
-        print(f"💾 Saving expansion for {processed_expansion['content_type']}...")
-        
-        # Save expansion content
-        cur.execute("""
-            INSERT INTO world_content (parent_content_id, world_id, campaign_id, 
-                                     content_type, source_type, title, content, tags)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            RETURNING content_id;
-        """, (parent_content_id, world_id, campaign_id,
-              processed_expansion['content_type'], processed_expansion['source_type'],
-              processed_expansion['title'], processed_expansion['narrative_content'],
-              processed_expansion['tags']))
-        
-        expansion_content_id = cur.fetchone()[0]
-        
-        # Save expansion entities
-        for entity in processed_expansion['entities']:
-            cur.execute("""
-                INSERT INTO extracted_entities (world_id, campaign_id, source_content_id,
-                                              entity_type, entity_name, description, status,
-                                              tags, extraction_context)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-            """, (world_id, campaign_id, expansion_content_id,
-                  entity['entity_type'], entity['entity_name'], entity['description'],
-                  entity['status'], entity['tags'], entity.get('extraction_context', '')))
-        
-        # Create vector embeddings for expansion chunks
-        vector_service = VectorService()
-        for chunk in processed_expansion['chunks']:
-            try:
-                vector_service.store_content_chunk_embedding(
-                    content_id=str(expansion_content_id),
-                    campaign_id=str(campaign_id),
-                    world_id=str(world_id),
-                    chunk_data=chunk
-                )
-            except Exception as e:
-                print(f"⚠️ Warning: Vector embedding failed for expansion chunk: {e}")
-        
-        # Update tag vocabulary
-        _update_tag_vocabulary_batch(campaign_id, processed_expansion['tags'], 
-                                   processed_expansion['content_type'], cur)
-        
-        conn.commit()
-        print(f"✅ Expansion saved with {len(processed_expansion['entities'])} entities")
-        return str(expansion_content_id)
-        
-    except Exception as e:
-        conn.rollback()
-        print(f"❌ Failed to save expansion: {e}")
-        raise
-    finally:
-        cur.close()
-        conn.close()
-
-def _update_tag_vocabulary_batch(campaign_id: str, tags: List[str], 
-                               content_type: str, cursor) -> None:
-    """Update tag vocabulary in batch for efficiency"""
-    
-    for tag in tags:
-        # Determine tag category
-        if tag in ['pantheon', 'magic_system', 'global_threats', 'world_overview']:
-            category = 'category'
-        elif tag in ['detailed', 'expanded', 'base']:
-            category = 'detail_level'
-        elif '_' in tag:
-            category = 'theme'
-        else:
-            category = 'entity'
-        
-        cursor.execute("""
-            INSERT INTO tag_vocabulary (campaign_id, tag_name, tag_category, usage_count)
-            VALUES (%s, %s, %s, 1)
-            ON CONFLICT (campaign_id, tag_name)
-            DO UPDATE SET 
-                usage_count = tag_vocabulary.usage_count + 1,
-                last_used = CURRENT_TIMESTAMP
-        """, (campaign_id, tag, category))
-
-def save_world(campaign_id, world_data):
-    """Save world metadata and structured content to database
-    
-    Args:
-        campaign_id: UUID of the campaign
-        world_data: Dictionary containing UniverseBuilder JSON output
-        
-    Returns:
-        world_id: UUID of the created world
-    """
-    
-    
-    conn = get_db_connection()
-    cur = conn.cursor()
-    
-    # Extract basic world info
-    world_info = world_data.get('world_info', {})
-    magic_system = world_data.get('magic_system', {})
-    size_info = world_data.get('size', {})
-    
-    world_name = world_info.get('world_name', 'Unnamed World')
-    scope = size_info.get('scope', 'regional')
-    theme_list = world_info.get('theme_list', '')
-    region_count = size_info.get('region_count', 1)
-    major_city_count = size_info.get('major_city_count', 1)
-    settlement_count = size_info.get('settlement_count', 3)
-    magic_level = magic_system.get('magic_level', 'medium')
-    
-    # Create the world record
-    cur.execute("""
-        INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
-                           region_count, major_city_count, settlement_count, magic_level)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        RETURNING world_id;
-    """, (campaign_id, world_name, scope, theme_list, 
-          region_count, major_city_count, settlement_count, magic_level))
-    
-    world_id = cur.fetchone()[0]
-    
-    # Commit the world record first so it's available for foreign key references
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    # Save structured content for each major section
-    content_sections = [
-        ('world_info', world_info.get('world_description', ''), world_data.get('world_info')),
-        ('magic_system', magic_system.get('mechanics', ''), world_data.get('magic_system')),
-        ('pantheon', world_data.get('pantheon', {}).get('structure', ''), world_data.get('pantheon')),
-    ]
-    
-    # Save global threats as separate content entries
-    for threat in world_data.get('global_threats', []):
-        threat_title = threat.get('primary_threat', 'Unknown Threat')
-        threat_content = threat.get('threat_details', '')
-        content_sections.append(('global_threat', threat_content, threat))
-    
-    # Insert all content sections (each creates its own transaction)
-    for content_type, content_text, metadata in content_sections:
-        if content_text:  # Only save if there's actual content
-            save_world_content(world_id, campaign_id, content_type, content_text, metadata)
-    
-    return world_id
-
-def save_world_content(world_id, campaign_id, content_type, content_text, metadata=None, title=None, create_embedding=True):
-    """Save a piece of world content to the database and optionally create embeddings
+def save_world_content(world_id, campaign_id, content_type, content_text, metadata=None, title=None):
+    """Save a piece of world content to the database
     
     Args:
         world_id: UUID of the world
@@ -822,7 +537,6 @@ def save_world_content(world_id, campaign_id, content_type, content_text, metada
         content_text: The narrative text content
         metadata: Optional structured data (JSON object)
         title: Optional title (will generate from content_type if not provided)
-        create_embedding: Whether to create vector embeddings (default True)
         
     Returns:
         content_id: UUID of the created content
@@ -849,54 +563,8 @@ def save_world_content(world_id, campaign_id, content_type, content_text, metada
     cur.close()
     conn.close()
     
-    # Create vector embedding if requested and content is substantial
-    if create_embedding and content_text and len(content_text.strip()) > 50:
-        try:
-            from services.vector_service import VectorService
-            vector_service = VectorService()
-            vector_service.store_world_content_embedding(
-                content_id=str(content_id),
-                campaign_id=str(campaign_id),
-                world_id=str(world_id),
-                content_type=content_type,
-                title=title,
-                text=content_text
-            )
-        except Exception as e:
-            print(f"⚠️ Warning: Content saved to database but vector embedding failed: {e}")
-            print("💾 Content is still searchable via regular database queries")
-    
     return content_id
 
-def get_world_by_campaign(campaign_id):
-    """Get world data for a campaign"""
-    conn = get_db_connection()
-    cur = conn.cursor()
-    
-    cur.execute("""
-        SELECT world_id, world_name, scope, theme_list, region_count, 
-               major_city_count, settlement_count, magic_level, created_at
-        FROM worlds 
-        WHERE campaign_id = %s;
-    """, (campaign_id,))
-    
-    result = cur.fetchone()
-    cur.close()
-    conn.close()
-    
-    if result:
-        return {
-            "world_id": result[0],
-            "world_name": result[1],
-            "scope": result[2],
-            "theme_list": result[3],
-            "region_count": result[4],
-            "major_city_count": result[5],
-            "settlement_count": result[6],
-            "magic_level": result[7],
-            "created_at": result[8]
-        }
-    return None
 
 def create_world_record(campaign_id: str, universe_data: dict) -> str:
     """Create the basic world record and return world_id"""
@@ -936,204 +604,95 @@ def create_world_record(campaign_id: str, universe_data: dict) -> str:
         cur.close()
         conn.close()
 
-def search_world_content(campaign_id, query, content_types=None, limit=5):
-    """Search world content using semantic search via Pinecone
-    
-    Args:
-        campaign_id: UUID of the campaign
-        query: The search query text
-        content_types: Optional list of content types to filter by
-        limit: Maximum number of results to return
-        
-    Returns:
-        List of matching content with full details from database
-    """
-    try:
-        from services.vector_service import VectorService
-        
-        vector_service = VectorService()
-        
-        # Perform semantic search in Pinecone
-        vector_results = vector_service.semantic_search(
-            query=query,
-            campaign_id=str(campaign_id),
-            content_types=content_types,
-            top_k=limit
-        )
-        
-        if not vector_results:
-            print(f"🔍 No semantic matches found for: '{query}'")
-            return []
-        
-        # Get full content details from database
-        conn = get_db_connection()
-        cur = conn.cursor()
-        
-        enriched_results = []
-        for result in vector_results:
-            cur.execute("""
-                SELECT content_id, title, content, content_type, metadata, created_at
-                FROM world_content 
-                WHERE content_id = %s;
-            """, (result["content_id"],))
-            
-            db_row = cur.fetchone()
-            if db_row:
-                enriched_results.append({
-                    "content_id": db_row[0],
-                    "title": db_row[1],
-                    "content": db_row[2],
-                    "content_type": db_row[3],
-                    "metadata": db_row[4],
-                    "created_at": db_row[5],
-                    "similarity_score": result["score"],
-                    "text_snippet": result["text_snippet"]
-                })
-        
-        cur.close()
-        conn.close()
-        
-        print(f"🎯 Found {len(enriched_results)} semantic matches for: '{query}'")
-        return enriched_results
-        
-    except Exception as e:
-        print(f"⚠️ Semantic search failed, falling back to database text search: {e}")
-        
-        # Fallback to simple database text search
-        conn = get_db_connection()
-        cur = conn.cursor()
-        
-        content_type_filter = ""
-        params = [str(campaign_id), f"%{query}%"]
-        
-        if content_types:
-            placeholders = ",".join(["%s"] * len(content_types))
-            content_type_filter = f"AND content_type IN ({placeholders})"
-            params.extend(content_types)
-        
-        cur.execute(f"""
-            SELECT content_id, title, content, content_type, metadata, created_at
-            FROM world_content 
-            WHERE campaign_id = %s 
-            AND (title ILIKE %s OR content ILIKE %s)
-            {content_type_filter}
-            ORDER BY created_at DESC
-            LIMIT %s;
-        """, params + [f"%{query}%", limit])
-        
-        results = cur.fetchall()
-        cur.close()
-        conn.close()
-        
-        fallback_results = []
-        for row in results:
-            fallback_results.append({
-                "content_id": row[0],
-                "title": row[1],
-                "content": row[2],
-                "content_type": row[3],
-                "metadata": row[4],
-                "created_at": row[5],
-                "similarity_score": 0.5,  # Default score for text search
-                "text_snippet": row[2][:500] + "..." if len(row[2]) > 500 else row[2]
-            })
-        
-        print(f"🔍 Fallback search found {len(fallback_results)} text matches")
-        return fallback_results
 
-def save_processed_world_lightweight(campaign_id: str, processed_sections: List[Dict[str, Any]], 
-                                    world_name: str = None) -> str:
-    """
-    Save lightweight ContentProcessor output to database (tags and content only)
-    Used with distributed architecture where entities are saved directly by EntityProcessor
-    and chunks are vectorized directly by ContentChunker
-    
-    Args:
-        campaign_id: Campaign UUID
-        processed_sections: Output from ContentProcessor.process_universe_content_distributed()
-        world_name: Optional world name override
-        
-    Returns:
-        world_id: UUID of created world
-    """
+
+def update_world_full_json(world_id: str, universe_data: dict) -> None:
+    """Update the full_json field and world metadata with actual generated universe data"""
     import psycopg2.extras
-    
-    if not processed_sections:
-        raise ValueError("No processed sections to save")
-    
-    # Extract world metadata from first section
-    first_section = processed_sections[0]
-    if not isinstance(first_section, dict):
-        print(f"❌ ERROR: First section is not a dict, it's: {type(first_section)}")
-        print(f"❌ ERROR: First section content: {first_section}")
-        raise ValueError(f"Expected dict for section, got {type(first_section)}")
-    
-    world_metadata = first_section.get('original_metadata', {})
-    
-    if not world_name:
-        world_name = world_metadata.get('world_name', 'Generated World')
     
     conn = get_db_connection()
     cur = conn.cursor()
     
     try:
-        # Phase 1: Create world record
-        print("💾 Creating world record...")
-        scope = world_metadata.get('scope', 'regional')
-        theme_list = world_metadata.get('theme_list', '')
-        magic_level = world_metadata.get('magic_level', 'medium')
+        # Extract actual counts from generated universe data
+        world_info = universe_data.get('world_info', {})
+        regions = universe_data.get('regions', [])
+        settlements = []
         
+        # Count actual settlements across all regions
+        for region in regions:
+            settlements.extend(region.get('settlements', []))
+        
+        actual_region_count = len(regions)
+        actual_settlement_count = len(settlements)
+        actual_major_city_count = len([s for s in settlements if s.get('size') == 'major_city'])
+        
+        # Update both full_json and metadata fields with actual data
         cur.execute("""
-            INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
-                               region_count, major_city_count, settlement_count, magic_level)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-            RETURNING world_id;
-        """, (campaign_id, world_name, scope, theme_list, 
-              world_metadata.get('region_count', 1),
-              world_metadata.get('major_city_count', 1), 
-              world_metadata.get('settlement_count', 3),
-              magic_level))
-        
-        world_id = cur.fetchone()[0]
-        
-        # Phase 2: Save lightweight content sections (tags and narrative only)
-        for i, section in enumerate(processed_sections):
-            print(f"💾 Saving lightweight {section['content_type']} (tags and narrative only)...")
-            
-            # DEBUG: Check section structure
-            if not isinstance(section, dict):
-                print(f"❌ ERROR: Section {i} is not a dict, it's: {type(section)}")
-                print(f"❌ ERROR: Section {i} content: {section}")
-                continue
-            
-            # Save main content with tags (no entities/chunks)
-            cur.execute("""
-                INSERT INTO world_content (world_id, campaign_id, content_type, source_type,
-                                         title, content, metadata, tags)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                RETURNING content_id;
-            """, (world_id, campaign_id, section['content_type'], section['source_type'],
-                  section['title'], section['narrative_content'],
-                  psycopg2.extras.Json(section['original_metadata']),
-                  section['tags']))
-            
-            content_id = cur.fetchone()[0]
-            
-            # Update tag vocabulary
-            _update_tag_vocabulary_batch(campaign_id, section['tags'], 
-                                       section['content_type'], cur)
-        
+            UPDATE worlds SET 
+                full_json = %s,
+                region_count = %s,
+                major_city_count = %s,
+                settlement_count = %s,
+                scope = %s,
+                theme_list = %s,
+                magic_level = %s,
+                updated_at = CURRENT_TIMESTAMP 
+            WHERE world_id = %s;
+        """, (
+            psycopg2.extras.Json(universe_data),
+            actual_region_count,
+            actual_major_city_count,
+            actual_settlement_count,
+            world_info.get('scope', 'regional'),
+            world_info.get('theme_list', ''),
+            world_info.get('magic_level', 'medium'),
+            world_id
+        ))
         conn.commit()
-        print(f"✅ World '{world_name}' created with ID: {world_id}")
-        print(f"📊 Saved {len(processed_sections)} content sections (lightweight - entities and chunks handled separately)")
-        
-        return str(world_id)
-        
+
     except Exception as e:
+        print(f"❌ Failed to update world data: {e}")
         conn.rollback()
-        print(f"❌ Failed to save world: {e}")
         raise
     finally:
         cur.close()
         conn.close()
+
+def update_tag_vocabulary_batch(campaign_id: str, tags: List[str], content_type: str) -> None:
+    """Update tag vocabulary in batch for efficiency"""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        for tag in tags:
+            # Determine tag category
+            if tag in ['pantheon', 'magic_system', 'global_threats', 'world_overview']:
+                category = 'category'
+            elif tag in ['detailed', 'expanded', 'base']:
+                category = 'detail_level'
+            elif '_' in tag:
+                category = 'theme'
+            else:
+                category = 'entity'
+            
+            cur.execute("""
+                INSERT INTO tag_vocabulary (campaign_id, tag_name, tag_category, usage_count)
+                VALUES (%s, %s, %s, 1)
+                ON CONFLICT (campaign_id, tag_name)
+                DO UPDATE SET 
+                    usage_count = tag_vocabulary.usage_count + 1,
+                    last_used = CURRENT_TIMESTAMP
+            """, (campaign_id, tag, category))
+        
+        conn.commit()
+        print(f"💾 Updated tag vocabulary with {len(tags)} tags")
+    except Exception as e:
+        print(f"❌ Failed to update tag vocabulary: {e}")
+        conn.rollback()
+        raise
+    finally:
+        cur.close()
+        conn.close()
+
 

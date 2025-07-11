@@ -1,9 +1,8 @@
-import os
 from openai import OpenAI
 from dotenv import load_dotenv
 import json
 import typer
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional
 
 # Load environment variables
 load_dotenv()
@@ -16,7 +15,7 @@ class UniverseBuilder:
     
     def __init__(self, openai_api_key: Optional[str] = None):
         """Initialize with OpenAI client"""
-        self.debug = True  # TODO: Make configurable
+        self.debug = True 
         
         try:
             if openai_api_key:
@@ -39,21 +38,8 @@ class UniverseBuilder:
             Dict containing complete universe context for other builders
         """
         if self.debug:
-            typer.secho(f"🌌 UniverseBuilder: Generating universe context...", fg=typer.colors.CYAN)
+            typer.secho("🌌 UniverseBuilder: Generating universe context...", fg=typer.colors.CYAN)
             typer.secho(f"   Parameters: {parameters}", fg=typer.colors.YELLOW)
-        
-        # Generate universe using AI with all parameters as context
-        universe_context = self._generate_with_ai(parameters)
-        
-        if self.debug:
-            world_name = universe_context.get('world_info', {}).get('world_name', 'Unknown')
-            typer.secho(f"✅ Universe context generated: {world_name}", fg=typer.colors.GREEN)
-            typer.secho(f"   Size: {universe_context['size']['scope']} ({universe_context['size']['region_count']} regions, {universe_context['size']['major_city_count']} cities, {universe_context['size']['settlement_count']} settlements)", fg=typer.colors.BLUE)
-        
-        return universe_context
-    
-    def _generate_with_ai(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
-        """Use OpenAI to generate universe context"""
         
         # Check if client is available
         if not self.client:
@@ -74,7 +60,7 @@ class UniverseBuilder:
                 {"role": "user", "content": prompt}
             ],
             temperature=0.8,
-            max_tokens=2000,
+            max_tokens=6000,
             response_format={"type": "json_object"}
         )
         
@@ -82,8 +68,15 @@ class UniverseBuilder:
         
         # Parse JSON response
         try:
-            ai_result = json.loads(content)
-            return ai_result
+            universe_context = json.loads(content)
+            
+            if self.debug:
+                world_name = universe_context.get('world_info', {}).get('world_name', 'Unknown')
+                typer.secho(f"✅ Universe context generated: {world_name}", fg=typer.colors.GREEN)
+                typer.secho(f"   Size: {universe_context['size']['scope']} ({universe_context['size']['region_count']} regions, {universe_context['size']['major_city_count']} cities, {universe_context['size']['settlement_count']} settlements)", fg=typer.colors.BLUE)
+            
+            return universe_context
+            
         except json.JSONDecodeError as e:
             if self.debug:
                 typer.secho(f"⚠️ AI returned invalid JSON: {content}", fg=typer.colors.YELLOW)

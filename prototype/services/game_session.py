@@ -1,10 +1,10 @@
 # game_session.py
 import cli
 from bots.story_agent import StoryAgent
-from db.db import (create_character, get_character_in_campaign, update_character_stats,
+from db.db import (get_character_in_campaign,
                    save_npc, get_npcs_at_location, save_event, get_recent_events, 
-                   update_npc_relationship, get_npc_relationships, get_or_create_user,
-                   clear_characters_in_campaign)
+                   update_npc_relationship, get_npc_relationships, get_or_create_user
+                   )
 from bots.combat_agent import CombatAgent
 from services.combat_system import CombatManager, analyze_combat_state_ai
 from utils.dice_utility import DiceUtility
@@ -39,7 +39,49 @@ class GameSession:
         
         # Try to load existing character
         self.load_character_stats()
-  
+
+    def run_session(self, is_new_character=False):
+        """Run the actual game session - main game loop"""
+        
+        print(f"\nStarting session for {self.player_name} ({self.player_class})")
+        
+        cli.ui_intro_text()
+        cli.ui_player_character_sheet(self.character)
+        
+        # Run intro scene
+        if is_new_character:    
+            intro_text = self.run_intro_scene()
+            print(f"\n{intro_text}")
+        else:
+            print(f"\nWelcome back, {self.player_name}! Your adventure continues...")
+            print(f"\n{self.last_dm_text}") # add a summary here!
+        
+        # Main game loop
+        while True:
+            action = cli.ui_get_action()
+            
+            # Process the action (command handler will handle menu/other commands)
+            result = self.action_handler(action)
+            
+            if result == "exit_to_menu":
+                return  # Exit to campaign menu
+            elif result == "command_handled":
+                continue  # Command was handled, ask for next action
+            elif result == "combat":
+                # Start combat
+                combat_result = self.start_combat()
+                if combat_result == "exit_to_menu":
+                    return  # Player chose to exit to menu from combat
+                elif combat_result == "game_over":
+                    return  # Character died, exit to menu
+                else:
+                    # Combat ended, continue story
+                    print(f"\n{combat_result}")
+            elif result == "game_over":
+                return  # Game over, exit to menu
+            else:
+                # Normal story continuation
+                print(f"\n{result}")
 
     def run_intro_scene(self):
         debug_log("run_intro_scene() called.")
@@ -54,7 +96,7 @@ class GameSession:
             print(f"\n🧠 Found {len(existing_npcs)} existing NPCs at {self.current_location}")
             self.current_npcs = existing_npcs
             
-            # Get their relationship history for context
+            # ! Get their relationship history for context - im not sure about all of this relationship functionality
             if self.character_id:
                 relationships = get_npc_relationships(self.campaign_id, self.character_id)
                 if relationships:
@@ -192,6 +234,7 @@ class GameSession:
 
     def _update_relationships_from_interaction(self, player_action, dm_response):
         """Analyze interaction and update NPC relationships"""
+        # ! Not sure what this is doing, we need to make sure it is working
         # Simple heuristic - you could make this more sophisticated with AI analysis
         positive_words = ["help", "save", "protect", "kind", "generous", "thank"]
         negative_words = ["attack", "threaten", "steal", "harm", "insult", "kill"]

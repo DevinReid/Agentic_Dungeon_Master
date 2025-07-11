@@ -5,7 +5,7 @@ from debug.debug_util import debug_log
 
 load_dotenv()
 client = OpenAI()
-
+## ! This is busted
 class CombatAgent:
     def __init__(self):
         debug_log("CombatAgent.__init__() called.")

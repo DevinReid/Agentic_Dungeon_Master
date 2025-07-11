@@ -1,7 +1,16 @@
-typer[all]
+# Core Dependencies
+typer[all]>=0.9.0
+InquirerPy>=0.3.4
+python-dotenv>=1.0.0
+
+# AI/ML Dependencies
 openai>=1.0.0
-python-dotenv
-InquirerPy
-pytest
-psycopg2-binary
-pinecone-client
+pinecone-client>=2.2.0
+
+# Database Dependencies
+psycopg2-binary>=2.9.0
+sqlmodel>=0.0.8
+sqlalchemy>=2.0.0
+
+# Testing Dependencies
+pytest>=7.0.0

@@ -10,13 +10,11 @@ This service handles:
 """
 
 import os
-import hashlib
-import json
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from pinecone import Pinecone
 from openai import OpenAI
 from dotenv import load_dotenv
-import numpy as np
+
 
 load_dotenv()
 
@@ -89,58 +87,9 @@ class VectorService:
             print(f"❌ Failed to generate embedding: {e}")
             raise
     
-    def create_vector_id(self, content_id: str, content_type: str) -> str:
-        """Create a unique vector ID for Pinecone"""
-        # Combine content_id and content_type to create unique vector ID
-        unique_string = f"{content_id}:{content_type}"
-        return hashlib.md5(unique_string.encode()).hexdigest()
+
     
-    def store_world_content_embedding(self, 
-                                    content_id: str,
-                                    campaign_id: str, 
-                                    world_id: str,
-                                    content_type: str,
-                                    title: str,
-                                    text: str) -> str:
-        """Store world content embedding in Pinecone
-        
-        Args:
-            content_id: UUID from world_content table
-            campaign_id: Campaign UUID
-            world_id: World UUID  
-            content_type: Type of content (world_info, magic_system, etc.)
-            title: Content title
-            text: The actual text content to embed
-            
-        Returns:
-            vector_id: The Pinecone vector ID
-        """
-        try:
-            # Generate embedding
-            embedding = self.generate_embedding(text)
-            
-            # Create unique vector ID
-            vector_id = self.create_vector_id(content_id, content_type)
-            
-            # Metadata for linking back to PostgreSQL
-            metadata = {
-                "content_id": content_id,
-                "campaign_id": campaign_id,
-                "world_id": world_id,
-                "content_type": content_type,
-                "title": title,
-                "text_snippet": text[:500] + "..." if len(text) > 500 else text  # Store preview
-            }
-            
-            # Store in Pinecone
-            self.index.upsert(vectors=[(vector_id, embedding, metadata)])
-            
-            print(f"✅ Stored embedding for {content_type}: {title}")
-            return vector_id
-            
-        except Exception as e:
-            print(f"❌ Failed to store embedding: {e}")
-            raise
+
     
     def semantic_search(self, 
                        query: str, 
@@ -195,64 +144,9 @@ class VectorService:
         except Exception as e:
             print(f"❌ Semantic search failed: {e}")
             return []
+
     
-    def get_related_content(self, 
-                          content_id: str, 
-                          campaign_id: str = None,
-                          top_k: int = 3) -> List[Dict[str, Any]]:
-        """Find content related to a specific piece of content
-        
-        Args:
-            content_id: The source content ID
-            campaign_id: Optional campaign filter
-            top_k: Number of related items to return
-            
-        Returns:
-            List of related content
-        """
-        try:
-            # Get the source vector
-            vector_id = self.create_vector_id(content_id, "search")  # We'll need content_type for this
-            
-            # For now, we'll search by retrieving the content and doing similarity
-            # This is a simplified version - in practice you'd want to cache embeddings
-            
-            # Build filter
-            filter_dict = {"content_id": {"$ne": content_id}}  # Exclude the source content
-            if campaign_id:
-                filter_dict["campaign_id"] = campaign_id
-            
-            # This would need the actual implementation based on your specific needs
-            # For now, returning empty list
-            return []
-            
-        except Exception as e:
-            print(f"❌ Related content search failed: {e}")
-            return []
-    
-    def delete_world_content_embeddings(self, world_id: str):
-        """Delete all embeddings for a specific world"""
-        try:
-            # Pinecone doesn't have a direct "delete by metadata" function
-            # We'd need to query first, then delete by IDs
-            # This is a placeholder for the proper implementation
-            print(f"🗑️ Would delete embeddings for world_id: {world_id}")
-            
-        except Exception as e:
-            print(f"❌ Failed to delete embeddings: {e}")
-    
-    def get_index_stats(self) -> Dict[str, Any]:
-        """Get statistics about the Pinecone index"""
-        try:
-            stats = self.index.describe_index_stats()
-            return {
-                "total_vectors": stats.get('total_vector_count', 0),
-                "dimension": stats.get('dimension', 0),
-                "index_fullness": stats.get('index_fullness', 0.0)
-            }
-        except Exception as e:
-            print(f"❌ Failed to get index stats: {e}")
-            return {} 
+
     
     def store_content_chunk_embedding(self, 
                                      content_id: str,

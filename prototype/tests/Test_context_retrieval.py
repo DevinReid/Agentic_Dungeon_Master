@@ -9,8 +9,8 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from services.vector_service import VectorService
-from db.db import search_world_content, get_db_connection
-import uuid
+from db.db import  get_db_connection
+
 
 def explore_vector_database(campaign_id: str):
     """Explore what's actually in the vector database for this campaign"""

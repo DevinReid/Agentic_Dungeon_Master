@@ -62,7 +62,7 @@ class ContentChunkerAgent:
             print(f"❌ DEBUG: Exception type: {type(e)}")
             print(f"❌ DEBUG: Exception args: {e.args}")
             import traceback
-            print(f"❌ DEBUG: Full traceback:")
+            print("❌ DEBUG: Full traceback:")
             traceback.print_exc()
             
             # Fallback to simple word-count chunking (no AI processing)
@@ -123,7 +123,7 @@ class ContentChunkerAgent:
                 model="gpt-4o",  # Use gpt-4o which supports structured output
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.2,  # Lower temperature for consistent chunking
-                max_tokens=2000,
+                max_tokens=6000,
                 response_format={"type": "json_object"}
             )
             

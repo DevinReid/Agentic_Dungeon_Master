@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from services.vector_service import VectorService
 
 # CAMPAIGN ID - don't change this
-CAMPAIGN_ID = "e23f1a62-6092-4e41-a903-edf08c26a552"
+CAMPAIGN_ID = "45419102-9a5c-492e-8805-1800ead448d6"
 
 # CHANGE THIS QUERY TO TEST DIFFERENT SEARCHES
 QUERY = "Where is the nearest mountain?"
