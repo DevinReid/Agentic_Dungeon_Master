@@ -1,0 +1,663 @@
+{
+  "world_id": "87d1ee3d-9f50-48f5-860a-12439d8bbe59",
+  "campaign_id": "9df4849d-5203-47e4-9a7e-3a165241e550",
+  "universe_data": {
+    "world_info": {
+      "world_name": "Elaris",
+      "world_description": "Elaris, a realm imbued with the pulse of magic, stretches across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization. Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath.",
+      "theme_description": "Elaris thrives on the interplay of mysticism and heroism, where legendary figures rise from humble origins to shape the fate of kingdoms. Magic is the lifeblood that connects the realms, and the ancient myths are not mere stories, but echoes of forgotten truths. As an ancient evil stirs once more, the world calls out for new champions to rise in defense of peace and light.",
+      "theme_list": "magic, heroism, ancient myths, divine intervention, balance of power",
+      "natural_laws": "Magic in Elaris is like a vast, ever-present ocean with currents that can be tapped by those skilled enough. The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues.",
+      "custom_details": "The MyFirstCampaign campaign is set in this lush world, designed for classic fantasy adventures where the clash of swords and the whisper of spells are common echoes across the land."
+    },
+    "magic_system": {
+      "commonality": "In Elaris, magic is woven into the fabric of daily life. Most towns boast a resident wizard or healer, wise in the ways of spells and potions. The arcane arts are as common as the seasons, influencing every facet of society.",
+      "mechanics": "Magic in Elaris is a blend of innate talent and scholarly pursuit. Spells are cast through intricate gestures and ancient incantations, drawing power from the elemental planes. Wizards and sorcerers channel these energies through personal foci, while druids commune directly with nature.",
+      "limitations": "Magical power is limited by one's ability to tap into the elemental planes, which are only accessible at specific times or locations. Excessive use of magic can strain the user's connection, leading to unpredictable effects or total burnout.",
+      "sources": "Magic flows from the elemental planes\u2014Fire, Water, Earth, and Air\u2014each governed by ancient, enigmatic forces. These planes are interconnected, forming a delicate balance that sustains magical potential across Elaris.",
+      "magic_level": "High"
+    },
+    "pantheon": {
+      "structure": "Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world. Temples dedicated to these gods are centers of community life, their spires reaching toward the heavens as if seeking divine counsel.",
+      "major_deities": [
+        "Alyndra, Goddess of Light and Knowledge",
+        "Kalthor, God of War and Valor",
+        "Naelith, Goddess of Nature and Growth",
+        "Morthen, God of Shadows and Secrets"
+      ],
+      "religious_conflicts": [
+        "The Cult of Shadows, followers of Morthen, often clash with the Order of the Radiant Dawn, devotees of Alyndra.",
+        "The Druids of Naelith oppose the industrial expansion urged by Kalthor's followers, fearing the loss of natural balance."
+      ],
+      "divine_influence": "The gods of Elaris are active participants in mortal affairs, their influence seen in miraculous interventions and omens. Their favor can be a boon or a curse, swaying the tides of fortune."
+    },
+    "global_threats": [
+      {
+        "primary_threat": "The Awakening of the Drakthar",
+        "threat_details": "Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber. Prophecies speak of its awakening as the harbinger of an age of chaos.",
+        "world_impact": "The looming threat of the Drakthar casts a shadow over Elaris, with fear seeping into the hearts of its people. Crops wither under its darkening aura, and the winds carry whispers of dread.",
+        "resistance_forces": "The Emerald Vanguard, a coalition of heroes and scholars, seeks to unravel the ancient secrets necessary to contain or destroy the Drakthar. They rally support from the kingdoms, urging unity against the coming storm."
+      }
+    ],
+    "size": {
+      "scope": "regional",
+      "description": "Elaris encompasses a small continent with varied landscapes, from the mist-cloaked forests of the North to the sun-drenched plains of the South. It is divided into three kingdoms, each with its own rich history and cultural identity.",
+      "region_count": 3,
+      "major_city_count": 5,
+      "settlement_count": 20
+    }
+  },
+  "processed_sections": [
+    {
+      "section_key": "world_info",
+      "content_type": "world_overview",
+      "source_type": "universe_builder",
+      "title": "World Overview - Elaris",
+      "narrative_content": "Elaris, a realm imbued with the pulse of magic, stretches across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization. Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath. Elaris thrives on the interplay of mysticism and heroism, where legendary figures rise from humble origins to shape the fate of kingdoms. Magic is the lifeblood that connects the realms, and the ancient myths are not mere stories, but echoes of forgotten truths. As an ancient evil stirs once more, the world calls out for new champions to rise in defense of peace and light. Magic in Elaris is like a vast, ever-present ocean with currents that can be tapped by those skilled enough. The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues. The MyFirstCampaign campaign is set in this lush world, designed for classic fantasy adventures where the clash of swords and the whisper of spells are common echoes across the land.",
+      "original_metadata": {
+        "world_name": "Elaris",
+        "world_description": "Elaris, a realm imbued with the pulse of magic, stretches across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization. Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath.",
+        "theme_description": "Elaris thrives on the interplay of mysticism and heroism, where legendary figures rise from humble origins to shape the fate of kingdoms. Magic is the lifeblood that connects the realms, and the ancient myths are not mere stories, but echoes of forgotten truths. As an ancient evil stirs once more, the world calls out for new champions to rise in defense of peace and light.",
+        "theme_list": "magic, heroism, ancient myths, divine intervention, balance of power",
+        "natural_laws": "Magic in Elaris is like a vast, ever-present ocean with currents that can be tapped by those skilled enough. The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues.",
+        "custom_details": "The MyFirstCampaign campaign is set in this lush world, designed for classic fantasy adventures where the clash of swords and the whisper of spells are common echoes across the land."
+      },
+      "content_id": "af24aec6-5e2d-40f4-a683-20cac7f12330",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "magic_system",
+        "ancient_alliance",
+        "three_kingdoms",
+        "arcane_currents",
+        "creation_myths",
+        "divine_influence",
+        "mysticism",
+        "heroism",
+        "ancient_evil",
+        "magic_as_lifeblood",
+        "forgotten_truths",
+        "call_for_heroes"
+      ]
+    },
+    {
+      "section_key": "magic_system",
+      "content_type": "magic_system",
+      "source_type": "universe_builder",
+      "title": "Magic System",
+      "narrative_content": "Magic in Elaris is a blend of innate talent and scholarly pursuit. Spells are cast through intricate gestures and ancient incantations, drawing power from the elemental planes. Wizards and sorcerers channel these energies through personal foci, while druids commune directly with nature. In Elaris, magic is woven into the fabric of daily life. Most towns boast a resident wizard or healer, wise in the ways of spells and potions. The arcane arts are as common as the seasons, influencing every facet of society. Magical power is limited by one's ability to tap into the elemental planes, which are only accessible at specific times or locations. Excessive use of magic can strain the user's connection, leading to unpredictable effects or total burnout. Magic flows from the elemental planes\u2014Fire, Water, Earth, and Air\u2014each governed by ancient, enigmatic forces. These planes are interconnected, forming a delicate balance that sustains magical potential across Elaris.",
+      "original_metadata": {
+        "commonality": "In Elaris, magic is woven into the fabric of daily life. Most towns boast a resident wizard or healer, wise in the ways of spells and potions. The arcane arts are as common as the seasons, influencing every facet of society.",
+        "mechanics": "Magic in Elaris is a blend of innate talent and scholarly pursuit. Spells are cast through intricate gestures and ancient incantations, drawing power from the elemental planes. Wizards and sorcerers channel these energies through personal foci, while druids commune directly with nature.",
+        "limitations": "Magical power is limited by one's ability to tap into the elemental planes, which are only accessible at specific times or locations. Excessive use of magic can strain the user's connection, leading to unpredictable effects or total burnout.",
+        "sources": "Magic flows from the elemental planes\u2014Fire, Water, Earth, and Air\u2014each governed by ancient, enigmatic forces. These planes are interconnected, forming a delicate balance that sustains magical potential across Elaris.",
+        "magic_level": "High"
+      },
+      "content_id": "5cc96887-8625-4d3f-87f1-786e071e63ae",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "magic_system",
+        "ancient_alliance",
+        "three_kingdoms",
+        "arcane_currents",
+        "creation_myths",
+        "divine_influence",
+        "mysticism",
+        "heroism",
+        "ancient_evil",
+        "magic_as_lifeblood",
+        "forgotten_truths",
+        "call_for_heroes"
+      ]
+    },
+    {
+      "section_key": "pantheon",
+      "content_type": "pantheon",
+      "source_type": "universe_builder",
+      "title": "Divine Pantheon",
+      "narrative_content": "Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world. Temples dedicated to these gods are centers of community life, their spires reaching toward the heavens as if seeking divine counsel. The gods of Elaris are active participants in mortal affairs, their influence seen in miraculous interventions and omens. Their favor can be a boon or a curse, swaying the tides of fortune.",
+      "original_metadata": {
+        "structure": "Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world. Temples dedicated to these gods are centers of community life, their spires reaching toward the heavens as if seeking divine counsel.",
+        "major_deities": [
+          "Alyndra, Goddess of Light and Knowledge",
+          "Kalthor, God of War and Valor",
+          "Naelith, Goddess of Nature and Growth",
+          "Morthen, God of Shadows and Secrets"
+        ],
+        "religious_conflicts": [
+          "The Cult of Shadows, followers of Morthen, often clash with the Order of the Radiant Dawn, devotees of Alyndra.",
+          "The Druids of Naelith oppose the industrial expansion urged by Kalthor's followers, fearing the loss of natural balance."
+        ],
+        "divine_influence": "The gods of Elaris are active participants in mortal affairs, their influence seen in miraculous interventions and omens. Their favor can be a boon or a curse, swaying the tides of fortune."
+      },
+      "content_id": "25c443ed-bc18-4244-8e1f-9b5c5cb3274b",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "magic_system",
+        "ancient_alliance",
+        "three_kingdoms",
+        "arcane_currents",
+        "creation_myths",
+        "divine_influence",
+        "mysticism",
+        "heroism",
+        "ancient_evil",
+        "magic_as_lifeblood",
+        "forgotten_truths",
+        "call_for_heroes"
+      ]
+    },
+    {
+      "section_key": "global_threats",
+      "content_type": "global_threats",
+      "source_type": "universe_builder",
+      "title": "Global Threats",
+      "narrative_content": "Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber. Prophecies speak of its awakening as the harbinger of an age of chaos. The looming threat of the Drakthar casts a shadow over Elaris, with fear seeping into the hearts of its people. Crops wither under its darkening aura, and the winds carry whispers of dread. Known as: The Awakening of the Drakthar",
+      "original_metadata": [
+        {
+          "primary_threat": "The Awakening of the Drakthar",
+          "threat_details": "Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber. Prophecies speak of its awakening as the harbinger of an age of chaos.",
+          "world_impact": "The looming threat of the Drakthar casts a shadow over Elaris, with fear seeping into the hearts of its people. Crops wither under its darkening aura, and the winds carry whispers of dread.",
+          "resistance_forces": "The Emerald Vanguard, a coalition of heroes and scholars, seeks to unravel the ancient secrets necessary to contain or destroy the Drakthar. They rally support from the kingdoms, urging unity against the coming storm."
+        }
+      ],
+      "content_id": "74b5dbab-a358-4159-9423-b77765b16b9f",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "magic_system",
+        "ancient_alliance",
+        "three_kingdoms",
+        "arcane_currents",
+        "creation_myths",
+        "divine_influence",
+        "mysticism",
+        "heroism",
+        "ancient_evil",
+        "magic_as_lifeblood",
+        "forgotten_truths",
+        "call_for_heroes"
+      ]
+    },
+    {
+      "section_key": "size",
+      "content_type": "world_scale",
+      "source_type": "universe_builder",
+      "title": "World Scale",
+      "narrative_content": "Elaris encompasses a small continent with varied landscapes, from the mist-cloaked forests of the North to the sun-drenched plains of the South. It is divided into three kingdoms, each with its own rich history and cultural identity.",
+      "original_metadata": {
+        "scope": "regional",
+        "description": "Elaris encompasses a small continent with varied landscapes, from the mist-cloaked forests of the North to the sun-drenched plains of the South. It is divided into three kingdoms, each with its own rich history and cultural identity.",
+        "region_count": 3,
+        "major_city_count": 5,
+        "settlement_count": 20
+      },
+      "content_id": "8236f97a-7492-4d8c-bb18-0a483d12d113",
+      "tags": [
+        "universe_content",
+        "elaris",
+        "magic_system",
+        "ancient_alliance",
+        "three_kingdoms",
+        "arcane_currents",
+        "creation_myths",
+        "divine_influence",
+        "mysticism",
+        "heroism",
+        "ancient_evil",
+        "magic_as_lifeblood",
+        "forgotten_truths",
+        "call_for_heroes"
+      ]
+    }
+  ],
+  "all_tags": [
+    "universe_content",
+    "elaris",
+    "magic_system",
+    "ancient_alliance",
+    "three_kingdoms",
+    "arcane_currents",
+    "creation_myths",
+    "divine_influence",
+    "mysticism",
+    "heroism",
+    "ancient_evil",
+    "magic_as_lifeblood",
+    "forgotten_truths",
+    "call_for_heroes"
+  ],
+  "all_entities_grouped": {
+    "npcs": [],
+    "locations": [
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440001",
+        "campaign_id": "9df4849d-5203-47e4-9a7e-3a165241e550",
+        "name": "Elaris",
+        "description": "Elaris is a realm imbued with the pulse of magic, stretching across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization.",
+        "notable_features": "Three kingdoms, arcane currents, ancient alliances",
+        "connections": {
+          "north": "Mist-cloaked forests",
+          "south": "Sun-drenched plains"
+        },
+        "location_type": "continent",
+        "size": "massive",
+        "inhabitants": [
+          "humans",
+          "elves",
+          "dwarves",
+          "magical creatures"
+        ],
+        "notable_items": [],
+        "atmosphere": "mystical",
+        "relationships": [
+          {
+            "target": "Elemental Planes",
+            "type": "connected_to"
+          },
+          {
+            "target": "Pantheon of Elaris",
+            "type": "guided_by"
+          }
+        ],
+        "lore": "Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath.",
+        "tags": [
+          "universe_content",
+          "elaris",
+          "three_kingdoms",
+          "magic_system"
+        ],
+        "source_content_type": "universe_content"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440002",
+        "campaign_id": "9df4849d-5203-47e4-9a7e-3a165241e550",
+        "name": "Elemental Planes",
+        "description": "A network of planes\u2014Fire, Water, Earth, and Air\u2014that grant specific powers and sustain magical potential across Elaris. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues.",
+        "notable_features": "Fire, Water, Earth, and Air planes",
+        "connections": {},
+        "location_type": "plane",
+        "size": "massive",
+        "inhabitants": [
+          "elementals",
+          "arcane beings"
+        ],
+        "notable_items": [],
+        "atmosphere": "mystical",
+        "relationships": [
+          {
+            "target": "Elaris",
+            "type": "connected_to"
+          }
+        ],
+        "lore": "Magic flows from these elemental planes, each governed by ancient, enigmatic forces, forming a delicate balance that sustains magical potential across Elaris.",
+        "tags": [
+          "magic_system",
+          "arcane_currents",
+          "mysticism"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "organizations": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440003",
+        "campaign_id": "9df4849d-5203-47e4-9a7e-3a165241e550",
+        "entity_type": "organization",
+        "entity_name": "Pantheon of Elaris",
+        "description": "A diverse group of deities overseeing distinct aspects of the world, active in mortal affairs.",
+        "organization_type": "religious",
+        "size": "massive",
+        "influence": "continental",
+        "structure": "Hierarchical with each deity overseeing specific domains",
+        "goals": [
+          "Maintain balance in Elaris",
+          "Guide mortals"
+        ],
+        "notable_members": [],
+        "relationships": [
+          {
+            "target": "Elaris",
+            "type": "guides"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "divine_influence",
+          "mysticism",
+          "creation_myths"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "artifacts": [],
+    "deities": [],
+    "threats": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440004",
+        "campaign_id": "9df4849d-5203-47e4-9a7e-3a165241e550",
+        "entity_type": "threat",
+        "entity_name": "Drakthar",
+        "description": "A primordial entity of darkness and destruction, prophesied to bring an age of chaos.",
+        "artifact_type": "entity",
+        "rarity": "legendary",
+        "properties": [
+          "darkness",
+          "destruction"
+        ],
+        "requirements": "Awakens under specific conditions",
+        "history": "Deep beneath the earth, the Drakthar stirs from its millennial slumber, casting a shadow over Elaris.",
+        "relationships": [
+          {
+            "target": "The Awakening of the Drakthar",
+            "type": "causes"
+          }
+        ],
+        "status": "dormant",
+        "tags": [
+          "ancient_evil",
+          "threat",
+          "forgotten_truths",
+          "call_for_heroes"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "events": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440005",
+        "campaign_id": "9df4849d-5203-47e4-9a7e-3a165241e550",
+        "entity_type": "event",
+        "entity_name": "The Awakening of the Drakthar",
+        "description": "The prophesied event marking the awakening of the Drakthar, heralding an age of chaos.",
+        "artifact_type": "event",
+        "rarity": "legendary",
+        "properties": [
+          "chaos",
+          "destruction"
+        ],
+        "requirements": "Triggered by celestial alignments",
+        "history": "Prophecies speak of its awakening as the harbinger of an age of chaos.",
+        "relationships": [
+          {
+            "target": "Drakthar",
+            "type": "caused_by"
+          }
+        ],
+        "status": "pending",
+        "tags": [
+          "ancient_evil",
+          "forgotten_truths",
+          "call_for_heroes"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "items": []
+  },
+  "all_chunks": [
+    {
+      "index": 0,
+      "text": "Elaris is a realm imbued with the pulse of magic, stretching across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization. Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath. Elaris thrives on the interplay of mysticism and heroism, where legendary figures rise from humble origins to shape the fate of kingdoms. Magic is the lifeblood that connects the realms, and the ancient myths are not mere stories, but echoes of forgotten truths.",
+      "topic": "Introduction to Elaris and its magical essence",
+      "word_count": 142,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "three_kingdoms",
+        "arcane_currents",
+        "divine_influence",
+        "universe_content",
+        "elaris",
+        "forgotten_truths",
+        "mysticism",
+        "magic_as_lifeblood",
+        "ancient_evil",
+        "heroism",
+        "call_for_heroes",
+        "creation_myths",
+        "ancient_alliance",
+        "magic_system"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Introduction to Elaris and its magical essence",
+        "chunk_index": 0,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 1,
+      "text": "As an ancient evil stirs once more, Elaris calls out for new champions to rise in defense of peace and light. Magic in Elaris is like a vast, ever-present ocean with currents that can be tapped by those skilled enough. The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues. The MyFirstCampaign campaign is set in this lush world, designed for classic fantasy adventures where the clash of swords and the whisper of spells are common echoes across the land.",
+      "topic": "The call for heroes and the elemental planes",
+      "word_count": 108,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "three_kingdoms",
+        "arcane_currents",
+        "divine_influence",
+        "universe_content",
+        "elaris",
+        "forgotten_truths",
+        "mysticism",
+        "magic_as_lifeblood",
+        "ancient_evil",
+        "heroism",
+        "call_for_heroes",
+        "creation_myths",
+        "ancient_alliance",
+        "magic_system"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The call for heroes and the elemental planes",
+        "chunk_index": 1,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 2,
+      "text": "Magic in Elaris is a blend of innate talent and scholarly pursuit. Spells are cast through intricate gestures and ancient incantations, drawing power from the elemental planes. Wizards and sorcerers channel these energies through personal foci, while druids commune directly with nature. In Elaris, magic is woven into the fabric of daily life. Most towns boast a resident wizard or healer, wise in the ways of spells and potions. The arcane arts are as common as the seasons, influencing every facet of society. Magical power is limited by one's ability to tap into the elemental planes, which are only accessible at specific times or locations. Excessive use of magic can strain the user's connection, leading to unpredictable effects or total burnout.",
+      "topic": "The practice and limitations of magic in Elaris",
+      "word_count": 121,
+      "chunk_type": "mechanical",
+      "content_type": "universe_content",
+      "tags": [
+        "three_kingdoms",
+        "arcane_currents",
+        "divine_influence",
+        "universe_content",
+        "elaris",
+        "forgotten_truths",
+        "mysticism",
+        "magic_as_lifeblood",
+        "ancient_evil",
+        "heroism",
+        "call_for_heroes",
+        "creation_myths",
+        "ancient_alliance",
+        "magic_system"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The practice and limitations of magic in Elaris",
+        "chunk_index": 2,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 3,
+      "text": "Magic flows from the elemental planes\u2014Fire, Water, Earth, and Air\u2014each governed by ancient, enigmatic forces. These planes are interconnected, forming a delicate balance that sustains magical potential across Elaris. Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world. Temples dedicated to these gods are centers of community life, their spires reaching toward the heavens as if seeking divine counsel. The gods of Elaris are active participants in mortal affairs, their influence seen in miraculous interventions and omens. Their favor can be a boon or a curse, swaying the tides of fortune.",
+      "topic": "Elemental planes and divine influence in Elaris",
+      "word_count": 97,
+      "chunk_type": "entity_focused",
+      "content_type": "universe_content",
+      "tags": [
+        "three_kingdoms",
+        "arcane_currents",
+        "divine_influence",
+        "universe_content",
+        "elaris",
+        "forgotten_truths",
+        "mysticism",
+        "magic_as_lifeblood",
+        "ancient_evil",
+        "heroism",
+        "call_for_heroes",
+        "creation_myths",
+        "ancient_alliance",
+        "magic_system"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Elemental planes and divine influence in Elaris",
+        "chunk_index": 3,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 4,
+      "text": "Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber. Prophecies speak of the Drakthar's awakening as the harbinger of an age of chaos. The looming threat of the Drakthar casts a shadow over Elaris, with fear seeping into the hearts of its people. Crops wither under the Drakthar's darkening aura, and the winds carry whispers of dread. Known as: The Awakening of the Drakthar, Elaris encompasses a small continent with varied landscapes, from the mist-cloaked forests of the North to the sun-drenched plains of the South. Elaris is divided into three kingdoms, each with its own rich history and cultural identity.",
+      "topic": "The threat of the Drakthar and the geography of Elaris",
+      "word_count": 110,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "three_kingdoms",
+        "arcane_currents",
+        "divine_influence",
+        "universe_content",
+        "elaris",
+        "forgotten_truths",
+        "mysticism",
+        "magic_as_lifeblood",
+        "ancient_evil",
+        "heroism",
+        "call_for_heroes",
+        "creation_myths",
+        "ancient_alliance",
+        "magic_system"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The threat of the Drakthar and the geography of Elaris",
+        "chunk_index": 4,
+        "entity_names": []
+      }
+    }
+  ],
+  "combined_narrative": "Elaris, a realm imbued with the pulse of magic, stretches across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization. Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath. Elaris thrives on the interplay of mysticism and heroism, where legendary figures rise from humble origins to shape the fate of kingdoms. Magic is the lifeblood that connects the realms, and the ancient myths are not mere stories, but echoes of forgotten truths. As an ancient evil stirs once more, the world calls out for new champions to rise in defense of peace and light. Magic in Elaris is like a vast, ever-present ocean with currents that can be tapped by those skilled enough. The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues. The MyFirstCampaign campaign is set in this lush world, designed for classic fantasy adventures where the clash of swords and the whisper of spells are common echoes across the land. Magic in Elaris is a blend of innate talent and scholarly pursuit. Spells are cast through intricate gestures and ancient incantations, drawing power from the elemental planes. Wizards and sorcerers channel these energies through personal foci, while druids commune directly with nature. In Elaris, magic is woven into the fabric of daily life. Most towns boast a resident wizard or healer, wise in the ways of spells and potions. The arcane arts are as common as the seasons, influencing every facet of society. Magical power is limited by one's ability to tap into the elemental planes, which are only accessible at specific times or locations. Excessive use of magic can strain the user's connection, leading to unpredictable effects or total burnout. Magic flows from the elemental planes\u2014Fire, Water, Earth, and Air\u2014each governed by ancient, enigmatic forces. These planes are interconnected, forming a delicate balance that sustains magical potential across Elaris. Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world. Temples dedicated to these gods are centers of community life, their spires reaching toward the heavens as if seeking divine counsel. The gods of Elaris are active participants in mortal affairs, their influence seen in miraculous interventions and omens. Their favor can be a boon or a curse, swaying the tides of fortune. Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber. Prophecies speak of its awakening as the harbinger of an age of chaos. The looming threat of the Drakthar casts a shadow over Elaris, with fear seeping into the hearts of its people. Crops wither under its darkening aura, and the winds carry whispers of dread. Known as: The Awakening of the Drakthar Elaris encompasses a small continent with varied landscapes, from the mist-cloaked forests of the North to the sun-drenched plains of the South. It is divided into three kingdoms, each with its own rich history and cultural identity.",
+  "raw_tag_response": {
+    "model": "gpt-4-0613",
+    "usage": {
+      "completion_tokens": 79,
+      "prompt_tokens": 471,
+      "total_tokens": 550,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"tags\": [\"universe_content\", \"elaris\", \"magic_system\", \"ancient_alliance\", \"three_kingdoms\", \"arcane_currents\", \"creation_myths\", \"divine_influence\", \"mysticism\", \"heroism\", \"ancient_evil\", \"magic_as_lifeblood\", \"forgotten_truths\", \"call_for_heroes\"]}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": [],
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null
+        }
+      }
+    ],
+    "raw_content": "{\"tags\": [\"universe_content\", \"elaris\", \"magic_system\", \"ancient_alliance\", \"three_kingdoms\", \"arcane_currents\", \"creation_myths\", \"divine_influence\", \"mysticism\", \"heroism\", \"ancient_evil\", \"magic_as_lifeblood\", \"forgotten_truths\", \"call_for_heroes\"]}"
+  },
+  "raw_entity_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 529,
+      "prompt_tokens": 1351,
+      "total_tokens": 1880,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n    \"entities\": [\n        {\n            \"entity_name\": \"Elaris\",\n            \"entity_type\": \"location\",\n            \"description\": \"A realm imbued with the pulse of magic, consisting of a small continent divided into three kingdoms.\",\n            \"extraction_context\": \"Elaris, a realm imbued with the pulse of magic, stretches across a verdant small continent divided into three distinct kingdoms.\",\n            \"suggested_tags\": [\"universe_content\", \"elaris\", \"three_kingdoms\", \"magic_system\"]\n        },\n        {\n            \"entity_name\": \"Drakthar\",\n            \"entity_type\": \"threat\",\n            \"description\": \"A primordial entity of darkness and destruction, prophesied to bring an age of chaos.\",\n            \"extraction_context\": \"Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber.\",\n            \"suggested_tags\": [\"ancient_evil\", \"threat\", \"forgotten_truths\", \"call_for_heroes\"]\n        },\n        {\n            \"entity_name\": \"Elemental Planes\",\n            \"entity_type\": \"location\",\n            \"description\": \"A network of planes\u2014Fire, Water, Earth, and Air\u2014that grant specific powers and sustain magical potential across Elaris.\",\n            \"extraction_context\": \"The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries.\",\n            \"suggested_tags\": [\"magic_system\", \"arcane_currents\", \"mysticism\"]\n        },\n        {\n            \"entity_name\": \"Pantheon of Elaris\",\n            \"entity_type\": \"organization\",\n            \"description\": \"A diverse group of deities overseeing distinct aspects of the world, active in mortal affairs.\",\n            \"extraction_context\": \"Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world.\",\n            \"suggested_tags\": [\"divine_influence\", \"mysticism\", \"creation_myths\"]\n        },\n        {\n            \"entity_name\": \"The Awakening of the Drakthar\",\n            \"entity_type\": \"event\",\n            \"description\": \"The prophesied event marking the awakening of the Drakthar, heralding an age of chaos.\",\n            \"extraction_context\": \"Known as: The Awakening of the Drakthar\",\n            \"suggested_tags\": [\"ancient_evil\", \"forgotten_truths\", \"call_for_heroes\"]\n        }\n    ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": [],
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null
+        }
+      }
+    ],
+    "raw_content": "{\n    \"entities\": [\n        {\n            \"entity_name\": \"Elaris\",\n            \"entity_type\": \"location\",\n            \"description\": \"A realm imbued with the pulse of magic, consisting of a small continent divided into three kingdoms.\",\n            \"extraction_context\": \"Elaris, a realm imbued with the pulse of magic, stretches across a verdant small continent divided into three distinct kingdoms.\",\n            \"suggested_tags\": [\"universe_content\", \"elaris\", \"three_kingdoms\", \"magic_system\"]\n        },\n        {\n            \"entity_name\": \"Drakthar\",\n            \"entity_type\": \"threat\",\n            \"description\": \"A primordial entity of darkness and destruction, prophesied to bring an age of chaos.\",\n            \"extraction_context\": \"Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber.\",\n            \"suggested_tags\": [\"ancient_evil\", \"threat\", \"forgotten_truths\", \"call_for_heroes\"]\n        },\n        {\n            \"entity_name\": \"Elemental Planes\",\n            \"entity_type\": \"location\",\n            \"description\": \"A network of planes\u2014Fire, Water, Earth, and Air\u2014that grant specific powers and sustain magical potential across Elaris.\",\n            \"extraction_context\": \"The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries.\",\n            \"suggested_tags\": [\"magic_system\", \"arcane_currents\", \"mysticism\"]\n        },\n        {\n            \"entity_name\": \"Pantheon of Elaris\",\n            \"entity_type\": \"organization\",\n            \"description\": \"A diverse group of deities overseeing distinct aspects of the world, active in mortal affairs.\",\n            \"extraction_context\": \"Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world.\",\n            \"suggested_tags\": [\"divine_influence\", \"mysticism\", \"creation_myths\"]\n        },\n        {\n            \"entity_name\": \"The Awakening of the Drakthar\",\n            \"entity_type\": \"event\",\n            \"description\": \"The prophesied event marking the awakening of the Drakthar, heralding an age of chaos.\",\n            \"extraction_context\": \"Known as: The Awakening of the Drakthar\",\n            \"suggested_tags\": [\"ancient_evil\", \"forgotten_truths\", \"call_for_heroes\"]\n        }\n    ]\n}"
+  },
+  "raw_chunk_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 966,
+      "prompt_tokens": 1165,
+      "total_tokens": 2131,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elaris is a realm imbued with the pulse of magic, stretching across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization. Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath. Elaris thrives on the interplay of mysticism and heroism, where legendary figures rise from humble origins to shape the fate of kingdoms. Magic is the lifeblood that connects the realms, and the ancient myths are not mere stories, but echoes of forgotten truths.\",\n      \"topic\": \"Introduction to Elaris and its magical essence\",\n      \"word_count\": 150,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"As an ancient evil stirs once more, Elaris calls out for new champions to rise in defense of peace and light. Magic in Elaris is like a vast, ever-present ocean with currents that can be tapped by those skilled enough. The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues. The MyFirstCampaign campaign is set in this lush world, designed for classic fantasy adventures where the clash of swords and the whisper of spells are common echoes across the land.\",\n      \"topic\": \"The call for heroes and the elemental planes\",\n      \"word_count\": 150,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Magic in Elaris is a blend of innate talent and scholarly pursuit. Spells are cast through intricate gestures and ancient incantations, drawing power from the elemental planes. Wizards and sorcerers channel these energies through personal foci, while druids commune directly with nature. In Elaris, magic is woven into the fabric of daily life. Most towns boast a resident wizard or healer, wise in the ways of spells and potions. The arcane arts are as common as the seasons, influencing every facet of society. Magical power is limited by one's ability to tap into the elemental planes, which are only accessible at specific times or locations. Excessive use of magic can strain the user's connection, leading to unpredictable effects or total burnout.\",\n      \"topic\": \"The practice and limitations of magic in Elaris\",\n      \"word_count\": 150,\n      \"chunk_type\": \"mechanical\"\n    },\n    {\n      \"text\": \"Magic flows from the elemental planes\u2014Fire, Water, Earth, and Air\u2014each governed by ancient, enigmatic forces. These planes are interconnected, forming a delicate balance that sustains magical potential across Elaris. Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world. Temples dedicated to these gods are centers of community life, their spires reaching toward the heavens as if seeking divine counsel. The gods of Elaris are active participants in mortal affairs, their influence seen in miraculous interventions and omens. Their favor can be a boon or a curse, swaying the tides of fortune.\",\n      \"topic\": \"Elemental planes and divine influence in Elaris\",\n      \"word_count\": 150,\n      \"chunk_type\": \"entity_focused\"\n    },\n    {\n      \"text\": \"Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber. Prophecies speak of the Drakthar's awakening as the harbinger of an age of chaos. The looming threat of the Drakthar casts a shadow over Elaris, with fear seeping into the hearts of its people. Crops wither under the Drakthar's darkening aura, and the winds carry whispers of dread. Known as: The Awakening of the Drakthar, Elaris encompasses a small continent with varied landscapes, from the mist-cloaked forests of the North to the sun-drenched plains of the South. Elaris is divided into three kingdoms, each with its own rich history and cultural identity.\",\n      \"topic\": \"The threat of the Drakthar and the geography of Elaris\",\n      \"word_count\": 150,\n      \"chunk_type\": \"narrative\"\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": [],
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null
+        }
+      }
+    ],
+    "raw_content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Elaris is a realm imbued with the pulse of magic, stretching across a verdant small continent divided into three distinct kingdoms. Each kingdom bears the legacy of an ancient alliance formed to keep the balance of power and magic in harmony. The land itself is alive with arcane currents, flowing like invisible rivers beneath the surface, nurturing the bonds between nature and civilization. Legends of old speak of the time when these lands were forged by the Gods themselves, a time when the skies were painted with the fire of creation, and the seas were calmed by divine breath. Elaris thrives on the interplay of mysticism and heroism, where legendary figures rise from humble origins to shape the fate of kingdoms. Magic is the lifeblood that connects the realms, and the ancient myths are not mere stories, but echoes of forgotten truths.\",\n      \"topic\": \"Introduction to Elaris and its magical essence\",\n      \"word_count\": 150,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"As an ancient evil stirs once more, Elaris calls out for new champions to rise in defense of peace and light. Magic in Elaris is like a vast, ever-present ocean with currents that can be tapped by those skilled enough. The world is connected to a network of elemental planes, each granting specific powers to those who pledge themselves to its mysteries. These planes are visible only during certain celestial alignments, infusing the night sky with otherworldly hues. The MyFirstCampaign campaign is set in this lush world, designed for classic fantasy adventures where the clash of swords and the whisper of spells are common echoes across the land.\",\n      \"topic\": \"The call for heroes and the elemental planes\",\n      \"word_count\": 150,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Magic in Elaris is a blend of innate talent and scholarly pursuit. Spells are cast through intricate gestures and ancient incantations, drawing power from the elemental planes. Wizards and sorcerers channel these energies through personal foci, while druids commune directly with nature. In Elaris, magic is woven into the fabric of daily life. Most towns boast a resident wizard or healer, wise in the ways of spells and potions. The arcane arts are as common as the seasons, influencing every facet of society. Magical power is limited by one's ability to tap into the elemental planes, which are only accessible at specific times or locations. Excessive use of magic can strain the user's connection, leading to unpredictable effects or total burnout.\",\n      \"topic\": \"The practice and limitations of magic in Elaris\",\n      \"word_count\": 150,\n      \"chunk_type\": \"mechanical\"\n    },\n    {\n      \"text\": \"Magic flows from the elemental planes\u2014Fire, Water, Earth, and Air\u2014each governed by ancient, enigmatic forces. These planes are interconnected, forming a delicate balance that sustains magical potential across Elaris. Elaris is guided by a diverse pantheon, each deity overseeing distinct aspects of the world. Temples dedicated to these gods are centers of community life, their spires reaching toward the heavens as if seeking divine counsel. The gods of Elaris are active participants in mortal affairs, their influence seen in miraculous interventions and omens. Their favor can be a boon or a curse, swaying the tides of fortune.\",\n      \"topic\": \"Elemental planes and divine influence in Elaris\",\n      \"word_count\": 150,\n      \"chunk_type\": \"entity_focused\"\n    },\n    {\n      \"text\": \"Deep beneath the earth, the Drakthar, a primordial entity of darkness and destruction, stirs from its millennial slumber. Prophecies speak of the Drakthar's awakening as the harbinger of an age of chaos. The looming threat of the Drakthar casts a shadow over Elaris, with fear seeping into the hearts of its people. Crops wither under the Drakthar's darkening aura, and the winds carry whispers of dread. Known as: The Awakening of the Drakthar, Elaris encompasses a small continent with varied landscapes, from the mist-cloaked forests of the North to the sun-drenched plains of the South. Elaris is divided into three kingdoms, each with its own rich history and cultural identity.\",\n      \"topic\": \"The threat of the Drakthar and the geography of Elaris\",\n      \"word_count\": 150,\n      \"chunk_type\": \"narrative\"\n    }\n  ]\n}"
+  }
+}
