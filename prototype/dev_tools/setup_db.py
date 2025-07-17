@@ -1,6 +1,10 @@
 import os
+import sys
 import psycopg2
 from dotenv import load_dotenv
+
+# Add parent directory to path so we can import from db
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from db.db_schema import SCHEMA_SQL
 
 load_dotenv()

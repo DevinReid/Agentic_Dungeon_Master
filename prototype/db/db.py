@@ -1,6 +1,7 @@
 import os
 import psycopg2
-import uuid
+from typing import List
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -128,6 +129,7 @@ def list_campaigns(user_id=None):
     return campaigns
 
 def get_most_recent_campaign(user_id):
+    ##Feels like this could go away##
     """Get the most recently played campaign for a user"""
     campaigns = list_campaigns(user_id)
     return campaigns[0] if campaigns else None
@@ -146,6 +148,33 @@ def update_campaign_last_played(campaign_id):
     conn.commit()
     cur.close()
     conn.close()
+
+def delete_campaign_from_database(campaign_id):
+    """Delete a campaign and all associated data from the database"""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        # Delete the campaign - CASCADE DELETE will handle all associated data
+        cur.execute("DELETE FROM campaigns WHERE campaign_id = %s", (campaign_id,))
+        
+        # Check if any rows were affected
+        if cur.rowcount == 0:
+            print("❌ Campaign not found in database!")
+            return False
+        
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+        return True
+        
+    except Exception as e:
+        print(f"❌ Database error: {str(e)}")
+        conn.rollback()
+        cur.close()
+        conn.close()
+        return False
 
 # =============================================================================
 # CHARACTER MANAGEMENT
@@ -230,23 +259,7 @@ def clear_characters_in_campaign(campaign_id):
 # LOCATION MANAGEMENT
 # =============================================================================
 
-def create_location(campaign_id, name, description=None):
-    """Create a location in a campaign"""
-    conn = get_db_connection()
-    cur = conn.cursor()
-    
-    cur.execute("""
-        INSERT INTO locations (campaign_id, name, description)
-        VALUES (%s, %s, %s)
-        RETURNING location_id;
-    """, (campaign_id, name, description))
-    
-    location_id = cur.fetchone()[0]
-    conn.commit()
-    cur.close()
-    conn.close()
-    
-    return location_id
+
 
 def get_or_create_location(campaign_id, name, description=None):
     """Get existing location or create new one"""
@@ -343,6 +356,8 @@ def save_npc(campaign_id, npc_data, location_name="Starting Area"):
     
     return npc_id
 
+
+# ! this seems like it has some issues, we dont have locations named yet
 def get_npcs_at_location(campaign_id, location_name, status="alive"):
     """Get all NPCs at a specific location in campaign"""
     conn = get_db_connection()
@@ -378,7 +393,7 @@ def get_npcs_at_location(campaign_id, location_name, status="alive"):
 # =============================================================================
 # EVENT MANAGEMENT
 # =============================================================================
-
+# ? this is functionality for the story agent, we need to make sure it is working
 def save_event(campaign_id, event_type, description, location_name=None, 
                npcs_involved=None, character_ids=None, player_actions=None, 
                consequences=None, session_context=None):
@@ -401,7 +416,7 @@ def save_event(campaign_id, event_type, description, location_name=None,
     conn.commit()
     cur.close()
     conn.close()
-
+# ? this is functionality for the story agent, we need to make sure it is working
 def get_recent_events(campaign_id, limit=10):
     """Get recent events for AI context in campaign"""
     conn = get_db_connection()
@@ -430,7 +445,7 @@ def get_recent_events(campaign_id, limit=10):
 # =============================================================================
 # RELATIONSHIP MANAGEMENT
 # =============================================================================
-
+# ! this is functionality for the story agent, we need to make sure it is working - need to figure out wehat we need here
 def update_npc_relationship(campaign_id, npc_name, character_id, relationship_change, interaction_description):
     """Update relationship between NPC and character in campaign"""
     conn = get_db_connection()
@@ -482,7 +497,7 @@ def update_npc_relationship(campaign_id, npc_name, character_id, relationship_ch
     conn.commit()
     cur.close()
     conn.close()
-
+# ! need to decide on this relationship functionality
 def get_npc_relationships(campaign_id, character_id):
     """Get all NPC relationships for a character in campaign"""
     conn = get_db_connection()
@@ -506,4 +521,178 @@ def get_npc_relationships(campaign_id, character_id):
         "relationship_score": row[3], "history": row[4], 
         "last_interaction": row[5], "updated_at": row[6]
     } for row in results]
+
+
+# =============================================================================
+# WORLD CONTENT MANAGEMENT
+# =============================================================================
+
+def save_world_content(world_id, campaign_id, content_type, content_text, metadata=None, title=None):
+    """Save a piece of world content to the database
+    
+    Args:
+        world_id: UUID of the world
+        campaign_id: UUID of the campaign
+        content_type: Type of content ('world_info', 'magic_system', 'pantheon', 'global_threat', etc.)
+        content_text: The narrative text content
+        metadata: Optional structured data (JSON object)
+        title: Optional title (will generate from content_type if not provided)
+        
+    Returns:
+        content_id: UUID of the created content
+    """
+    import psycopg2.extras
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    if not title:
+        title = content_type.replace('_', ' ').title()
+    
+    cur.execute("""
+        INSERT INTO world_content (world_id, campaign_id, content_type, source_type, 
+                                 title, content, metadata)
+        VALUES (%s, %s, %s, 'universe_builder', %s, %s, %s)
+        RETURNING content_id;
+    """, (world_id, campaign_id, content_type, title, content_text, 
+          psycopg2.extras.Json(metadata) if metadata else None))
+    
+    content_id = cur.fetchone()[0]
+    
+    conn.commit()
+    cur.close()
+    conn.close()
+    
+    return content_id
+
+
+def create_world_record(campaign_id: str, universe_data: dict) -> str:
+    """Create the basic world record and return world_id"""
+    world_name = universe_data.get('world_info', {}).get('world_name', 'Generated World')
+    world_metadata = universe_data.get('world_info', {})
+    
+    print("💾 Creating world record first for entity direct saves...")
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        scope = world_metadata.get('scope', 'regional')
+        theme_list = world_metadata.get('theme_list', '')
+        magic_level = world_metadata.get('magic_level', 'medium')
+        
+        cur.execute("""
+            INSERT INTO worlds (campaign_id, world_name, scope, theme_list, 
+                               region_count, major_city_count, settlement_count, magic_level)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING world_id;
+        """, (campaign_id, world_name, scope, theme_list, 
+              world_metadata.get('region_count', 1),
+              world_metadata.get('major_city_count', 1), 
+              world_metadata.get('settlement_count', 3),
+              magic_level))
+        
+        world_id = cur.fetchone()[0]
+        conn.commit()
+        print(f"✅ World record created with ID: {world_id}")
+        return str(world_id)
+        
+    except Exception as e:
+        conn.rollback()
+        print(f"❌ Failed to create world record: {e}")
+        raise
+    finally:
+        cur.close()
+        conn.close()
+
+
+
+def update_world_full_json(world_id: str, universe_data: dict) -> None:
+    """Update the full_json field and world metadata with actual generated universe data"""
+    import psycopg2.extras
+    
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        # Extract actual counts from generated universe data
+        world_info = universe_data.get('world_info', {})
+        regions = universe_data.get('regions', [])
+        settlements = []
+        
+        # Count actual settlements across all regions
+        for region in regions:
+            settlements.extend(region.get('settlements', []))
+        
+        actual_region_count = len(regions)
+        actual_settlement_count = len(settlements)
+        actual_major_city_count = len([s for s in settlements if s.get('size') == 'major_city'])
+        
+        # Update both full_json and metadata fields with actual data
+        cur.execute("""
+            UPDATE worlds SET 
+                full_json = %s,
+                region_count = %s,
+                major_city_count = %s,
+                settlement_count = %s,
+                scope = %s,
+                theme_list = %s,
+                magic_level = %s,
+                updated_at = CURRENT_TIMESTAMP 
+            WHERE world_id = %s;
+        """, (
+            psycopg2.extras.Json(universe_data),
+            actual_region_count,
+            actual_major_city_count,
+            actual_settlement_count,
+            world_info.get('scope', 'regional'),
+            world_info.get('theme_list', ''),
+            world_info.get('magic_level', 'medium'),
+            world_id
+        ))
+        conn.commit()
+
+    except Exception as e:
+        print(f"❌ Failed to update world data: {e}")
+        conn.rollback()
+        raise
+    finally:
+        cur.close()
+        conn.close()
+
+def update_tag_vocabulary_batch(campaign_id: str, tags: List[str], content_type: str) -> None:
+    """Update tag vocabulary in batch for efficiency"""
+    conn = get_db_connection()
+    cur = conn.cursor()
+    
+    try:
+        for tag in tags:
+            # Determine tag category
+            if tag in ['pantheon', 'magic_system', 'global_threats', 'world_overview']:
+                category = 'category'
+            elif tag in ['detailed', 'expanded', 'base']:
+                category = 'detail_level'
+            elif '_' in tag:
+                category = 'theme'
+            else:
+                category = 'entity'
+            
+            cur.execute("""
+                INSERT INTO tag_vocabulary (campaign_id, tag_name, tag_category, usage_count)
+                VALUES (%s, %s, %s, 1)
+                ON CONFLICT (campaign_id, tag_name)
+                DO UPDATE SET 
+                    usage_count = tag_vocabulary.usage_count + 1,
+                    last_used = CURRENT_TIMESTAMP
+            """, (campaign_id, tag, category))
+        
+        conn.commit()
+        print(f"💾 Updated tag vocabulary with {len(tags)} tags")
+    except Exception as e:
+        print(f"❌ Failed to update tag vocabulary: {e}")
+        conn.rollback()
+        raise
+    finally:
+        cur.close()
+        conn.close()
+
 

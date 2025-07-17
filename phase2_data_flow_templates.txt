@@ -1,0 +1,367 @@
+PHASE 2: CONTENT PROCESSING DATA FLOW TEMPLATES
+================================================================
+
+CATEGORY 1: "world_info" → "world_overview"
+--------------------------------------------
+
+INPUT:
+section_key: str = "world_info"
+section_data: dict = {
+  "world_name": str,
+  "world_description": str,
+  "theme_description": str, 
+  "theme_list": str,
+  "natural_laws": str,
+  "custom_details": str
+}
+
+NARRATIVE EXTRACTION:
+source_field: "world_description"
+narrative_content: str
+
+TAGGENATOR INPUT:
+content: str
+content_type: str = "world_overview"
+campaign_id: str
+metadata: dict = {world_name, theme_list, natural_laws}
+
+TAGGENATOR OUTPUT:
+tags: List[str] = ["world_overview", entity_names, theme_tags, location_tags]
+
+ENTITYEXTRACTOR INPUT:
+content: str
+content_type: str = "world_overview"
+existing_tags: List[str]
+campaign_id: str
+
+ENTITYEXTRACTOR OUTPUT:
+entities: List[dict] = [
+  {
+    "entity_name": str,
+    "entity_type": str,  // "location", "organization", etc.
+    "description": str,
+    "extraction_context": str,
+    "tags": List[str],
+    "status": str = "extracted",
+    "source_content_type": str = "world_overview"
+  }
+]
+
+CONTENTCHUNKER INPUT:
+content: str
+content_type: str = "world_overview"
+tags: List[str]
+entities: List[dict]
+
+CONTENTCHUNKER OUTPUT:
+chunks: List[dict] = [
+  {
+    "index": int,
+    "text": str,
+    "topic": str,
+    "word_count": int,
+    "chunk_type": str,
+    "content_type": str = "world_overview",
+    "tags": List[str],
+    "entities_mentioned": List[dict],
+    "embedding_metadata": dict
+  }
+]
+
+================================================================
+
+CATEGORY 2: "magic_system" → "magic_system"
+--------------------------------------------
+
+INPUT:
+section_key: str = "magic_system"
+section_data: dict = {
+  "commonality": str,
+  "mechanics": str,
+  "limitations": str,
+  "sources": str,
+  "magic_level": str
+}
+
+NARRATIVE EXTRACTION:
+source_field: "mechanics"
+narrative_content: str
+
+TAGGENATOR INPUT:
+content: str
+content_type: str = "magic_system"
+campaign_id: str
+metadata: dict = {commonality, sources, magic_level, limitations}
+
+TAGGENATOR OUTPUT:
+tags: List[str] = ["magic_system", magic_type_tags, component_tags, level_tags]
+
+ENTITYEXTRACTOR INPUT:
+content: str
+content_type: str = "magic_system"
+existing_tags: List[str]
+campaign_id: str
+
+ENTITYEXTRACTOR OUTPUT:
+entities: List[dict] = [
+  {
+    "entity_name": str,
+    "entity_type": str,  // "artifact", "location", "organization"
+    "description": str,
+    "extraction_context": str,
+    "tags": List[str],
+    "status": str = "extracted",
+    "source_content_type": str = "magic_system"
+  }
+]
+
+CONTENTCHUNKER INPUT:
+content: str
+content_type: str = "magic_system"
+tags: List[str]
+entities: List[dict]
+
+CONTENTCHUNKER OUTPUT:
+chunks: List[dict] = [
+  {
+    "index": int,
+    "text": str,
+    "topic": str,
+    "word_count": int,
+    "chunk_type": str,
+    "content_type": str = "magic_system",
+    "tags": List[str],
+    "entities_mentioned": List[dict],
+    "embedding_metadata": dict
+  }
+]
+
+================================================================
+
+CATEGORY 3: "pantheon" → "pantheon"
+------------------------------------
+
+INPUT:
+section_key: str = "pantheon"
+section_data: dict = {
+  "structure": str,
+  "major_deities": List[str],
+  "religious_conflicts": List[str],
+  "divine_influence": str
+}
+
+NARRATIVE EXTRACTION:
+source_field: "structure"
+narrative_content: str
+
+TAGGENATOR INPUT:
+content: str
+content_type: str = "pantheon"
+campaign_id: str
+metadata: dict = {major_deities, structure, religious_conflicts}
+
+TAGGENATOR OUTPUT:
+tags: List[str] = ["pantheon", deity_names, conflict_tags, religious_tags]
+
+ENTITYEXTRACTOR INPUT:
+content: str
+content_type: str = "pantheon"
+existing_tags: List[str]
+campaign_id: str
+
+ENTITYEXTRACTOR OUTPUT:
+entities: List[dict] = [
+  {
+    "entity_name": str,
+    "entity_type": str,  // "deity", "organization", "threat", "location"
+    "description": str,
+    "extraction_context": str,
+    "tags": List[str],
+    "status": str = "extracted",
+    "source_content_type": str = "pantheon"
+  }
+]
+
+CONTENTCHUNKER INPUT:
+content: str
+content_type: str = "pantheon"
+tags: List[str]
+entities: List[dict]
+
+CONTENTCHUNKER OUTPUT:
+chunks: List[dict] = [
+  {
+    "index": int,
+    "text": str,
+    "topic": str,
+    "word_count": int,
+    "chunk_type": str,
+    "content_type": str = "pantheon",
+    "tags": List[str],
+    "entities_mentioned": List[dict],
+    "embedding_metadata": dict
+  }
+]
+
+================================================================
+
+CATEGORY 4: "global_threats" → "global_threats"
+------------------------------------------------
+
+INPUT:
+section_key: str = "global_threats"
+section_data: List[dict] = [
+  {
+    "primary_threat": str,
+    "threat_details": str,
+    "world_impact": str,
+    "resistance_forces": str
+  }
+]
+
+NARRATIVE EXTRACTION:
+source_fields: threat_details + world_impact + primary_threat (combined)
+narrative_content: str
+
+TAGGENATOR INPUT:
+content: str
+content_type: str = "global_threats"
+campaign_id: str
+metadata: dict = {primary_threat, world_impact, resistance_forces}
+
+TAGGENATOR OUTPUT:
+tags: List[str] = ["global_threats", threat_names, impact_tags, resistance_tags]
+
+ENTITYEXTRACTOR INPUT:
+content: str
+content_type: str = "global_threats"
+existing_tags: List[str]
+campaign_id: str
+
+ENTITYEXTRACTOR OUTPUT:
+entities: List[dict] = [
+  {
+    "entity_name": str,
+    "entity_type": str,  // "threat", "location", "organization", "npc"
+    "description": str,
+    "extraction_context": str,
+    "tags": List[str],
+    "status": str = "extracted",
+    "source_content_type": str = "global_threats"
+  }
+]
+
+CONTENTCHUNKER INPUT:
+content: str
+content_type: str = "global_threats"
+tags: List[str]
+entities: List[dict]
+
+CONTENTCHUNKER OUTPUT:
+chunks: List[dict] = [
+  {
+    "index": int,
+    "text": str,
+    "topic": str,
+    "word_count": int,
+    "chunk_type": str,
+    "content_type": str = "global_threats",
+    "tags": List[str],
+    "entities_mentioned": List[dict],
+    "embedding_metadata": dict
+  }
+]
+
+================================================================
+
+CATEGORY 5: "size" → "world_scale"
+-----------------------------------
+
+INPUT:
+section_key: str = "size"
+section_data: dict = {
+  "scope": str,
+  "description": str,
+  "region_count": int,
+  "major_city_count": int,
+  "settlement_count": int
+}
+
+NARRATIVE EXTRACTION:
+source_field: "description"
+narrative_content: str
+
+TAGGENATOR INPUT:
+content: str
+content_type: str = "world_scale"
+campaign_id: str
+metadata: dict = {scope, region_count, major_city_count}
+
+TAGGENATOR OUTPUT:
+tags: List[str] = ["world_scale", scope_tags, size_tags, geographic_tags]
+
+ENTITYEXTRACTOR INPUT:
+content: str
+content_type: str = "world_scale"
+existing_tags: List[str]
+campaign_id: str
+
+ENTITYEXTRACTOR OUTPUT:
+entities: List[dict] = [
+  {
+    "entity_name": str,
+    "entity_type": str,  // "location", "organization"
+    "description": str,
+    "extraction_context": str,
+    "tags": List[str],
+    "status": str = "extracted",
+    "source_content_type": str = "world_scale"
+  }
+]
+
+CONTENTCHUNKER INPUT:
+content: str
+content_type: str = "world_scale"
+tags: List[str]
+entities: List[dict]
+
+CONTENTCHUNKER OUTPUT:
+chunks: List[dict] = [
+  {
+    "index": int,
+    "text": str,
+    "topic": str,
+    "word_count": int,
+    "chunk_type": str,
+    "content_type": str = "world_scale",
+    "tags": List[str],
+    "entities_mentioned": List[dict],
+    "embedding_metadata": dict
+  }
+]
+
+================================================================
+
+FINAL ORCHESTRATOR ASSEMBLY (for each category)
+================================================
+
+CONTENTPROCESSOR FINAL OUTPUT:
+processed_section: dict = {
+  "section_key": str,           // "pantheon", "magic_system", etc.
+  "content_type": str,          // "pantheon", "magic_system", etc.
+  "source_type": str = "universe_builder",
+  "title": str,                 // Generated title
+  "narrative_content": str,     // Extracted narrative text
+  "original_metadata": dict,    // Original JSON section
+  "tags": List[str],           // FROM TagGenerator
+  "entities": List[dict],      // FROM EntityExtractor
+  "chunks": List[dict]         // FROM ContentChunker
+}
+
+ALL SECTIONS COMBINED:
+processed_sections: List[dict] = [world_overview, magic_system, pantheon, global_threats, world_scale]
+
+DATABASE SAVE INPUT:
+campaign_id: str
+processed_sections: List[dict]
+world_name: str 

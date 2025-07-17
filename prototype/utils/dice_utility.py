@@ -1,11 +1,11 @@
 #dice_utility.py
 
-import os
+
 import json
 import random
 from openai import OpenAI
 from dotenv import load_dotenv
-from .debug_util import debug_log
+from debug.debug_util import debug_log
 load_dotenv()
 client = OpenAI()
 
