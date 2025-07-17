@@ -1,0 +1,718 @@
+{
+  "world_id": "393b74e5-ba79-43fa-8da3-dd427dec8d72",
+  "campaign_id": "adbed08d-d444-4adf-bbef-739d84a07069",
+  "universe_data": {
+    "world_info": {
+      "world_name": "Eldoria",
+      "world_description": "Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. This small continent is divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land. These kingdoms rose from the ashes of a forgotten age, tethered together by a shared history and the looming shadow of an ancient evil threatening to awaken.",
+      "theme_description": "Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness. It is a land of soaring citadels and enchanted forests, where the echoes of old gods still whisper in sacred groves, and destiny calls from the stars.",
+      "theme_list": "Magic and Mystery, Heroic Journeys, Ancient Evils, Divine Intervention",
+      "natural_laws": "In Eldoria, reality is intertwined with the magical and the mundane. The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts. The presence of these lines creates areas of wild magic where reality can be unpredictable, and the boundaries between the material world and the other planes are thin.",
+      "custom_details": "This setting is designed to evoke the classic excitement of a fantasy adventure, where new heroes write their legends amidst ancient ruins and mythical beasts."
+    },
+    "magic_system": {
+      "commonality": "Magic is woven into the daily life of Eldoria's inhabitants. In every town, a wizard or healer can be found, their skills essential to the community's well-being, whether through crafting potions, offering blessings, or protecting against dark forces.",
+      "mechanics": "Magic in Eldoria is cast through incantations and rituals, drawing on the ambient power of ley lines or from the wielder's own spirit. Spells are crafted through a combination of spoken word and gestural motions, with more complex spells requiring rare components or celestial alignments.",
+      "limitations": "The use of magic is bound by the user's knowledge, training, and the availability of magical energy. Overuse can exhaust the caster, leading to physical and mental fatigue or unintended magical backlash.",
+      "sources": "Magic emanates primarily from the ley lines that crisscross Eldoria, as well as from celestial bodies that enhance magical power during certain lunar phases or celestial events. Artifacts from the ancient world also serve as potent sources of magical energy.",
+      "magic_level": "High"
+    },
+    "pantheon": {
+      "structure": "The pantheon of Eldoria consists of multiple deities, each presiding over distinct domains such as war, nature, the sea, and love. Temples and shrines dedicated to these gods are scattered across the land, standing not only as places of worship but as centers for community gatherings.",
+      "major_deities": [
+        "Althar, God of Knowledge",
+        "Myris, Goddess of Nature",
+        "Zyron, God of War",
+        "Lira, Goddess of Love"
+      ],
+      "religious_conflicts": [
+        "The Cult of Zyron seeks to impose martial law across the kingdoms, clashing with the peaceful teachings of Myris' druids.",
+        "Followers of Lira struggle against the rigid doctrines of Althar's clergy, promoting emotion and passion over cold logic."
+      ],
+      "divine_influence": "The gods of Eldoria are known to be active, often intervening in mortal affairs through visions, omens, or direct influence, ensuring their will is enacted by chosen champions."
+    },
+    "global_threats": [
+      {
+        "primary_threat": "The Awakening of Malakar",
+        "threat_details": "Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom. Sealed away by the gods during the dawn of time, its prison weakens as ancient seals crumble. This malevolent force seeks to reclaim the world in shadow, rallying dark creatures and corrupted souls to its cause.",
+        "world_impact": "Fear grips the land as nightmarish creatures emerge from the shadows, villages are razed, and the skies darken with ominous portents. Communities fortify their defenses, while whispers of doom spread, causing panic and distrust among neighboring states.",
+        "resistance_forces": "The Order of the Silver Light, a coalition of paladins, mages, and common folk, rises to confront Malakar's minions. Heroes, both new and old, gather under their banner, seeking to rediscover lost knowledge and rekindle ancient alliances."
+      }
+    ],
+    "size": {
+      "scope": "regional",
+      "description": "Eldoria is a small but diverse continent where three distinct kingdoms exist in a delicate balance of power and diplomacy. The landscape is dotted with bustling cities and quaint villages, where diverse cultures and histories intertwine.",
+      "region_count": 3,
+      "major_city_count": 4,
+      "settlement_count": 18
+    }
+  },
+  "processed_sections": [
+    {
+      "section_key": "world_info",
+      "content_type": "world_overview",
+      "source_type": "universe_builder",
+      "title": "World Overview - Eldoria",
+      "narrative_content": "Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. This small continent is divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land. These kingdoms rose from the ashes of a forgotten age, tethered together by a shared history and the looming shadow of an ancient evil threatening to awaken. Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness. It is a land of soaring citadels and enchanted forests, where the echoes of old gods still whisper in sacred groves, and destiny calls from the stars. In Eldoria, reality is intertwined with the magical and the mundane. The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts. The presence of these lines creates areas of wild magic where reality can be unpredictable, and the boundaries between the material world and the other planes are thin. This setting is designed to evoke the classic excitement of a fantasy adventure, where new heroes write their legends amidst ancient ruins and mythical beasts.",
+      "original_metadata": {
+        "world_name": "Eldoria",
+        "world_description": "Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. This small continent is divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land. These kingdoms rose from the ashes of a forgotten age, tethered together by a shared history and the looming shadow of an ancient evil threatening to awaken.",
+        "theme_description": "Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness. It is a land of soaring citadels and enchanted forests, where the echoes of old gods still whisper in sacred groves, and destiny calls from the stars.",
+        "theme_list": "Magic and Mystery, Heroic Journeys, Ancient Evils, Divine Intervention",
+        "natural_laws": "In Eldoria, reality is intertwined with the magical and the mundane. The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts. The presence of these lines creates areas of wild magic where reality can be unpredictable, and the boundaries between the material world and the other planes are thin.",
+        "custom_details": "This setting is designed to evoke the classic excitement of a fantasy adventure, where new heroes write their legends amidst ancient ruins and mythical beasts."
+      },
+      "content_id": "7c32481d-1bfc-47a0-9c75-f952ef49c096",
+      "tags": [
+        "universe_content",
+        "eldoria",
+        "high_fantasy",
+        "magic_system",
+        "ley_lines",
+        "three_kingdoms",
+        "ancient_evil",
+        "wild_magic",
+        "arcane_arts",
+        "enchanted_forests",
+        "soaring_citadels",
+        "old_gods",
+        "destiny_calls",
+        "magical_reality",
+        "primordial_darkness"
+      ]
+    },
+    {
+      "section_key": "magic_system",
+      "content_type": "magic_system",
+      "source_type": "universe_builder",
+      "title": "Magic System",
+      "narrative_content": "Magic in Eldoria is cast through incantations and rituals, drawing on the ambient power of ley lines or from the wielder's own spirit. Spells are crafted through a combination of spoken word and gestural motions, with more complex spells requiring rare components or celestial alignments. Magic is woven into the daily life of Eldoria's inhabitants. In every town, a wizard or healer can be found, their skills essential to the community's well-being, whether through crafting potions, offering blessings, or protecting against dark forces. The use of magic is bound by the user's knowledge, training, and the availability of magical energy. Overuse can exhaust the caster, leading to physical and mental fatigue or unintended magical backlash. Magic emanates primarily from the ley lines that crisscross Eldoria, as well as from celestial bodies that enhance magical power during certain lunar phases or celestial events. Artifacts from the ancient world also serve as potent sources of magical energy.",
+      "original_metadata": {
+        "commonality": "Magic is woven into the daily life of Eldoria's inhabitants. In every town, a wizard or healer can be found, their skills essential to the community's well-being, whether through crafting potions, offering blessings, or protecting against dark forces.",
+        "mechanics": "Magic in Eldoria is cast through incantations and rituals, drawing on the ambient power of ley lines or from the wielder's own spirit. Spells are crafted through a combination of spoken word and gestural motions, with more complex spells requiring rare components or celestial alignments.",
+        "limitations": "The use of magic is bound by the user's knowledge, training, and the availability of magical energy. Overuse can exhaust the caster, leading to physical and mental fatigue or unintended magical backlash.",
+        "sources": "Magic emanates primarily from the ley lines that crisscross Eldoria, as well as from celestial bodies that enhance magical power during certain lunar phases or celestial events. Artifacts from the ancient world also serve as potent sources of magical energy.",
+        "magic_level": "High"
+      },
+      "content_id": "ce28b641-a68c-4199-9c6a-b486139b3180",
+      "tags": [
+        "universe_content",
+        "eldoria",
+        "high_fantasy",
+        "magic_system",
+        "ley_lines",
+        "three_kingdoms",
+        "ancient_evil",
+        "wild_magic",
+        "arcane_arts",
+        "enchanted_forests",
+        "soaring_citadels",
+        "old_gods",
+        "destiny_calls",
+        "magical_reality",
+        "primordial_darkness"
+      ]
+    },
+    {
+      "section_key": "pantheon",
+      "content_type": "pantheon",
+      "source_type": "universe_builder",
+      "title": "Divine Pantheon",
+      "narrative_content": "The pantheon of Eldoria consists of multiple deities, each presiding over distinct domains such as war, nature, the sea, and love. Temples and shrines dedicated to these gods are scattered across the land, standing not only as places of worship but as centers for community gatherings. The gods of Eldoria are known to be active, often intervening in mortal affairs through visions, omens, or direct influence, ensuring their will is enacted by chosen champions.",
+      "original_metadata": {
+        "structure": "The pantheon of Eldoria consists of multiple deities, each presiding over distinct domains such as war, nature, the sea, and love. Temples and shrines dedicated to these gods are scattered across the land, standing not only as places of worship but as centers for community gatherings.",
+        "major_deities": [
+          "Althar, God of Knowledge",
+          "Myris, Goddess of Nature",
+          "Zyron, God of War",
+          "Lira, Goddess of Love"
+        ],
+        "religious_conflicts": [
+          "The Cult of Zyron seeks to impose martial law across the kingdoms, clashing with the peaceful teachings of Myris' druids.",
+          "Followers of Lira struggle against the rigid doctrines of Althar's clergy, promoting emotion and passion over cold logic."
+        ],
+        "divine_influence": "The gods of Eldoria are known to be active, often intervening in mortal affairs through visions, omens, or direct influence, ensuring their will is enacted by chosen champions."
+      },
+      "content_id": "4990041e-8a7c-49b3-b14a-02a6ed0813e7",
+      "tags": [
+        "universe_content",
+        "eldoria",
+        "high_fantasy",
+        "magic_system",
+        "ley_lines",
+        "three_kingdoms",
+        "ancient_evil",
+        "wild_magic",
+        "arcane_arts",
+        "enchanted_forests",
+        "soaring_citadels",
+        "old_gods",
+        "destiny_calls",
+        "magical_reality",
+        "primordial_darkness"
+      ]
+    },
+    {
+      "section_key": "global_threats",
+      "content_type": "global_threats",
+      "source_type": "universe_builder",
+      "title": "Global Threats",
+      "narrative_content": "Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom. Sealed away by the gods during the dawn of time, its prison weakens as ancient seals crumble. This malevolent force seeks to reclaim the world in shadow, rallying dark creatures and corrupted souls to its cause. Fear grips the land as nightmarish creatures emerge from the shadows, villages are razed, and the skies darken with ominous portents. Communities fortify their defenses, while whispers of doom spread, causing panic and distrust among neighboring states. Known as: The Awakening of Malakar",
+      "original_metadata": [
+        {
+          "primary_threat": "The Awakening of Malakar",
+          "threat_details": "Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom. Sealed away by the gods during the dawn of time, its prison weakens as ancient seals crumble. This malevolent force seeks to reclaim the world in shadow, rallying dark creatures and corrupted souls to its cause.",
+          "world_impact": "Fear grips the land as nightmarish creatures emerge from the shadows, villages are razed, and the skies darken with ominous portents. Communities fortify their defenses, while whispers of doom spread, causing panic and distrust among neighboring states.",
+          "resistance_forces": "The Order of the Silver Light, a coalition of paladins, mages, and common folk, rises to confront Malakar's minions. Heroes, both new and old, gather under their banner, seeking to rediscover lost knowledge and rekindle ancient alliances."
+        }
+      ],
+      "content_id": "62e87b5a-8c9e-43da-a206-b80e4d71e07a",
+      "tags": [
+        "universe_content",
+        "eldoria",
+        "high_fantasy",
+        "magic_system",
+        "ley_lines",
+        "three_kingdoms",
+        "ancient_evil",
+        "wild_magic",
+        "arcane_arts",
+        "enchanted_forests",
+        "soaring_citadels",
+        "old_gods",
+        "destiny_calls",
+        "magical_reality",
+        "primordial_darkness"
+      ]
+    },
+    {
+      "section_key": "size",
+      "content_type": "world_scale",
+      "source_type": "universe_builder",
+      "title": "World Scale",
+      "narrative_content": "Eldoria is a small but diverse continent where three distinct kingdoms exist in a delicate balance of power and diplomacy. The landscape is dotted with bustling cities and quaint villages, where diverse cultures and histories intertwine.",
+      "original_metadata": {
+        "scope": "regional",
+        "description": "Eldoria is a small but diverse continent where three distinct kingdoms exist in a delicate balance of power and diplomacy. The landscape is dotted with bustling cities and quaint villages, where diverse cultures and histories intertwine.",
+        "region_count": 3,
+        "major_city_count": 4,
+        "settlement_count": 18
+      },
+      "content_id": "13683a75-2828-49a1-bee3-f3b584ae7056",
+      "tags": [
+        "universe_content",
+        "eldoria",
+        "high_fantasy",
+        "magic_system",
+        "ley_lines",
+        "three_kingdoms",
+        "ancient_evil",
+        "wild_magic",
+        "arcane_arts",
+        "enchanted_forests",
+        "soaring_citadels",
+        "old_gods",
+        "destiny_calls",
+        "magical_reality",
+        "primordial_darkness"
+      ]
+    }
+  ],
+  "all_tags": [
+    "universe_content",
+    "eldoria",
+    "high_fantasy",
+    "magic_system",
+    "ley_lines",
+    "three_kingdoms",
+    "ancient_evil",
+    "wild_magic",
+    "arcane_arts",
+    "enchanted_forests",
+    "soaring_citadels",
+    "old_gods",
+    "destiny_calls",
+    "magical_reality",
+    "primordial_darkness"
+  ],
+  "all_entities_grouped": {
+    "npcs": [],
+    "locations": [
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440001",
+        "campaign_id": "adbed08d-d444-4adf-bbef-739d84a07069",
+        "name": "Eldoria",
+        "description": "Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. This small continent is divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land.",
+        "notable_features": "Three powerful kingdoms, ancient ley lines, magical energy",
+        "connections": {
+          "north": "Northern Kingdom",
+          "south": "Southern Kingdom",
+          "west": "Western Kingdom"
+        },
+        "location_type": "continent",
+        "size": "massive",
+        "inhabitants": [
+          "humans",
+          "elves",
+          "dwarves",
+          "various magical creatures"
+        ],
+        "notable_items": [
+          "artifacts from the ancient world"
+        ],
+        "atmosphere": "mysterious",
+        "relationships": [
+          {
+            "target": "Western Kingdom",
+            "type": "contains"
+          },
+          {
+            "target": "Ley Lines",
+            "type": "crisscrosses"
+          }
+        ],
+        "lore": "Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness.",
+        "tags": [
+          "universe_content",
+          "eldoria",
+          "high_fantasy",
+          "three_kingdoms"
+        ],
+        "source_content_type": "universe_content"
+      },
+      {
+        "location_id": "550e8400-e29b-41d4-a716-446655440002",
+        "campaign_id": "adbed08d-d444-4adf-bbef-739d84a07069",
+        "name": "Western Kingdom",
+        "description": "A kingdom in Eldoria where Malakar begins to stir. Known for its rugged mountain ranges and ancient seals that imprison dark forces.",
+        "notable_features": "Rugged mountain ranges, ancient seals",
+        "connections": {
+          "east": "Central Kingdom"
+        },
+        "location_type": "kingdom",
+        "size": "large",
+        "inhabitants": [
+          "humans",
+          "dwarves",
+          "dark creatures"
+        ],
+        "notable_items": [
+          "ancient seals"
+        ],
+        "atmosphere": "ominous",
+        "relationships": [
+          {
+            "target": "Malakar",
+            "type": "contains"
+          },
+          {
+            "target": "Eldoria",
+            "type": "part_of"
+          }
+        ],
+        "lore": "This kingdom is a key location in the struggle against Malakar, with its ancient seals weakening and dark forces emerging.",
+        "tags": [
+          "eldoria",
+          "three_kingdoms"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "organizations": [],
+    "artifacts": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440003",
+        "campaign_id": "adbed08d-d444-4adf-bbef-739d84a07069",
+        "entity_type": "artifact",
+        "entity_name": "Ley Lines",
+        "description": "Invisible veins of power that channel arcane currents across Eldoria. They can be tapped by those skilled in the arcane arts.",
+        "artifact_type": "wondrous_item",
+        "rarity": "legendary",
+        "properties": [
+          "enhances magical abilities",
+          "creates areas of wild magic"
+        ],
+        "requirements": "Arcane knowledge to tap into",
+        "history": "Believed to be remnants of the world's creation, these lines have been used by powerful wizards throughout history.",
+        "relationships": [
+          {
+            "target": "Eldoria",
+            "type": "crisscrosses"
+          }
+        ],
+        "status": "extracted",
+        "tags": [
+          "magic_system",
+          "ley_lines",
+          "arcane_arts"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "deities": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440004",
+        "campaign_id": "adbed08d-d444-4adf-bbef-739d84a07069",
+        "entity_type": "deity",
+        "entity_name": "Malakar",
+        "description": "A dark entity from the world's primal past, sealed away by the gods. It seeks to reclaim the world in shadow.",
+        "artifact_type": "threat",
+        "rarity": "unique",
+        "properties": [
+          "primordial darkness",
+          "commands dark creatures"
+        ],
+        "requirements": "Sealed by ancient magic",
+        "history": "Sealed away by the gods during the dawn of time, its prison weakens as ancient seals crumble.",
+        "relationships": [
+          {
+            "target": "Western Kingdom",
+            "type": "located_in"
+          },
+          {
+            "target": "Old Gods",
+            "type": "sealed_by"
+          }
+        ],
+        "status": "stirring",
+        "tags": [
+          "ancient_evil",
+          "primordial_darkness",
+          "threat"
+        ],
+        "source_content_type": "universe_content"
+      },
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440005",
+        "campaign_id": "adbed08d-d444-4adf-bbef-739d84a07069",
+        "entity_type": "deity",
+        "entity_name": "Old Gods",
+        "description": "Deities whose echoes still whisper in sacred groves. They are known to have sealed Malakar away.",
+        "artifact_type": "deity",
+        "rarity": "unique",
+        "properties": [
+          "divine magic",
+          "influence over nature"
+        ],
+        "requirements": "Worshipped in sacred groves",
+        "history": "Ancient deities that have shaped the world and continue to influence it through subtle means.",
+        "relationships": [
+          {
+            "target": "Malakar",
+            "type": "sealed"
+          }
+        ],
+        "status": "active",
+        "tags": [
+          "old_gods",
+          "divine_magic"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "threats": [],
+    "events": [
+      {
+        "entity_id": "550e8400-e29b-41d4-a716-446655440006",
+        "campaign_id": "adbed08d-d444-4adf-bbef-739d84a07069",
+        "entity_type": "event",
+        "entity_name": "The Awakening of Malakar",
+        "description": "The event where Malakar begins to stir and threaten the world.",
+        "artifact_type": "event",
+        "rarity": "unique",
+        "properties": [
+          "dark forces emerging",
+          "seals weakening"
+        ],
+        "requirements": "Ancient seals failing",
+        "history": "As ancient seals crumble, Malakar begins to stir, rallying dark creatures and corrupted souls.",
+        "relationships": [
+          {
+            "target": "Malakar",
+            "type": "involves"
+          },
+          {
+            "target": "Western Kingdom",
+            "type": "occurs_in"
+          }
+        ],
+        "status": "ongoing",
+        "tags": [
+          "ancient_evil",
+          "primordial_darkness",
+          "threat"
+        ],
+        "source_content_type": "universe_content"
+      }
+    ],
+    "items": []
+  },
+  "all_chunks": [
+    {
+      "index": 0,
+      "text": "Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. Eldoria is a small continent divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land. These kingdoms rose from the ashes of a forgotten age, tethered together by a shared history and the looming shadow of an ancient evil threatening to awaken. Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness. Eldoria is a land of soaring citadels and enchanted forests, where the echoes of old gods still whisper in sacred groves, and destiny calls from the stars. In Eldoria, reality is intertwined with the magical and the mundane. The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts.",
+      "topic": "Introduction to Eldoria and its magical landscape",
+      "word_count": 159,
+      "chunk_type": "descriptive",
+      "content_type": "universe_content",
+      "tags": [
+        "high_fantasy",
+        "ancient_evil",
+        "enchanted_forests",
+        "old_gods",
+        "magic_system",
+        "arcane_arts",
+        "ley_lines",
+        "three_kingdoms",
+        "magical_reality",
+        "primordial_darkness",
+        "wild_magic",
+        "eldoria",
+        "soaring_citadels",
+        "destiny_calls",
+        "universe_content"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Introduction to Eldoria and its magical landscape",
+        "chunk_index": 0,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 1,
+      "text": "The presence of ley lines creates areas of wild magic where reality can be unpredictable, and the boundaries between the material world and the other planes are thin. This setting is designed to evoke the classic excitement of a fantasy adventure, where new heroes write their legends amidst ancient ruins and mythical beasts. Magic in Eldoria is cast through incantations and rituals, drawing on the ambient power of ley lines or from the wielder's own spirit. Spells are crafted through a combination of spoken word and gestural motions, with more complex spells requiring rare components or celestial alignments. Magic is woven into the daily life of Eldoria's inhabitants. In every town, a wizard or healer can be found, their skills essential to the community's well-being, whether through crafting potions, offering blessings, or protecting against dark forces.",
+      "topic": "Magic system and its role in Eldoria",
+      "word_count": 136,
+      "chunk_type": "mechanical",
+      "content_type": "universe_content",
+      "tags": [
+        "high_fantasy",
+        "ancient_evil",
+        "enchanted_forests",
+        "old_gods",
+        "magic_system",
+        "arcane_arts",
+        "ley_lines",
+        "three_kingdoms",
+        "magical_reality",
+        "primordial_darkness",
+        "wild_magic",
+        "eldoria",
+        "soaring_citadels",
+        "destiny_calls",
+        "universe_content"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Magic system and its role in Eldoria",
+        "chunk_index": 1,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 2,
+      "text": "The use of magic is bound by the user's knowledge, training, and the availability of magical energy. Overuse can exhaust the caster, leading to physical and mental fatigue or unintended magical backlash. Magic emanates primarily from the ley lines that crisscross Eldoria, as well as from celestial bodies that enhance magical power during certain lunar phases or celestial events. Artifacts from the ancient world also serve as potent sources of magical energy. The pantheon of Eldoria consists of multiple deities, each presiding over distinct domains such as war, nature, the sea, and love. Temples and shrines dedicated to these gods are scattered across the land, standing not only as places of worship but as centers for community gatherings.",
+      "topic": "Magic limitations and the pantheon of Eldoria",
+      "word_count": 118,
+      "chunk_type": "entity_focused",
+      "content_type": "universe_content",
+      "tags": [
+        "high_fantasy",
+        "ancient_evil",
+        "enchanted_forests",
+        "old_gods",
+        "magic_system",
+        "arcane_arts",
+        "ley_lines",
+        "three_kingdoms",
+        "magical_reality",
+        "primordial_darkness",
+        "wild_magic",
+        "eldoria",
+        "soaring_citadels",
+        "destiny_calls",
+        "universe_content"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Magic limitations and the pantheon of Eldoria",
+        "chunk_index": 2,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 3,
+      "text": "The gods of Eldoria are known to be active, often intervening in mortal affairs through visions, omens, or direct influence, ensuring their will is enacted by chosen champions. Malakar, a dark entity from Eldoria's primal past, begins to stir beneath the mountain ranges of the Western Kingdom. Malakar was sealed away by the gods during the dawn of time, but Malakar's prison weakens as ancient seals crumble. This malevolent force seeks to reclaim the world in shadow, rallying dark creatures and corrupted souls to Malakar's cause. Fear grips the land as nightmarish creatures emerge from the shadows, villages are razed, and the skies darken with ominous portents.",
+      "topic": "The threat of Malakar and divine intervention",
+      "word_count": 107,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "high_fantasy",
+        "ancient_evil",
+        "enchanted_forests",
+        "old_gods",
+        "magic_system",
+        "arcane_arts",
+        "ley_lines",
+        "three_kingdoms",
+        "magical_reality",
+        "primordial_darkness",
+        "wild_magic",
+        "eldoria",
+        "soaring_citadels",
+        "destiny_calls",
+        "universe_content"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "The threat of Malakar and divine intervention",
+        "chunk_index": 3,
+        "entity_names": []
+      }
+    },
+    {
+      "index": 4,
+      "text": "Communities fortify their defenses, while whispers of doom spread, causing panic and distrust among neighboring states. Known as The Awakening of Malakar, Eldoria is a small but diverse continent where three distinct kingdoms exist in a delicate balance of power and diplomacy. The landscape is dotted with bustling cities and quaint villages, where diverse cultures and histories intertwine. The kingdoms of Eldoria must navigate the rising threat of Malakar while maintaining their own internal stability and alliances.",
+      "topic": "Community response to Malakar and kingdom dynamics",
+      "word_count": 77,
+      "chunk_type": "narrative",
+      "content_type": "universe_content",
+      "tags": [
+        "high_fantasy",
+        "ancient_evil",
+        "enchanted_forests",
+        "old_gods",
+        "magic_system",
+        "arcane_arts",
+        "ley_lines",
+        "three_kingdoms",
+        "magical_reality",
+        "primordial_darkness",
+        "wild_magic",
+        "eldoria",
+        "soaring_citadels",
+        "destiny_calls",
+        "universe_content"
+      ],
+      "entities_mentioned": [],
+      "embedding_metadata": {
+        "content_type": "universe_content",
+        "chunk_topic": "Community response to Malakar and kingdom dynamics",
+        "chunk_index": 4,
+        "entity_names": []
+      }
+    }
+  ],
+  "combined_narrative": "Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. This small continent is divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land. These kingdoms rose from the ashes of a forgotten age, tethered together by a shared history and the looming shadow of an ancient evil threatening to awaken. Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness. It is a land of soaring citadels and enchanted forests, where the echoes of old gods still whisper in sacred groves, and destiny calls from the stars. In Eldoria, reality is intertwined with the magical and the mundane. The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts. The presence of these lines creates areas of wild magic where reality can be unpredictable, and the boundaries between the material world and the other planes are thin. This setting is designed to evoke the classic excitement of a fantasy adventure, where new heroes write their legends amidst ancient ruins and mythical beasts. Magic in Eldoria is cast through incantations and rituals, drawing on the ambient power of ley lines or from the wielder's own spirit. Spells are crafted through a combination of spoken word and gestural motions, with more complex spells requiring rare components or celestial alignments. Magic is woven into the daily life of Eldoria's inhabitants. In every town, a wizard or healer can be found, their skills essential to the community's well-being, whether through crafting potions, offering blessings, or protecting against dark forces. The use of magic is bound by the user's knowledge, training, and the availability of magical energy. Overuse can exhaust the caster, leading to physical and mental fatigue or unintended magical backlash. Magic emanates primarily from the ley lines that crisscross Eldoria, as well as from celestial bodies that enhance magical power during certain lunar phases or celestial events. Artifacts from the ancient world also serve as potent sources of magical energy. The pantheon of Eldoria consists of multiple deities, each presiding over distinct domains such as war, nature, the sea, and love. Temples and shrines dedicated to these gods are scattered across the land, standing not only as places of worship but as centers for community gatherings. The gods of Eldoria are known to be active, often intervening in mortal affairs through visions, omens, or direct influence, ensuring their will is enacted by chosen champions. Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom. Sealed away by the gods during the dawn of time, its prison weakens as ancient seals crumble. This malevolent force seeks to reclaim the world in shadow, rallying dark creatures and corrupted souls to its cause. Fear grips the land as nightmarish creatures emerge from the shadows, villages are razed, and the skies darken with ominous portents. Communities fortify their defenses, while whispers of doom spread, causing panic and distrust among neighboring states. Known as: The Awakening of Malakar Eldoria is a small but diverse continent where three distinct kingdoms exist in a delicate balance of power and diplomacy. The landscape is dotted with bustling cities and quaint villages, where diverse cultures and histories intertwine.",
+  "raw_tag_response": {
+    "model": "gpt-4-0613",
+    "usage": {
+      "completion_tokens": 84,
+      "prompt_tokens": 469,
+      "total_tokens": 553,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\"tags\": [\"universe_content\", \"eldoria\", \"high_fantasy\", \"magic_system\", \"ley_lines\", \"three_kingdoms\", \"ancient_evil\", \"wild_magic\", \"arcane_arts\", \"enchanted_forests\", \"soaring_citadels\", \"old_gods\", \"destiny_calls\", \"magical_reality\", \"primordial_darkness\"]}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": [],
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null
+        }
+      }
+    ],
+    "raw_content": "{\"tags\": [\"universe_content\", \"eldoria\", \"high_fantasy\", \"magic_system\", \"ley_lines\", \"three_kingdoms\", \"ancient_evil\", \"wild_magic\", \"arcane_arts\", \"enchanted_forests\", \"soaring_citadels\", \"old_gods\", \"destiny_calls\", \"magical_reality\", \"primordial_darkness\"]}"
+  },
+  "raw_entity_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 544,
+      "prompt_tokens": 1327,
+      "total_tokens": 1871,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n    \"entities\": [\n        {\n            \"entity_name\": \"Eldoria\",\n            \"entity_type\": \"location\",\n            \"description\": \"A realm steeped in mysticism and legend, divided among three powerful kingdoms.\",\n            \"extraction_context\": \"Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy.\",\n            \"suggested_tags\": [\"universe_content\", \"eldoria\", \"high_fantasy\", \"three_kingdoms\"]\n        },\n        {\n            \"entity_name\": \"Malakar\",\n            \"entity_type\": \"deity\",\n            \"description\": \"A dark entity from the world's primal past, sealed away by the gods.\",\n            \"extraction_context\": \"Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom.\",\n            \"suggested_tags\": [\"ancient_evil\", \"primordial_darkness\", \"threat\"]\n        },\n        {\n            \"entity_name\": \"The Awakening of Malakar\",\n            \"entity_type\": \"event\",\n            \"description\": \"The event where Malakar begins to stir and threaten the world.\",\n            \"extraction_context\": \"Known as: The Awakening of Malakar\",\n            \"suggested_tags\": [\"ancient_evil\", \"primordial_darkness\", \"threat\"]\n        },\n        {\n            \"entity_name\": \"Western Kingdom\",\n            \"entity_type\": \"location\",\n            \"description\": \"A kingdom in Eldoria where Malakar begins to stir.\",\n            \"extraction_context\": \"Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom.\",\n            \"suggested_tags\": [\"eldoria\", \"three_kingdoms\"]\n        },\n        {\n            \"entity_name\": \"Ley Lines\",\n            \"entity_type\": \"artifact\",\n            \"description\": \"Invisible veins of power that channel arcane currents across Eldoria.\",\n            \"extraction_context\": \"The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts.\",\n            \"suggested_tags\": [\"magic_system\", \"ley_lines\", \"arcane_arts\"]\n        },\n        {\n            \"entity_name\": \"Old Gods\",\n            \"entity_type\": \"deity\",\n            \"description\": \"Deities whose echoes still whisper in sacred groves.\",\n            \"extraction_context\": \"where the echoes of old gods still whisper in sacred groves\",\n            \"suggested_tags\": [\"old_gods\", \"divine_magic\"]\n        }\n    ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": [],
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null
+        }
+      }
+    ],
+    "raw_content": "{\n    \"entities\": [\n        {\n            \"entity_name\": \"Eldoria\",\n            \"entity_type\": \"location\",\n            \"description\": \"A realm steeped in mysticism and legend, divided among three powerful kingdoms.\",\n            \"extraction_context\": \"Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy.\",\n            \"suggested_tags\": [\"universe_content\", \"eldoria\", \"high_fantasy\", \"three_kingdoms\"]\n        },\n        {\n            \"entity_name\": \"Malakar\",\n            \"entity_type\": \"deity\",\n            \"description\": \"A dark entity from the world's primal past, sealed away by the gods.\",\n            \"extraction_context\": \"Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom.\",\n            \"suggested_tags\": [\"ancient_evil\", \"primordial_darkness\", \"threat\"]\n        },\n        {\n            \"entity_name\": \"The Awakening of Malakar\",\n            \"entity_type\": \"event\",\n            \"description\": \"The event where Malakar begins to stir and threaten the world.\",\n            \"extraction_context\": \"Known as: The Awakening of Malakar\",\n            \"suggested_tags\": [\"ancient_evil\", \"primordial_darkness\", \"threat\"]\n        },\n        {\n            \"entity_name\": \"Western Kingdom\",\n            \"entity_type\": \"location\",\n            \"description\": \"A kingdom in Eldoria where Malakar begins to stir.\",\n            \"extraction_context\": \"Malakar, a dark entity from the world's primal past, begins to stir beneath the mountain ranges of the Western Kingdom.\",\n            \"suggested_tags\": [\"eldoria\", \"three_kingdoms\"]\n        },\n        {\n            \"entity_name\": \"Ley Lines\",\n            \"entity_type\": \"artifact\",\n            \"description\": \"Invisible veins of power that channel arcane currents across Eldoria.\",\n            \"extraction_context\": \"The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts.\",\n            \"suggested_tags\": [\"magic_system\", \"ley_lines\", \"arcane_arts\"]\n        },\n        {\n            \"entity_name\": \"Old Gods\",\n            \"entity_type\": \"deity\",\n            \"description\": \"Deities whose echoes still whisper in sacred groves.\",\n            \"extraction_context\": \"where the echoes of old gods still whisper in sacred groves\",\n            \"suggested_tags\": [\"old_gods\", \"divine_magic\"]\n        }\n    ]\n}"
+  },
+  "raw_chunk_response": {
+    "model": "gpt-4o-2024-08-06",
+    "usage": {
+      "completion_tokens": 950,
+      "prompt_tokens": 1139,
+      "total_tokens": 2089,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": 0,
+        "cached_tokens": 0
+      }
+    },
+    "choices": [
+      {
+        "finish_reason": "stop",
+        "index": 0,
+        "logprobs": null,
+        "message": {
+          "content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. Eldoria is a small continent divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land. These kingdoms rose from the ashes of a forgotten age, tethered together by a shared history and the looming shadow of an ancient evil threatening to awaken. Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness. Eldoria is a land of soaring citadels and enchanted forests, where the echoes of old gods still whisper in sacred groves, and destiny calls from the stars. In Eldoria, reality is intertwined with the magical and the mundane. The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts.\",\n      \"topic\": \"Introduction to Eldoria and its magical landscape\",\n      \"word_count\": 180,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"The presence of ley lines creates areas of wild magic where reality can be unpredictable, and the boundaries between the material world and the other planes are thin. This setting is designed to evoke the classic excitement of a fantasy adventure, where new heroes write their legends amidst ancient ruins and mythical beasts. Magic in Eldoria is cast through incantations and rituals, drawing on the ambient power of ley lines or from the wielder's own spirit. Spells are crafted through a combination of spoken word and gestural motions, with more complex spells requiring rare components or celestial alignments. Magic is woven into the daily life of Eldoria's inhabitants. In every town, a wizard or healer can be found, their skills essential to the community's well-being, whether through crafting potions, offering blessings, or protecting against dark forces.\",\n      \"topic\": \"Magic system and its role in Eldoria\",\n      \"word_count\": 220,\n      \"chunk_type\": \"mechanical\"\n    },\n    {\n      \"text\": \"The use of magic is bound by the user's knowledge, training, and the availability of magical energy. Overuse can exhaust the caster, leading to physical and mental fatigue or unintended magical backlash. Magic emanates primarily from the ley lines that crisscross Eldoria, as well as from celestial bodies that enhance magical power during certain lunar phases or celestial events. Artifacts from the ancient world also serve as potent sources of magical energy. The pantheon of Eldoria consists of multiple deities, each presiding over distinct domains such as war, nature, the sea, and love. Temples and shrines dedicated to these gods are scattered across the land, standing not only as places of worship but as centers for community gatherings.\",\n      \"topic\": \"Magic limitations and the pantheon of Eldoria\",\n      \"word_count\": 190,\n      \"chunk_type\": \"entity_focused\"\n    },\n    {\n      \"text\": \"The gods of Eldoria are known to be active, often intervening in mortal affairs through visions, omens, or direct influence, ensuring their will is enacted by chosen champions. Malakar, a dark entity from Eldoria's primal past, begins to stir beneath the mountain ranges of the Western Kingdom. Malakar was sealed away by the gods during the dawn of time, but Malakar's prison weakens as ancient seals crumble. This malevolent force seeks to reclaim the world in shadow, rallying dark creatures and corrupted souls to Malakar's cause. Fear grips the land as nightmarish creatures emerge from the shadows, villages are razed, and the skies darken with ominous portents.\",\n      \"topic\": \"The threat of Malakar and divine intervention\",\n      \"word_count\": 180,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Communities fortify their defenses, while whispers of doom spread, causing panic and distrust among neighboring states. Known as The Awakening of Malakar, Eldoria is a small but diverse continent where three distinct kingdoms exist in a delicate balance of power and diplomacy. The landscape is dotted with bustling cities and quaint villages, where diverse cultures and histories intertwine. The kingdoms of Eldoria must navigate the rising threat of Malakar while maintaining their own internal stability and alliances.\",\n      \"topic\": \"Community response to Malakar and kingdom dynamics\",\n      \"word_count\": 150,\n      \"chunk_type\": \"narrative\"\n    }\n  ]\n}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": [],
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null
+        }
+      }
+    ],
+    "raw_content": "{\n  \"chunks\": [\n    {\n      \"text\": \"Eldoria is a realm steeped in mysticism and legend, where the very fabric of reality hums with magical energy. Eldoria is a small continent divided among three powerful kingdoms, each with its own culture and history, connected by ancient ley lines that channel arcane currents across the land. These kingdoms rose from the ashes of a forgotten age, tethered together by a shared history and the looming shadow of an ancient evil threatening to awaken. Eldoria is a high fantasy world where magic flows as freely as rivers, and heroes rise to challenge the remnants of a primordial darkness. Eldoria is a land of soaring citadels and enchanted forests, where the echoes of old gods still whisper in sacred groves, and destiny calls from the stars. In Eldoria, reality is intertwined with the magical and the mundane. The world is crisscrossed by ley lines, invisible veins of power that can be tapped by those skilled in the arcane arts.\",\n      \"topic\": \"Introduction to Eldoria and its magical landscape\",\n      \"word_count\": 180,\n      \"chunk_type\": \"descriptive\"\n    },\n    {\n      \"text\": \"The presence of ley lines creates areas of wild magic where reality can be unpredictable, and the boundaries between the material world and the other planes are thin. This setting is designed to evoke the classic excitement of a fantasy adventure, where new heroes write their legends amidst ancient ruins and mythical beasts. Magic in Eldoria is cast through incantations and rituals, drawing on the ambient power of ley lines or from the wielder's own spirit. Spells are crafted through a combination of spoken word and gestural motions, with more complex spells requiring rare components or celestial alignments. Magic is woven into the daily life of Eldoria's inhabitants. In every town, a wizard or healer can be found, their skills essential to the community's well-being, whether through crafting potions, offering blessings, or protecting against dark forces.\",\n      \"topic\": \"Magic system and its role in Eldoria\",\n      \"word_count\": 220,\n      \"chunk_type\": \"mechanical\"\n    },\n    {\n      \"text\": \"The use of magic is bound by the user's knowledge, training, and the availability of magical energy. Overuse can exhaust the caster, leading to physical and mental fatigue or unintended magical backlash. Magic emanates primarily from the ley lines that crisscross Eldoria, as well as from celestial bodies that enhance magical power during certain lunar phases or celestial events. Artifacts from the ancient world also serve as potent sources of magical energy. The pantheon of Eldoria consists of multiple deities, each presiding over distinct domains such as war, nature, the sea, and love. Temples and shrines dedicated to these gods are scattered across the land, standing not only as places of worship but as centers for community gatherings.\",\n      \"topic\": \"Magic limitations and the pantheon of Eldoria\",\n      \"word_count\": 190,\n      \"chunk_type\": \"entity_focused\"\n    },\n    {\n      \"text\": \"The gods of Eldoria are known to be active, often intervening in mortal affairs through visions, omens, or direct influence, ensuring their will is enacted by chosen champions. Malakar, a dark entity from Eldoria's primal past, begins to stir beneath the mountain ranges of the Western Kingdom. Malakar was sealed away by the gods during the dawn of time, but Malakar's prison weakens as ancient seals crumble. This malevolent force seeks to reclaim the world in shadow, rallying dark creatures and corrupted souls to Malakar's cause. Fear grips the land as nightmarish creatures emerge from the shadows, villages are razed, and the skies darken with ominous portents.\",\n      \"topic\": \"The threat of Malakar and divine intervention\",\n      \"word_count\": 180,\n      \"chunk_type\": \"narrative\"\n    },\n    {\n      \"text\": \"Communities fortify their defenses, while whispers of doom spread, causing panic and distrust among neighboring states. Known as The Awakening of Malakar, Eldoria is a small but diverse continent where three distinct kingdoms exist in a delicate balance of power and diplomacy. The landscape is dotted with bustling cities and quaint villages, where diverse cultures and histories intertwine. The kingdoms of Eldoria must navigate the rising threat of Malakar while maintaining their own internal stability and alliances.\",\n      \"topic\": \"Community response to Malakar and kingdom dynamics\",\n      \"word_count\": 150,\n      \"chunk_type\": \"narrative\"\n    }\n  ]\n}"
+  }
+}

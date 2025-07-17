@@ -5,7 +5,7 @@ python-dotenv>=1.0.0
 
 # AI/ML Dependencies
 openai>=1.0.0
-pinecone-client>=2.2.0
+pinecone==7.3.0
 
 # Database Dependencies
 psycopg2-binary>=2.9.0
